@@ -33,19 +33,19 @@ class Room:
 
 
 class Weapon:
-    def __init__(self, name, atk, type):
+    def __init__(self, name, atk, type, description):
         self.name = name
         self.atk = atk
         self.type = type
 
 class Armor:
-    def __init__(self, name, dfn, type):
+    def __init__(self, name, dfn, type, description):
         self.name = name
         self.dfn = dfn
         self.type = type
 
 class Food:
-    def __init__(self, name, heal, text, type):
+    def __init__(self, name, heal, text, type, description):
         self.name = name
         self.heal = heal
         self.text = text
@@ -125,51 +125,51 @@ code = Puzzle(
 
 nothing = Item(name = "", type = "internal")
 
-stick = Weapon(name = "Stick", atk = 2, type = "weapon")
+stick = Weapon(name = "Stick", atk = 2, type = "weapon", description = "Just wooden stick. +2 ATK")
 
-noteknife = Weapon(name = "Note Knife", atk = 5, type = "weapon")
+noteknife = Weapon(name = "Note Blade", atk = 5, type = "weapon", description = "A blade made from musical notes. +5 ATK.")
 
-scienceStaff = Weapon(name = "Science Staff", atk = 7, type = "weapon")
+scienceStaff = Weapon(name = "Science Staff", atk = 7, type = "weapon", description = "An old staff... +7 ATK")
 
-scrap = Weapon(name = "Scrap", atk = 12, type = "weapon")
-rustDagger = Weapon(name = "Rusted Dagger", atk = 14, type = "weapon")
+scrap = Weapon(name = "Scrap", atk = 12, type = "weapon", description = "A long, sharp metal pipe. +12 ATK")
+rustDagger = Weapon(name = "Rusted Dagger", atk = 14, type = "weapon", description = "A rusted steel dagger. There is cat drawn on its blade. +14 ATK")
 
-electricRod = Weapon(name = "Electric Rod", atk = 16, type = "weapon")
+electricRod = Weapon(name = "Electric Rod", atk = 16, type = "weapon", description = "A long, blue glass pipe with energy inside it. +16 ATK")
 
-oldStaff = Weapon(name = "Old Staff", atk = 26, type = "weapon")
+oldStaff = Weapon(name = "Old Staff", atk = 26, type = "weapon", description = "An old, wooden staff. There is a cat drawn on it. +26 ATK")
 
-debugWP = Weapon(name = "Debug Stick", atk = 10**40-1, type = "weapon")
-
-
-bandage = Armor(name = "Bandage", dfn = 2, type = "armor")
-
-boneArmor = Armor(name = "Bone Armor", dfn = 4, type = "armor")
-
-catCloak = Armor(name = "Cat Cloak", dfn = 5, type = "armor")
-
-labCoat = Armor(name = "Lab Coat", dfn = 8, type = "armor")
-
-forceField = Armor(name = "Force Field", dfn = 14, type = "armor")
-
-locket = Armor(name = "The Locket", dfn = 18, type = "armor")
+debugWP = Weapon(name = "Debug Stick", atk = 10**40-1, type = "weapon", description = "just smal stick. +NaN ATK")
 
 
-dumplings = Food(name = "Dumplings", heal = 40, text = "Not very tasty.", type = "food")
-cheesecake = Food(name = "Cheesecake", heal = 100, text = "Very sweet.", type = "food")
-susdog = Food(name = "Suspicous Dog", heal = 999999, text = "Is it legal?", type = "food")
-bread = Food(name = "Bread", heal = 25, text = "Bread. Just bread.", type = "food")
-flakes = Food(name = "Flakes", heal = 10, text = "Very bitter.", type = "food")
-susbottle = Food(name = "Suspicous Bottle", heal = -999999999999, text = "...", type = "kill")
-spooderSoup = Food(name = "Spooder Soup", heal = 65, text = "Disgusting.", type = "food")
-spooderBread = Food(name = "Spooder Bread", heal = 20, text = "Normal bread are better.", type = "food")
+bandage = Armor(name = "Bandage", dfn = 2, type = "armor", description = "Made of premium materials. +2 DEF")
 
-energyDrink = Food(name = "Energy Drink", heal = 55, text = "Very bitter.", type = "food")
+boneArmor = Armor(name = "Bone Armor", dfn = 4, type = "armor", description = "An armor made from bones. +4 DEF")
 
-mintTea = Food(name = "Mint Tea", heal = 500, text = "This is the best tea ever.", type = "food")
+catCloak = Armor(name = "Cat Cloak", dfn = 5, type = "armor", description = "A red, big cloak with cat drawed on its back. +5 DEF")
 
+labCoat = Armor(name = "Lab Coat", dfn = 8, type = "armor", description = "An white, old lab coat. +8 DEF")
+
+forceField = Armor(name = "Force Field", dfn = 14, type = "armor", description = "An smal electrical device. +14 DEF")
+
+locket = Armor(name = "The Locket", dfn = 18, type = "armor", description = "An locket in shape of heart. Its made from gold.\nThere are photo with three cats inside it... +18 DEF")
 
 
-nukeButton = Item("Nuke Button", type = "nukeTrigger")
+dumplings = Food(name = "Dumplings", heal = 40, text = "Not very tasty.", type = "food", description = "Just dumplings with meat. Heals 40 HP.")
+cheesecake = Food(name = "Cheesecake", heal = 100, text = "Very sweet.", type = "food", description = "An extremely big cheesecake. Heals 100 HP.")
+susdog = Food(name = "Suspicous Dog", heal = 999999, text = "Is it legal?", type = "food", description = "A dog? Heals ??? HP.")
+bread = Food(name = "Bread", heal = 25, text = "Bread. Just bread.", type = "food", description = "Just bread. Heals 25 HP.")
+flakes = Food(name = "Flakes", heal = 10, text = "Very bitter.", type = "food", description = "A flakes made by cats. Heals 10 HP.")
+susbottle = Food(name = "Suspicous Flask", heal = -999999999999, text = "...", type = "kill", description = "An glass flask. There are written: 'Hydrochloric Acid'")
+spooderSoup = Food(name = "Spooder Soup", heal = 65, text = "Disgusting.", type = "food", description = "An very suspicous soup. Heals 65 HP.")
+spooderBread = Food(name = "Spooder Bread", heal = 20, text = "Normal bread are better.", type = "food", description = "A purple bread. Heals 20 HP.")
+
+energyDrink = Food(name = "Energy Drink", heal = 55, text = "Very bitter.", type = "food", description = "A metal bottle with energy drink. Heals 55 HP.")
+
+mintTea = Food(name = "Mint Tea", heal = 999999999, text = "This is the best tea ever.", type = "food", description = "A cup of mint tea. Heals ??? HP.")
+
+
+
+nukeButton = Item("Red Button", type = "nukeTrigger", description = "A red button with nuke sticker on it. I wouldn't recommend pressing it...")
 
 oldPiano = Piano(name = "Old Piano")
 
@@ -359,7 +359,7 @@ def heal(hpHeal, text, name, type):
     global maxHP
 
     if type == "kill":
-        print("You drinked Suspicous Bottle....")
+        print("You drinked Suspicous Flask....")
         sleep(2.3)
         hp = 0
         gameover()
@@ -1123,9 +1123,9 @@ while True:
     updateATK()
     updateDFN()
     if room == pianoRoom:
-        act = input("Action(info, seek, clear, item, nextroom, open, shop, drop, talk, play): ")
+        act = input("Action(info, seek, clear, item, nextroom, open, shop, drop, talk, iteminfo, play): ")
     else:
-        act = input("Action(info, seek, clear, item, nextroom, open, shop, drop, talk): ")
+        act = input("Action(info, seek, clear, item, nextroom, open, shop, drop, talk, iteminfo): ")
     if act == "info":
         print(f"LV: {lv}")
         print(f"EXP: {exp}")
@@ -1449,5 +1449,20 @@ while True:
     elif act == "end":
         room = finalRoom
         dirtyHacker = True
-        
+    elif act == "infoitem" or act == "iteminfo":
+        print("INVENTORY:")
+        for i in range(len(inventory)):
+            print(f"[{i}] : [{inventory[i].name}]")
+        try:
+            slot = int(input("Which item to inspect? (Enter slot number): "))
+            if slot < 0 or slot >= len(inventory):
+                print("Invalid slot number!")
+            elif inventory[slot] == nothing:
+                print("This slot is empty!")
+            else:
+                item = inventory[slot]
+                print(f"\n--- {item.name} ---")
+                print(item.description)
+        except ValueError:
+            print("Please enter a valid number!")
         
