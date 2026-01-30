@@ -11,9 +11,10 @@ cls()
 
 
 class Item:
-    def __init__(self, name, type):
+    def __init__(self, name, type, description = ""):
         self.name = name
         self.type = type
+        self.description = description
 
 class Room:
     def __init__(self, name, boss, nextRoom, final, enemies, chest = None, npc = None, shop = None, puzzle = None, loot=[], piano = None):
@@ -33,23 +34,26 @@ class Room:
 
 
 class Weapon:
-    def __init__(self, name, atk, type, description):
+    def __init__(self, name, atk, type, description = ""):
         self.name = name
         self.atk = atk
         self.type = type
+        self.description = description
 
 class Armor:
-    def __init__(self, name, dfn, type, description):
+    def __init__(self, name, dfn, type, description = ""):
         self.name = name
         self.dfn = dfn
         self.type = type
+        self.description = description
 
 class Food:
-    def __init__(self, name, heal, text, type, description):
+    def __init__(self, name, heal, text, type, description = ""):
         self.name = name
         self.heal = heal
         self.text = text
         self.type = type
+        self.description = description
 
 
 class Enemy:
@@ -151,7 +155,7 @@ labCoat = Armor(name = "Lab Coat", dfn = 8, type = "armor", description = "An wh
 
 forceField = Armor(name = "Force Field", dfn = 14, type = "armor", description = "An smal electrical device. +14 DEF")
 
-locket = Armor(name = "The Locket", dfn = 18, type = "armor", description = "An locket in shape of heart. Its made from gold.\nThere are photo with three cats inside it... +18 DEF")
+locket = Armor(name = "The Locket", dfn = 18, type = "armor", description = "An locket in shape of heart. Its made from gold.\nThere are photo with three cats and text: 'Don't forget.' inside it... +18 DEF")
 
 
 dumplings = Food(name = "Dumplings", heal = 40, text = "Not very tasty.", type = "food", description = "Just dumplings with meat. Heals 40 HP.")
@@ -184,7 +188,7 @@ finalChest = Chest(items=[mintTea, locket, oldStaff])
 
 smolDoge = Enemy(name = "Smol Doge", hp = 15, maxHP = 15, atk = 1, exp = 6, text = "is barking and jumping around you!", instSpare = True)
 dog = Enemy(name = "Just Dog", hp = 20, maxHP = 20, atk = 3, exp = 12, text = "is.... BARK! BARK! BARK!")
-doge = Enemy(name = "Doge", hp = 450, maxHP = 450, atk = 16, exp = 120, text = "is barking and trying defeat you.", boss = True)
+doge = Enemy(name = "Doge", hp = 160, maxHP = 450, atk = 8, exp = 120, text = "is barking and trying defeat you.", boss = True)
 
 bob = Enemy(name = "bob", hp = 120, maxHP = 120, atk = 5, exp = 45, text = "is here to defeat you!")
 leo = Enemy(name = "Leopold", hp = 75, maxHP = 75, atk = 2, exp = 25, text = "is failing on your head!")
@@ -272,6 +276,7 @@ catRoom = Room(name = "The Cat Room", boss = None, nextRoom = lab, final = False
 pianoRoom = Room(name = "The Piano Room", boss = None, nextRoom = catRoom, final = False, chest = pianoChest, enemies = [smolSpooder], loot = [flakes], piano = oldPiano)
 dogRoom = Room(name = "The Dog Room", boss = doge, nextRoom = pianoRoom, final = False, chest = dogChest, enemies = [smolDoge, dog], npc = [annoyDog], loot = [dumplings, susdog])
 
+roomOfDog = Room(name = "Room of Dog", boss = None, nextRoom = "", final = False, chest = None, enemies = [], npc = [], loot = [])
 
 lv = 1
 exp = 0
@@ -291,6 +296,10 @@ monsters = 70
 bosses = 4
 gold = 0
 name = ""
+gender = ""
+atk_bonus = 0
+mp_bonus = 0
+appearance = ""
 
 
 kills = 0
@@ -344,7 +353,7 @@ def updateATK():
     global atk
     global atkFin
     
-    atk = weapon.atk
+    atk = weapon.atk + atk_bonus
     atkFin = atk + lv - 1
 
 def updateDFN():
@@ -353,6 +362,27 @@ def updateDFN():
     
     dfn = armor.dfn
     dfnFin = dfn + lv - 1
+
+def updateMP():
+    global maxMP
+    global mp
+    
+    maxMP = 100 * lv + mp_bonus
+
+def exp_for_level(level):
+    if level <= 1:
+        return 0
+    return 20 * (level - 1) ** 2
+
+
+def get_exp_to_next_level():
+    current_lv = lv
+    next_lv = current_lv + 1
+    current_exp_threshold = exp_for_level(current_lv)
+    next_exp_threshold = exp_for_level(next_lv)
+    return next_exp_threshold - exp
+
+
 
 def heal(hpHeal, text, name, type):
     global hp
@@ -440,18 +470,6 @@ def show_credits():
 
 
 
-def gameover():
-    cls()
-    print("GAME OVER!")
-    printa("Don't give up!")
-    sleep(0.3)
-    printa("Save the DETERMINATION!")
-    sleep(0.6)
-    print()
-    input("Press Enter to exit...")
-    exit()
-
-
 
 
 def final_consequence():
@@ -464,7 +482,106 @@ def final_consequence():
     else:
         print("The ground trembles. The weight of your actions follows you.")
     
+
+
+def get_weapon_by_name(name):
+    weapons = {w.name: w for w in [stick, noteknife, scienceStaff, scrap, rustDagger, electricRod, oldStaff, debugWP]}
+    return weapons.get(name, stick)
+
+
+def get_armor_by_name(name):
+    armors = {a.name: a for a in [bandage, boneArmor, catCloak, labCoat, forceField, locket]}
+    return armors.get(name, bandage)
+
+def get_item_by_name(name):
+    items = {i.name: i for i in [dumplings, cheesecake, susdog, bread, flakes, susbottle, spooderBread, spooderSoup, energyDrink, mintTea, nukeButton]}
+    return items.get(name, nothing)
     
+def get_room_by_name(name):
+    rooms = {i.name: i for i in [dogRoom, pianoRoom, catRoom, lab, spiderRoom, warehouse, chargeRoom, finalRoom]}
+    return rooms.get(name, roomOfDog)
+ 
+
+def save_game(filename="save.json"):
+    current_save = {
+        "name": name,
+        "gender": gender,
+        "atk_bonus": atk_bonus,
+        "mp_bonus": mp_bonus,
+        "appearance": appearance,
+        "room": room.name,
+        "hp": hp,
+        "mp": mp,
+        "lv": lv,
+        "exp": exp,
+        "gold": gold,
+        "weapon": weapon.name,
+        "armor": armor.name,
+        "inventory": [item.name for item in inventory],
+        "kills": kills,
+        "spared": spared,
+    }
+    
+    with open(filename, "w", encoding="utf-8") as f:
+        json.dump(current_save, f, indent=2)
+    
+    print("\nFile saved!")
+    
+
+
+def load_game(filename="save.json"):
+    global name, room, hp, mp, lv, exp, gold, weapon, armor, inventory, kills, spared
+
+    
+    if not os.path.exists(filename):
+        print("There are no save files!")
+        sleep(0.5)
+        return False
+    
+    with open(filename, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    
+    name = data["name"]
+    gender = data["gender"]
+    atk_bonus = data["atk_bonus"]
+    mp_bonus = data["mp_bonus"]
+    appearance = data["appearance"]
+    room = get_room_by_name(data["room"])
+    hp = data["hp"]
+    mp = data["mp"]
+    lv = data["lv"]
+    exp = data["exp"]
+    gold = data["gold"]
+    
+    weapon = get_weapon_by_name(data["weapon"])
+    armor = get_armor_by_name(data["armor"])
+    inventory = [get_item_by_name(name) for name in data["inventory"]]
+    
+    kills = data["kills"]
+    spared = data["spared"]
+    
+    
+    print("\nFile loaded!")
+    sleep(0.5)
+    return True
+
+
+def gameover():
+    cls()
+    print("GAME OVER!")
+    printa(f"{name}, don't give up!")
+    sleep(0.3)
+    printa("Save the DETERMINATION!")
+    sleep(0.6)
+    print()
+    input("Press Enter to continue...")
+    sleep(1.5)
+    
+    if load_game():
+        pass
+    else:
+        exit()
+
 def show_ending():
     global kills, spared, pacifist_eligible, lv
     
@@ -527,7 +644,7 @@ def show_ending():
 
 
 def create_character():
-    global name, lv, exp, maxHP, hp, maxMP, mp, atk, dfn, weapon, armor, name
+    global name, gender, atk_bonus, mp_bonus, appearance, lv, exp, maxHP, hp, maxMP, mp, atk, dfn, weapon, armor, name
     
     cls()
     
@@ -542,8 +659,36 @@ def create_character():
         print("Name cannot be empty!")
         name = input("Enter your character's name: ").strip()
 
-
-
+    gender = input("Gender (M/F): ").strip().lower()
+    while gender not in ['m', 'f']:
+        gender = input("Gender (M/F): ").strip().lower()
+    
+    
+    print("Choose class:")
+    print("1. Warrior (+ATK, -MP)")
+    print("2. Mage (+MP, -ATK)")
+    print("3. Default(No changes)")
+    class_choice = input("> ")
+    if class_choice == "1":
+        atk_bonus = 5; mp_bonus = -20
+    elif class_choice == "2":
+        atk_bonus = -3; mp_bonus = 30
+    else:
+        pass
+    
+    print("\nChoose appearance:")
+    hair = input("Hair color (e.g., brown, red, blue): ").strip()
+    eyes = input("Eye color: ").strip()
+    build = input("Build (slender/athletic/stocky): ").strip()
+    
+    if gender == "m":
+        appearance = f"A {build} male with {hair} hair and {eyes} eyes."
+    elif gender == "f":
+        appearance = f"A {build} female with {hair} hair and {eyes} eyes."
+    else:
+       for i in range(10000):
+        printa("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", delay = 0.001)
+        os._exit(1)
     
     print("The journey begins...")
     sleep(2)
@@ -648,10 +793,33 @@ def nuclear_explosion():
     sleep(2.5)
 
 
-
+def main_menu():
+    while True:
+        cls()
+        print("\n=== MENU ===")
+        print("1. New Game")
+        print("2. Load Save")
+        print("3. Quit")
+        
+        choice = input("> ")
+        
+        if choice == "1":
+            create_character()
+            break
+        elif choice == "2":
+            if load_game(): break
+        elif choice == "3":
+            exit()
+        else:
+            print("Invalid input!")
 
 
 def battle(enemy):
+    global name
+    global gender
+    global atk_bonus
+    global mp_bonus
+    global appearance
     global lv
     global exp
     global maxHP
@@ -679,6 +847,10 @@ def battle(enemy):
     canSpared = False
     dmgMP = 1
     hpMP = 1
+    effectDuration = 0
+    defend = False
+    shieldApplied = False
+    enemy.hp = enemy.maxHP
 
     if enemy.instSpare == True:
         canSpared = True
@@ -690,6 +862,7 @@ def battle(enemy):
         updateHP()
         updateATK()
         updateDFN()
+        updateMP()
         
         if enemy.name == "Lord Cat":
             neutral_msg = rnd.choice(neutral_battle_messages)
@@ -701,7 +874,7 @@ def battle(enemy):
                 input("Action(attack, defend, magic, flee, info, item, spare): ")
                 cls()
                 print("Action(attack, defend, magic, flee, info, item, spare): attack")
-                print("Damage: 9999999999")
+                print(f"Damage: {10**40-1}")
                 print("Enemy HP: 0/800")
                 sleep(0.2)
                 printa("Lord Cat: B-b-burn-n in-n t-the-e h-hel-l-l...", 0.15, effect = "whisper")
@@ -724,20 +897,26 @@ def battle(enemy):
                 atck = atkFin * hpMP
                 crit_damage = int(atck * CRIT_MULTIPLIER)
                 blink("CRITICAL HIT!", 8)
-                print(f"Damage: {crit_damage} (x{CRIT_MULTIPLIER})")
+                if crit_damage > 10**40-1:
+                   print(f"Damage: {10**40-1} (x{CRIT_MULTIPLIER})") 
+                else:
+                    print(f"Damage: {crit_damage} (x{CRIT_MULTIPLIER})")
                 enemy.hp -= crit_damage
             else:
                 apw = rnd.randint(50, 200)/100
                 atck = int(atkFin * apw * hpMP)
                 enemy.hp -= atck
-                print(f"Damage: {atck}")
+                if atck > 10**40-1:
+                    print(f"Damage: {10**40-1}")
+                else:
+                    print(f"Damage: {atck}")
             if enemy.hp <= 0:
                 if enemy.name == "Lord Cat":
                     print("Enemy HP: 0.001/800")
                     printa("Lord Cat: P-p-pleas-s-se d-d-d-don't-t-t k-k-kil-l m-m-me...", effect = "whisper")
                     fAct = input("Action(attack, spare): ")
                     if fAct == "attack":
-                        print("Damage: 9999999999")
+                        print(f"Damage: {10**40-1}")
                         print("Enemy HP: 0/800")
                         sleep(0.2)
                         printa("Lord Cat: B-b-burn-n in-n t-the-e h-hel-l-l...", 0.15, effect = "whisper")
@@ -829,7 +1008,12 @@ def battle(enemy):
                 if mp < shield.cost:
                     print("You don't have enough MP")
                 elif mp >= shield.cost:
-                    defend = True
+                    if shieldApplied == True:
+                        print("You already have shield.")
+                    else:
+                        shieldApplied = True
+                        effectDuration = 5
+                        mp -= shield.cost
             elif mgT == "meteor":
                 if mp < meteor.cost:
                     print("You don't have enough MP")
@@ -862,8 +1046,12 @@ def battle(enemy):
             else:
                 print("You try to flee but legs refuse to run.")
         elif bAct == "info":
+            print(f"Name: {name}")
+            print(f"Gender: {gender.upper()}")
+            print(f"Appearance: {appearance}")
             print(f"LV: {lv}")
             print(f"EXP: {exp}")
+            print(f"EXP to next level: {get_exp_to_next_level()}")
             print(f"HP: {hp}/{maxHP}")
             print(f"MP: {mp}/{maxMP}")
             print(f"Weapon: {weapon.name}")
@@ -886,30 +1074,33 @@ def battle(enemy):
             print(f"[5] : [{inventory[5].name}]")
             print(f"[6] : [{inventory[6].name}]")
             print(f"[7] : [{inventory[7].name}]")
-            itemUse = int(input("What do you want to use?"))
-            if inventory[itemUse] == nothing:
-                pass
-            else:
-                if inventory[itemUse].type == "nukeTrigger":
-                    print("You pressed The Red Button...")
-                    sleep(1.5)
-                    nuclear_explosion()
-                    print("\n[NUKE SECRET ENDING]")
-                    print("...")
-                    sleep(3)
-                    input("Press Enter to quit...")
-                    exit()
-                elif inventory[itemUse].type == "weapon":
-                    oldWeapon = weapon
-                    weapon = inventory[itemUse]
-                    inventory[itemUse] = oldWeapon
-                elif inventory[itemUse].type == "armor":
-                    oldArmor = armor
-                    armor = inventory[itemUse]
-                    inventory[itemUse] = oldArmor
+            try:
+                itemUse = int(input("What do you want to use?"))
+                if inventory[itemUse] == nothing:
+                    pass
                 else:
-                    heal(inventory[itemUse].heal, inventory[itemUse].text, inventory[itemUse].name, inventory[itemUse].type)
-                    inventory[itemUse] = nothing
+                    if inventory[itemUse].type == "nukeTrigger":
+                        print("You pressed The Red Button...")
+                        sleep(1.5)
+                        nuclear_explosion()
+                        print("\n[NUKE SECRET ENDING]")
+                        print("...")
+                        sleep(3)
+                        input("Press Enter to quit...")
+                        exit()
+                    elif inventory[itemUse].type == "weapon":
+                        oldWeapon = weapon
+                        weapon = inventory[itemUse]
+                        inventory[itemUse] = oldWeapon
+                    elif inventory[itemUse].type == "armor":
+                        oldArmor = armor
+                        armor = inventory[itemUse]
+                        inventory[itemUse] = oldArmor
+                    else:
+                        heal(inventory[itemUse].heal, inventory[itemUse].text, inventory[itemUse].name, inventory[itemUse].type)
+                        inventory[itemUse] = nothing
+            except:
+                print("Invalid input!")
         elif bAct == "spare":
             if enemy.name == "Lord Cat":
                 wprint("You try to spare...", 1)
@@ -943,7 +1134,7 @@ def battle(enemy):
                 if talk == "call":
                     print("You don't know his name.")
                 elif talk == "showfood":
-                    print("You show food to Smol Doge. He eats it. He happy.")
+                    print("You show food to Dog. He eats it. He happy.")
                     canSpared = True
             elif enemy.name == "bob":
                 talk = input("What do(joke, ignore):")
@@ -1064,33 +1255,81 @@ def battle(enemy):
                 
 
         if defend == True:
-            print("You blocked enemy hit!")
-            if enemy.atk * dmgMP / 2 > dfnFin:
-                hp -= (enemy.atk - dfnFin) * dmgMP / 2
-                if hp <= 0:
-                    gameover()
-                print(f"You got {int((enemy.atk - dfnFin) * dmgMP / 2)} damage. HP: {hp}/{maxHP}")
+            if shieldApplied == True and effectDuration > 0:
+                print("Magical shield is absorbing half of enemy hit!")
+                if enemy.atk * dmgMP / 4 > dfnFin:
+                    hp -= (enemy.atk - dfnFin) * dmgMP / 4
+                    if hp <= 0:
+                        gameover()
+                        return False
+                        break
+                    print(f"You got {int((enemy.atk - dfnFin) * dmgMP / 4)} damage. HP: {hp}/{maxHP}")
+                else:
+                    hp -= 1
+                    print(f"You got 1 damage. HP: {hp}/{maxHP}")
+                    if hp <= 0:
+                        gameover()
+                        return False
+                        break
+                effectDuration -= 1
+                if effectDuration == 0:
+                    shieldApplied = False
             else:
-                hp -= 1
-                print(f"You got 1 damage. HP: {hp}/{maxHP}")
-                if hp <= 0:
-                    gameover()
+                print("You blocked half of enemy hit!")
+                if enemy.atk * dmgMP / 2 > dfnFin:
+                    hp -= (enemy.atk - dfnFin) * dmgMP / 2
+                    if hp <= 0:
+                        gameover()
+                        return False
+                        break
+                    print(f"You got {int((enemy.atk - dfnFin) * dmgMP / 2)} damage. HP: {hp}/{maxHP}")
+                else:
+                    hp -= 1
+                    print(f"You got 1 damage. HP: {hp}/{maxHP}")
+                    if hp <= 0:
+                        gameover()
+                        return False
+                        break
 
 
             dmgMP = 1
             
             
         else:
-            if enemy.atk * dmgMP > dfnFin:
-                hp -= int((enemy.atk - dfnFin) * dmgMP)
-                if hp <= 0:
-                    gameover()
-                print(f"You got {int(enemy.atk - dfnFin * dmgMP)} damage. HP: {hp}/{maxHP}")
+            if shieldApplied == True and effectDuration > 0:
+                print("Magical shield is absorbing half of enemy hit!")
+                if enemy.atk * dmgMP / 2 > dfnFin:
+                    hp -= (enemy.atk - dfnFin) * dmgMP / 2
+                    if hp <= 0:
+                        gameover()
+                        return False
+                        break
+                    print(f"You got {int((enemy.atk - dfnFin) * dmgMP / 2)} damage. HP: {hp}/{maxHP}")
+                else:
+                    hp -= 1
+                    print(f"You got 1 damage. HP: {hp}/{maxHP}")
+                    if hp <= 0:
+                        gameover()
+                        return False
+                        break
+                effectDuration -= 1
+                if effectDuration == 0:
+                    shieldApplied = False
             else:
-                hp -= 1
-                if hp <= 0:
-                    gameover()
-                print(f"You got 1 damage. HP: {hp}/{maxHP}")
+                if enemy.atk * dmgMP > dfnFin:
+                    hp -= int((enemy.atk - dfnFin) * dmgMP)
+                    if hp <= 0:
+                        gameover()
+                        return False
+                        break
+                    print(f"You got {int(enemy.atk - dfnFin * dmgMP)} damage. HP: {hp}/{maxHP}")
+                else:
+                    hp -= 1
+                    if hp <= 0:
+                        gameover()
+                        return False
+                        break
+                    print(f"You got 1 damage. HP: {hp}/{maxHP}")
 
             
            
@@ -1105,11 +1344,8 @@ print("===========================================")
 
 sleep(3)
 
-cls()
-sleep(2)
+main_menu()
 
-
-create_character()
 
 cls()
 
@@ -1117,49 +1353,125 @@ wprint("Welcome to The Underground", 2)
 wprint("Be careful there...", 2)
 wprint("You entered to the dark room with dark gray brick walls", 1)
 
-while True:
-    updateLV()
-    updateHP()
-    updateATK()
-    updateDFN()
-    if room == pianoRoom:
-        act = input("Action(info, seek, clear, item, nextroom, open, shop, drop, talk, iteminfo, play): ")
-    else:
-        act = input("Action(info, seek, clear, item, nextroom, open, shop, drop, talk, iteminfo): ")
-    if act == "info":
-        print(f"LV: {lv}")
-        print(f"EXP: {exp}")
-        print(f"HP: {hp}/{maxHP}")
-        print(f"MP: {mp}/{maxMP}")
-        print(f"Weapon: {weapon.name}")
-        print(f"Armor: {armor.name}")
-        print(f"ATK: {atkFin}({atk})")
-        print(f"DEF: {dfnFin}({dfn})")
-        print(f"GOLD: {gold}")
-        print()
-        print("INVENTORY:")
-        print(f"[0] : [{inventory[0].name}]")
-        print(f"[1] : [{inventory[1].name}]")
-        print(f"[2] : [{inventory[2].name}]")
-        print(f"[3] : [{inventory[3].name}]")
-        print(f"[4] : [{inventory[4].name}]")
-        print(f"[5] : [{inventory[5].name}]")
-        print(f"[6] : [{inventory[6].name}]")
-        print(f"[7] : [{inventory[7].name}]")       
-    elif act == "seek":
-        chance = rnd.randint(1,100)
-        if chance >= 0 and chance <= 20:
-            monster = rnd.choice(room.enemies)
-            wprint("...", 1)
-            if monsters > 0:
-                wprint(f"{monster.name} {monster.text}", 1)
-                battle(monster)
+def game_loop():
+    global lv
+    global exp
+    global maxHP
+    global hp
+    global maxMP
+    global mp
+    global inventory
+    global weapon
+    global armor
+    global atk
+    global atkFin
+    global dfn
+    global dfnFin
+    global room
+    global monsters
+    global bosses
+    global gold
+    global name
+    global gender
+    global atk_bonus
+    global mp_bonus
+    global appearance
+
+
+    global kills
+    global spared
+    global pacifist_eligible
+    global dirtyHacker
+    
+    global CRIT_CHANCE
+    global CRIT_MULTIPLIER
+
+
+    while True:
+        updateLV()
+        updateHP()
+        updateATK()
+        updateDFN()
+        updateMP()
+        
+        if room == pianoRoom:
+            act = input("Action(info, seek, clear, item, nextroom, open, shop, drop, talk, iteminfo, save, load, play): ")
+        else:
+            act = input("Action(info, seek, clear, item, nextroom, open, shop, drop, talk, iteminfo, save, load): ")
+        if act == "info":
+            print(f"Name: {name}")
+            print(f"Gender: {gender.upper()}")
+            print(f"Appearance: {appearance}")
+            print(f"LV: {lv}")
+            print(f"EXP: {exp}")
+            print(f"EXP to next level: {get_exp_to_next_level()}")
+            print(f"HP: {hp}/{maxHP}")
+            print(f"MP: {mp}/{maxMP}")
+            print(f"Weapon: {weapon.name}")
+            print(f"Armor: {armor.name}")
+            print(f"ATK: {atkFin}({atk})")
+            print(f"DEF: {dfnFin}({dfn})")
+            print(f"GOLD: {gold}")
+            print()
+            print("INVENTORY:")
+            print(f"[0] : [{inventory[0].name}]")
+            print(f"[1] : [{inventory[1].name}]")
+            print(f"[2] : [{inventory[2].name}]")
+            print(f"[3] : [{inventory[3].name}]")
+            print(f"[4] : [{inventory[4].name}]")
+            print(f"[5] : [{inventory[5].name}]")
+            print(f"[6] : [{inventory[6].name}]")
+            print(f"[7] : [{inventory[7].name}]")       
+        elif act == "seek":
+            chance = rnd.randint(1,100)
+            if chance >= 0 and chance <= 20:
+                monster = rnd.choice(room.enemies)
+                wprint("...", 1)
+                if monsters > 0:
+                    wprint(f"{monster.name} {monster.text}", 1)
+                    battle(monster)
+                else:
+                    print("But nobody came...")
+            elif chance >= 21 and chance <= 41:
+                wprint("...", 1)
+                drop = rnd.choice(room.loot)
+                print(f"You got {drop.name}!")
+                print("INVENTORY:")
+                print(f"[0] : [{inventory[0].name}]")
+                print(f"[1] : [{inventory[1].name}]")
+                print(f"[2] : [{inventory[2].name}]")
+                print(f"[3] : [{inventory[3].name}]")
+                print(f"[4] : [{inventory[4].name}]")
+                print(f"[5] : [{inventory[5].name}]")
+                print(f"[6] : [{inventory[6].name}]")
+                print(f"[7] : [{inventory[7].name}]")
+                try:
+                    place = int(input("Where to put it(8 - trash)?"))
+                    if place == 8:
+                        pass
+                    else:
+                        inventory[place] = drop
+                except:
+                    print("Incorrect input!")
+            elif chance >= 42 and chance <= 52:
+                wprint("...", 1)
+                print("You fall into trap...")
+                mp = 0
+                hp -= 20
+                if hp <= 0:
+                    gameover()
+                print(f"You got 20 damage. HP: {hp}/{maxHP}")
+            elif chance >= 53 and chance <= 100:
+                wprint("...", 1)
+                print("...but you don't find anything.")
             else:
-                print("But nobody came...")
-        elif chance >= 21 and chance <= 41:
-            wprint("...", 1)
-            drop = rnd.choice(room.loot)
-            print(f"You got {drop.name}!")
+                printa("WHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAT!!!", effect = "glitch")
+                sleep(0.5)
+                cls()
+                
+        elif act == "clear":
+            cls()
+        elif act == "item":
             print("INVENTORY:")
             print(f"[0] : [{inventory[0].name}]")
             print(f"[1] : [{inventory[1].name}]")
@@ -1169,300 +1481,300 @@ while True:
             print(f"[5] : [{inventory[5].name}]")
             print(f"[6] : [{inventory[6].name}]")
             print(f"[7] : [{inventory[7].name}]")
-            place = int(input("Where to put it(8 - trash)?"))
-            if place == 8:
-                pass
-            else:
-                inventory[place] = drop
-        elif chance >= 42 and chance <= 52:
-            wprint("...", 1)
-            print("You fall into trap...")
-            mp = 0
-            hp -= 20
-            if hp <= 0:
-                gameover()
-            print(f"You got 20 damage. HP: {hp}/{maxHP}")
-        elif chance >= 53 and chance <= 100:
-            wprint("...", 1)
-            print("...but you don't find anything.")
-        else:
-            printa("WHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAT!!!", effect = "glitch")
-            sleep(0.5)
-            cls()
-            
-    elif act == "clear":
-        cls()
-    elif act == "item":
-        print("INVENTORY:")
-        print(f"[0] : [{inventory[0].name}]")
-        print(f"[1] : [{inventory[1].name}]")
-        print(f"[2] : [{inventory[2].name}]")
-        print(f"[3] : [{inventory[3].name}]")
-        print(f"[4] : [{inventory[4].name}]")
-        print(f"[5] : [{inventory[5].name}]")
-        print(f"[6] : [{inventory[6].name}]")
-        print(f"[7] : [{inventory[7].name}]")
-        itemUse = int(input("What do you want to use?"))
-        if inventory[itemUse] == nothing:
-            pass
-        else:
-            if inventory[itemUse].type == "nukeTrigger":
-                print("You pressed The Red Button...")
-                sleep(1.5)
-                nuclear_explosion()
-                print("\n[NUKE SECRET ENDING]")
-                print("...")
-                sleep(3)
-                input("Press Enter to quit...")
-                exit()
-            elif inventory[itemUse].type == "weapon":
-                oldWeapon = weapon
-                weapon = inventory[itemUse]
-                inventory[itemUse] = oldWeapon
-            elif inventory[itemUse].type == "armor":
-                oldArmor = armor
-                armor = inventory[itemUse]
-                inventory[itemUse] = oldArmor
-            else:
-                heal(inventory[itemUse].heal, inventory[itemUse].text, inventory[itemUse].name, inventory[itemUse].type)
-                inventory[itemUse] = nothing
-    elif act == "nextroom":
-        if room.final == False:
-            if room.puzzle is not None:
-                print("To proceed, you must solve a puzzle!")
-                print(f"Puzzle: {room.puzzle.question}")
-                
-                if room.puzzle.hint:
-                    print(f"Hint: {room.puzzle.hint}")
-                
-                try:
-                    user_answer = input("Your answer: ")
-                    if room.puzzle.check(user_answer):
-                        print("Correct! The path opens.")
-                        if room.boss is not None:
-                            wprint(f"You see... The {room.boss.name}...", 2)
-                            cls()
-                            battle(room.boss)
-                        room = room.nextRoom
-                    else:
-                        print("Wrong answer! The door remains locked.")
-                except ValueError:
-                    print("Invalid input! Try again.")
-            else:
-                wprint(f"You go to {room.nextRoom.name}...", 3)
-                if room.boss == None:
-                    pass
-                else:
-                    wprint(f"You see... The {room.boss.name}...", 2)
-                    cls()
-                    battle(room.boss)
-                room = room.nextRoom
-        else:
-            final_consequence()
-            sleep(2)
-            wprint(f"You see The Exit from The Underground...", 3)
-            wprint("This fills you with DETERMINATION...", 2)
-            wprint(f"You see... The {room.boss.name}...", 2)
-            if monsters == 0 and bosses == 1:
-                printa("Lord Cat: There is a beautiful day outside...")
-                sleep(0.7)
-                printa("Lord Cat: Birds are singing...")
-                sleep(0.7)
-                printa("Lord Cat: ...sun is shining.")
-                sleep(0.7)
-                printa("Lord Cat: In that days, kids like you...")
-                sleep(2)
-                printa("Lord Cat: S H O U L D    B E    B U R N    I N    T H E    H E L L!", effect = "whisper")
-                sleep(0.8)
-            else:
-                printa("Lord Cat: Oh... hello?!")
-                sleep(0.7)
-                printa("Lord Cat: What's your name?")
-                sleep(1.5)
-                printa(f"Lord Cat: {name}? Good name, {name}.")
-                sleep(0.9)
-                printa("Lord Cat: Nice to meet you, human.")
-                sleep(0.7)
-                printa("Lord Cat: Goodbye.")
-                sleep(2)
-            cls()
-            battle(room.boss)
-            cls()
-            wprint("UNDERGROUND", 2)
-            wprint("by Alex", 2)
-            print()
-            show_ending()
-            cls()
-            input("Press Enter to exit...")
-            exit()
-    elif act == "open":
-        if room.chest is None:
-            print("There is no chest here.")
-        elif room.chest.opened:
-            print("The chest is already empty.")
-        else:
-            print("You opened the chest!")
-            chest = room.chest
-            for item in chest.items:
-                print(f"Found: {item.name}")
-                for i in range(len(inventory)):
-                    if inventory[i] == nothing:
-                        inventory[i] = item
-                        print(f"{item.name} added to inventory (slot {i}).")
-                        break
-                else:
-                    print(f"No space for {item.name}!")
-            chest.opened = True
-    elif act == "drop":
-        print("INVENTORY:")
-        for i in range(len(inventory)):
-            print(f"[{i}] : [{inventory[i].name}]")
-        try:
-            slot = int(input("Which item to drop? (Enter slot number): "))
-            if slot < 0 or slot >= len(inventory):
-                print("Invalid slot number!")
-            elif inventory[slot] == nothing:
-                print("This slot is empty!")
-            else:
-                dropped_item = inventory[slot]
-                inventory[slot] = nothing
-                print(f"You dropped {dropped_item.name}.")
-        except ValueError:
-            print("Please enter a valid number!")
-    elif act == "615474520412":
-        weapon = debugWP
-        inventory[0] = nukeButton
-        dirtyHacker = True
-    elif act == "g":
-        monsters = 0
-        pacifist_eligible = False
-    elif act == "talk":
-        if room.npc is None or len(room.npc) == 0:
-            print("There is no one to talk to here.")
-        else:
-            print("You see:")
-            for i, npc in enumerate(room.npc):
-                print(f"[{i}] {npc.name}")
             
             try:
-                choice = int(input("Who do you want to talk to? (enter number): "))
-                if 0 <= choice < len(room.npc):
-                    npc = room.npc[choice]
-                    print(f"\n{npc.name} says:")
-                    for line in npc.dialogue:
-                        printa(line, 0.05)
+                itemUse = int(input("What do you want to use?"))
+                if inventory[itemUse] == nothing:
+                    pass
+                else:
+                    if inventory[itemUse].type == "nukeTrigger":
+                        print("You pressed The Red Button...")
+                        sleep(1.5)
+                        nuclear_explosion()
+                        print("\n[NUKE SECRET ENDING]")
+                        print("...")
+                        sleep(3)
+                        input("Press Enter to quit...")
+                        exit()
+                    elif inventory[itemUse].type == "weapon":
+                        oldWeapon = weapon
+                        weapon = inventory[itemUse]
+                        inventory[itemUse] = oldWeapon
+                    elif inventory[itemUse].type == "armor":
+                        oldArmor = armor
+                        armor = inventory[itemUse]
+                        inventory[itemUse] = oldArmor
+                    else:
+                        heal(inventory[itemUse].heal, inventory[itemUse].text, inventory[itemUse].name, inventory[itemUse].type)
+                        inventory[itemUse] = nothing
+            except:
+                print("Invalid input!")
+        elif act == "nextroom":
+            if room.final == False:
+                if room.puzzle is not None:
+                    print("To proceed, you must solve a puzzle!")
+                    print(f"Puzzle: {room.puzzle.question}")
                     
-                    if npc.trade:
-                        print(f"\n{npc.name} offers to trade:")
-                        for i, item in enumerate(npc.items):
-                            print(f"[{i}] {item.name} (Heal: {item.heal})")
-                        try:
-                            trade_choice = int(input("Choose an item to receive (or -1 to cancel): "))
-                            if 0 <= trade_choice < len(npc.items):
-                                item = npc.items[trade_choice]
-                                for slot in range(len(inventory)):
-                                    if inventory[slot] == nothing:
-                                        inventory[slot] = item
-                                        print(f"You received {item.name}!")
+                    if room.puzzle.hint:
+                        print(f"Hint: {room.puzzle.hint}")
+                    
+                    try:
+                        user_answer = input("Your answer: ")
+                        if room.puzzle.check(user_answer):
+                            print("Correct! The path opens.")
+                            if room.boss is not None:
+                                wprint(f"You see... The {room.boss.name}...", 2)
+                                cls()
+                            if battle(room.boss) != False:
+                                room = room.nextRoom
+                            else:
+                                game_loop()
+                        else:
+                            print("Wrong answer! The door remains locked.")
+                    except ValueError:
+                        print("Invalid input! Try again.")
+                else:
+                    wprint(f"You go to {room.nextRoom.name}...", 3)
+                    if room.boss == None:
+                        pass
+                    else:
+                        wprint(f"You see... The {room.boss.name}...", 2)
+                        cls()
+                        if battle(room.boss) != False:
+                            room = room.nextRoom
+                        else:
+                            game_loop()
+            else:
+                final_consequence()
+                sleep(2)
+                wprint(f"You see The Exit from The Underground...", 3)
+                wprint("This fills you with DETERMINATION...", 2)
+                wprint(f"You see... The {room.boss.name}...", 2)
+                if monsters == 0 and bosses == 1:
+                    printa("Lord Cat: There is a beautiful day outside...")
+                    sleep(0.7)
+                    printa("Lord Cat: Birds are singing...")
+                    sleep(0.7)
+                    printa("Lord Cat: ...sun is shining.")
+                    sleep(0.7)
+                    printa("Lord Cat: In that days, kids like you...")
+                    sleep(2)
+                    printa("Lord Cat: S H O U L D    B E    B U R N    I N    T H E    H E L L!", effect = "whisper")
+                    sleep(0.8)
+                else:
+                    printa("Lord Cat: Oh... hello?!")
+                    sleep(0.7)
+                    printa("Lord Cat: What's your name?")
+                    sleep(1.5)
+                    printa(f"Lord Cat: {name}? Good name, {name}.")
+                    sleep(0.9)
+                    printa("Lord Cat: Nice to meet you, human.")
+                    sleep(0.7)
+                    printa("Lord Cat: Goodbye.")
+                    sleep(2)
+                cls()
+                if battle(room.boss) != False:
+                    pass
+                else:
+                    game_loop()
+                cls()
+                wprint("UNDERGROUND", 2)
+                wprint("by Alex", 2)
+                print()
+                show_ending()
+                cls()
+                input("Press Enter to exit...")
+                exit()
+        elif act == "open":
+            if room.chest is None:
+                print("There is no chest here.")
+            elif room.chest.opened:
+                print("The chest is already empty.")
+            else:
+                print("You opened the chest!")
+                chest = room.chest
+                for item in chest.items:
+                    print(f"Found: {item.name}")
+                    for i in range(len(inventory)):
+                        if inventory[i] == nothing:
+                            inventory[i] = item
+                            print(f"{item.name} added to inventory (slot {i}).")
+                            break
+                    else:
+                        print(f"No space for {item.name}!")
+                chest.opened = True
+        elif act == "drop":
+            print("INVENTORY:")
+            for i in range(len(inventory)):
+                print(f"[{i}] : [{inventory[i].name}]")
+            try:
+                slot = int(input("Which item to drop? (Enter slot number): "))
+                if slot < 0 or slot >= len(inventory):
+                    print("Invalid slot number!")
+                elif inventory[slot] == nothing:
+                    print("This slot is empty!")
+                else:
+                    dropped_item = inventory[slot]
+                    inventory[slot] = nothing
+                    print(f"You dropped {dropped_item.name}.")
+            except ValueError:
+                print("Please enter a valid number!")
+        elif act == "615474520412":
+            weapon = debugWP
+            inventory[0] = nukeButton
+            dirtyHacker = True
+        elif act == "g":
+            monsters = 0
+            pacifist_eligible = False
+        elif act == "talk":
+            if room.npc is None or len(room.npc) == 0:
+                print("There is no one to talk to here.")
+            else:
+                print("You see:")
+                for i, npc in enumerate(room.npc):
+                    print(f"[{i}] {npc.name}")
+                
+                try:
+                    choice = int(input("Who do you want to talk to? (enter number): "))
+                    if 0 <= choice < len(room.npc):
+                        npc = room.npc[choice]
+                        print(f"\n{npc.name} says:")
+                        for line in npc.dialogue:
+                            printa(line, 0.05)
+                        
+                        if npc.trade:
+                            print(f"\n{npc.name} offers to trade:")
+                            for i, item in enumerate(npc.items):
+                                print(f"[{i}] {item.name} (Heal: {item.heal})")
+                            try:
+                                trade_choice = int(input("Choose an item to receive (or -1 to cancel): "))
+                                if 0 <= trade_choice < len(npc.items):
+                                    item = npc.items[trade_choice]
+                                    for slot in range(len(inventory)):
+                                        if inventory[slot] == nothing:
+                                            inventory[slot] = item
+                                            print(f"You received {item.name}!")
+                                            break
+                                    else:
+                                        print("Inventory is full!")
+                                elif trade_choice != -1:
+                                    print("Invalid choice!")
+                            except ValueError:
+                                print("Please enter a number!")
+                    else:
+                        print("Invalid choice!")
+                except ValueError:
+                    print("Please enter a number!")
+        elif act == "shop":
+            if room.shop == None:
+                print("There isn't any shops.")
+            else:
+                current_shop = room.shop
+                while True:
+                    current_shop.show_items()
+                    buy_choice = input("Buy item (number) or [b] back: ")
+                    
+                    if buy_choice == "b":
+                        break
+                    
+                    try:
+                        idx = int(buy_choice)
+                        if 0 <= idx < len(current_shop.items):
+                            item, price = current_shop.items[idx]
+                            
+                            if gold >= price:
+                                for i, inv_item in enumerate(inventory):
+                                    if inv_item == nothing:
+                                        inventory[i] = item
+                                        gold -= price
+                                        print(f"Bought {item.name} for {price} gold!")
+                                        print(f"Gold left: {gold}")
                                         break
                                 else:
                                     print("Inventory is full!")
-                            elif trade_choice != -1:
-                                print("Invalid choice!")
-                        except ValueError:
-                            print("Please enter a number!")
-                else:
-                    print("Invalid choice!")
-            except ValueError:
-                print("Please enter a number!")
-    elif act == "shop":
-        if room.shop == None:
-            print("There isn't any shops.")
-        else:
-            current_shop = room.shop
-            while True:
-                current_shop.show_items()
-                buy_choice = input("Buy item (number) or [b] back: ")
-                
-                if buy_choice == "b":
-                    break
-                
-                try:
-                    idx = int(buy_choice)
-                    if 0 <= idx < len(current_shop.items):
-                        item, price = current_shop.items[idx]
-                        
-                        if gold >= price:
-                            for i, inv_item in enumerate(inventory):
-                                if inv_item == nothing:
-                                    inventory[i] = item
-                                    gold -= price
-                                    print(f"Bought {item.name} for {price} gold!")
-                                    print(f"Gold left: {gold}")
-                                    break
                             else:
-                                print("Inventory is full!")
+                                print("Not enough gold!")
                         else:
-                            print("Not enough gold!")
-                    else:
-                        print("Invalid item number!")
-                except ValueError:
-                    print("Enter a number or 'b'!")
-    elif act == "anuke":
-        printa("The walls briefly flash with blue light... Build. Defend. Survive.", 0.1)
-        print("(You feel a surge of DETERMINATION...)")
-        hp = min(hp + 50, maxHP)
-        mp = min(mp + 30, maxMP)
-    elif act == "play":
-        if room == pianoRoom:
-            print("You approach the old piano. The keys are dusty but intact.")
+                            print("Invalid item number!")
+                    except ValueError:
+                        print("Enter a number or 'b'!")
+        elif act == "anuke":
+            printa("The walls briefly flash with blue light... Build. Defend. Survive.", 0.1)
+            print("(You feel a surge of DETERMINATION...)")
+            hp = min(hp + 50, maxHP)
+            mp = min(mp + 30, maxMP)
+        elif act == "play":
+            if room == pianoRoom:
+                print("You approach the old piano. The keys are dusty but intact.")
 
-            sequence = input("Play notes: ").strip().upper()
-                
-            if sequence == "A G F E":
-                printa("The piano emits a soft, melodic chime...", 0.35)
-                printa("Suddenly, the floor shakes!", 0.3)
-                printa("A tiny white dog in a toy race car comes speeding in!", 0.2)
-                printa("BEEP! BEEP! VROOM!", 0.1)
-                sleep(1)
-                printa("CRASH!!!", 1)
-                sleep(0.5)
-                        
-                cls()
-                print()
-                print()
-                print("GAME OVER: PUPPY RAMPAGE!")
-                print()
-                print("The dog in the toy car knocked you out!")
-                print("You wake up covered in dog slobber...")
-                print("...and the piano is now on fire.")
-                print()
+                sequence = input("Play notes: ").strip().upper()
+                    
+                if sequence == "A G F E":
+                    printa("The piano emits a soft, melodic chime...", 0.35)
+                    printa("Suddenly, the floor shakes!", 0.3)
+                    printa("A tiny white dog in a toy race car comes speeding in!", 0.2)
+                    printa("BEEP! BEEP! VROOM!", 0.1)
+                    sleep(1)
+                    printa("CRASH!!!", 1)
+                    sleep(0.5)
+                            
+                    cls()
+                    print()
+                    print()
+                    print("GAME OVER: PUPPY RAMPAGE!")
+                    print()
+                    print("The dog in the toy car knocked you out!")
+                    print("You wake up covered in dog slobber...")
+                    print("...and the piano is now on fire.")
+                    print()
 
-                        
-                sleep(3)
-                input("Press Enter to accept your fate...")
-                exit()
+                            
+                    sleep(3)
+                    input("Press Enter to accept your fate...")
+                    exit()
+                else:
+                    print("The piano makes a discordant noise. Nothing happens.")
             else:
-                print("The piano makes a discordant noise. Nothing happens.")
-        else:
-            print("...")
-    elif act == "end":
-        room = finalRoom
-        dirtyHacker = True
-    elif act == "infoitem" or act == "iteminfo":
-        print("INVENTORY:")
-        for i in range(len(inventory)):
-            print(f"[{i}] : [{inventory[i].name}]")
-        try:
-            slot = int(input("Which item to inspect? (Enter slot number): "))
-            if slot < 0 or slot >= len(inventory):
-                print("Invalid slot number!")
-            elif inventory[slot] == nothing:
-                print("This slot is empty!")
-            else:
-                item = inventory[slot]
-                print(f"\n--- {item.name} ---")
-                print(item.description)
-        except ValueError:
-            print("Please enter a valid number!")
+                print("...")
+        elif act == "end":
+            room = finalRoom
+            dirtyHacker = True
+        elif act == "infoitem" or act == "iteminfo":
+            print("INVENTORY:")
+            for i in range(len(inventory)):
+                print(f"[{i}] : [{inventory[i].name}]")
+            try:
+                slot = int(input("Which item to inspect? (Enter slot number): "))
+                if slot < 0 or slot >= len(inventory):
+                    print("Invalid slot number!")
+                elif inventory[slot] == nothing:
+                    print("This slot is empty!")
+                else:
+                    item = inventory[slot]
+                    print(f"\n--- {item.name} ---")
+                    print(item.description)
+            except ValueError:
+                print("Please enter a valid number!")
+            
+        elif act == "save":
+            save_game()
         
+        elif act == "load":
+            load_game()
+        elif act == "AAAAAA":
+            for i in range(100):
+                printa("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", delay = 0.001)
+            os._exit(1)
+        elif act == "67":
+            for i in range(100):
+                printa("676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767", delay = 0.001)
+                printa("767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676", delay = 0.001)
+            sleep(2)
+            print("SixSeven hacked sucessfully.")
+            hp = maxHP
+            mp = maxMP
+            dirtyHacker = True
+            
+
+
+game_loop()
