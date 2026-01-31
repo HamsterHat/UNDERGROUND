@@ -1,3 +1,4 @@
+from tkinter.messagebox import *
 from mLib import *
 from time import *
 import math as mth
@@ -461,13 +462,31 @@ def show_credits():
         "Credits:",
         "Game Design: Alex",
         "Programming: Alex",
-        "Special Thanks: You, for playing!",
+        "Special Thanks:",
+        "- You, for playing",
+        "- My cat, for the moral support",
+        "- Alexey Evgenevich, for the idea",
         "",
         "The End."
     ]
     printsta(credits_text, delay_between=1.5, text_delay=0.07)
 
-
+def show_about():
+    cls()
+    print("\n=== ABOUT ===")
+    print("Game: THE UNDERGROUND")
+    print("Version: 1.0")
+    print("Developer: Alex")
+    print("Genre: Text-based RPG")
+    print("\nDescription:")
+    print("A dark fantasy adventure through mysterious underground chambers.")
+    print("Face monsters, solve puzzles, and choose your path — violence or peace.")
+    print("\nSpecial Thanks:")
+    print("- You, for playing!")
+    print("- My cat, for moral support")
+    print("- Alexey Evgenevich, for the idea")
+    print("\n© 2026 Alex. All rights reserved.")
+    input("\nPress Enter to return...")
 
 
 
@@ -670,9 +689,11 @@ def create_character():
     print("3. Default(No changes)")
     class_choice = input("> ")
     if class_choice == "1":
-        atk_bonus = 5; mp_bonus = -20
+        atk_bonus = 5
+        mp_bonus = -20
     elif class_choice == "2":
-        atk_bonus = -3; mp_bonus = 30
+        atk_bonus = -3
+        mp_bonus = 30
     else:
         pass
     
@@ -686,10 +707,14 @@ def create_character():
     elif gender == "f":
         appearance = f"A {build} female with {hair} hair and {eyes} eyes."
     else:
-       for i in range(10000):
-        printa("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", delay = 0.001)
+        for i in range(10000):
+            printa("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", delay = 0.001)
+        showerror(title="Critical Error", message="""Traceback (most recent call last)
+File "underground.py", line 711, in <module>
+    printa("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+
+Unknown Error""")
         os._exit(1)
-    
     print("The journey begins...")
     sleep(2)
 
@@ -799,7 +824,8 @@ def main_menu():
         print("\n=== MENU ===")
         print("1. New Game")
         print("2. Load Save")
-        print("3. Quit")
+        print("3. About")
+        print("4. Quit")
         
         choice = input("> ")
         
@@ -809,6 +835,8 @@ def main_menu():
         elif choice == "2":
             if load_game(): break
         elif choice == "3":
+            show_about()
+        elif choice == "4":
             exit()
         else:
             print("Invalid input!")
@@ -1764,6 +1792,11 @@ def game_loop():
         elif act == "AAAAAA":
             for i in range(100):
                 printa("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", delay = 0.001)
+            showerror(title="Critical Error", message="""Traceback (most recent call last)
+File "underground.py", line 1794, in <module>
+    printa("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+
+Unknown Error""")
             os._exit(1)
         elif act == "67":
             for i in range(100):
