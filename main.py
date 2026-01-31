@@ -189,7 +189,7 @@ finalChest = Chest(items=[mintTea, locket, oldStaff])
 
 smolDoge = Enemy(name = "Smol Doge", hp = 15, maxHP = 15, atk = 1, exp = 6, text = "is barking and jumping around you!", instSpare = True)
 dog = Enemy(name = "Just Dog", hp = 20, maxHP = 20, atk = 3, exp = 12, text = "is.... BARK! BARK! BARK!")
-doge = Enemy(name = "Doge", hp = 160, maxHP = 450, atk = 8, exp = 120, text = "is barking and trying defeat you.", boss = True)
+doge = Enemy(name = "Doge", hp = 160, maxHP = 160, atk = 8, exp = 120, text = "is barking and trying defeat you.", boss = True)
 
 bob = Enemy(name = "bob", hp = 120, maxHP = 120, atk = 5, exp = 45, text = "is here to defeat you!")
 leo = Enemy(name = "Leopold", hp = 75, maxHP = 75, atk = 2, exp = 25, text = "is failing on your head!")
@@ -334,6 +334,8 @@ neutral_battle_messages = [
 
 CRIT_CHANCE = 0.3
 CRIT_MULTIPLIER = 5.0
+VERSION = "1.0"
+DEBUG_MODE = False
 
 
 def updateHP():
@@ -513,7 +515,7 @@ def get_armor_by_name(name):
     return armors.get(name, bandage)
 
 def get_item_by_name(name):
-    items = {i.name: i for i in [dumplings, cheesecake, susdog, bread, flakes, susbottle, spooderBread, spooderSoup, energyDrink, mintTea, nukeButton]}
+    items = {i.name: i for i in [dumplings, cheesecake, susdog, bread, flakes, susbottle, spooderBread, spooderSoup, energyDrink, mintTea, nukeButton, stick, noteknife, scienceStaff, scrap, rustDagger, electricRod, oldStaff, debugWP, bandage, boneArmor, catCloak, labCoat, forceField, locket]}
     return items.get(name, nothing)
     
 def get_room_by_name(name):
@@ -539,6 +541,10 @@ def save_game(filename="save.json"):
         "inventory": [item.name for item in inventory],
         "kills": kills,
         "spared": spared,
+        "hacker": dirtyHacker,
+        "monsters": monsters,
+        "bosses": bosses,
+        "pacifist_eligible": pacifist_eligible,
     }
     
     with open(filename, "w", encoding="utf-8") as f:
@@ -549,7 +555,7 @@ def save_game(filename="save.json"):
 
 
 def load_game(filename="save.json"):
-    global name, room, hp, mp, lv, exp, gold, weapon, armor, inventory, kills, spared
+    global name, room, hp, mp, lv, exp, gold, weapon, armor, inventory, kills, spared, dirtyHacker, pacifist_eligible, monsters, bosses
 
     
     if not os.path.exists(filename):
@@ -578,6 +584,11 @@ def load_game(filename="save.json"):
     
     kills = data["kills"]
     spared = data["spared"]
+    
+    dirtyHacker = data["hacker"]
+    pacifist_eligible = data["pacifist_eligible"]
+    monsters = data["monsters"]
+    bosses = data["bosses"]
     
     
     print("\nFile loaded!")
@@ -816,6 +827,13 @@ def nuclear_explosion():
 
     print("The Underground is now just a crater.")
     sleep(2.5)
+    
+def gain_exp(amount):
+    global exp
+    exp += amount
+    updateLV()
+    print(f"You gained {amount} EXP!")
+
 
 
 def main_menu():
@@ -840,6 +858,115 @@ def main_menu():
             exit()
         else:
             print("Invalid input!")
+
+
+def handle_debug_command(cmd):
+    global hp, mp, lv, exp, gold, inventory, weapon, armor, kills, spared, pacifist_eligible, room, DEBUG_MODE, VERSION
+
+    if not DEBUG_MODE and cmd != "debug on":
+        print("Debug mode is off. Use 'debug on' to enable.")
+
+    try:
+        if cmd == "debug on":
+            DEBUG_MODE = True
+            print("[DEBUG] Enabled.")
+
+        elif cmd == "debug off":
+            DEBUG_MODE = False
+            print("[DEBUG] Disabled.")
+
+        elif cmd.startswith("debug hp "):
+            hp = int(cmd.split()[2])
+            print(f"[DEBUG] HP set to {hp}.")
+
+        elif cmd.startswith("debug lv "):
+            lv = int(cmd.split()[2])
+            updateHP()
+            updateATK()
+            updateDFN()
+            updateMP()
+            print(f"[DEBUG] Level set to {lv}. Stats updated.")
+
+        elif cmd.startswith("debug exp "):
+            exp = int(cmd.split()[2])
+            updateLV()
+            print(f"[DEBUG] EXP set to {exp}. Current level: {lv}.")
+
+        elif cmd.startswith("debug gold "):
+            gold = int(cmd.split()[2])
+            print(f"[DEBUG] Gold set to {gold}.")
+
+        elif cmd.startswith("debug kill "):
+            kills = int(cmd.split()[2])
+            print(f"[DEBUG] Kills set to {kills}.")
+
+
+        elif cmd.startswith("debug spare "):
+            spared = int(cmd.split()[2])
+            print(f"[DEBUG] Spared set to {spared}.")
+
+
+        elif cmd.startswith("debug pacifist "):
+            pacifist_eligible = cmd.split()[2].lower() == "true"
+            print(f"[DEBUG] Pacifist eligibility: {pacifist_eligible}.")
+
+
+        elif cmd.startswith("debug give "):
+            item_name = cmd.split(" ", 1)[2]
+            item = get_item_by_name(item_name)
+            if item:
+                inventory.append(item)
+                print(f"[DEBUG] Added '{item_name}' to inventory.")
+            else:
+                print(f"[DEBUG] Item '{item_name}' not found.")
+
+        elif cmd == "debug show state":
+            print("\n[DEBUG] CURRENT STATE:")
+            print(f"  GAME VERSION: {VERSION}")
+            print(f"  HP: {hp}/{maxHP}")
+            print(f"  MP: {mp}/{maxMP}")
+            print(f"  Level: {lv}")
+            print(f"  EXP: {exp} (Next: {get_exp_to_next_level()})")
+            print(f"  Gold: {gold}")
+            print(f"  Kills: {kills}, Spared: {spared}")
+            print(f"  Pacifist: {pacifist_eligible}")
+            print(f"  Weapon: {weapon.name} (+{weapon.atk} ATK)")
+            print(f"  Armor: {armor.name} (+{armor.dfn} DEF)")
+            print(f"  Inventory: {[item.name for item in inventory if item.name != '']}")
+            print()
+
+        elif cmd == "debug win boss":
+            if room.boss:
+                print(f"[DEBUG] Defeated {room.boss.name} instantly!")
+                gain_exp(room.boss.exp)
+                room.boss = None
+            else:
+                print("[DEBUG] No boss in this room.")
+
+
+        elif cmd == "debug next room":
+            if room.nextRoom:
+                room = room.nextRoom
+                print(f"[DEBUG] Moved to: {room.name}")
+            else:
+                print("[DEBUG] No next room.")
+
+
+        elif cmd == "debug teleport":
+            room_name = input("[DEBUG] Room name: ").strip()
+            target_room = get_room_by_name(room_name)
+            if target_room:
+                room = target_room
+                print(f"[DEBUG] Teleported to: {room.name}")
+            else:
+                print(f"[DEBUG] Room '{room_name}' not found.")
+
+
+        else:
+            print("[DEBUG] Unknown command. Try: hp X, lv X, exp X, gold X, give NAME, show state, win boss, next room, teleport")
+    except Exception as e:
+        print(f"[DEBUG] Error: {e}")
+
 
 
 def battle(enemy):
@@ -881,6 +1008,9 @@ def battle(enemy):
     enemy.hp = enemy.maxHP
 
     if enemy.instSpare == True:
+        canSpared = True
+        
+    if atkFin > enemy.hp:
         canSpared = True
 
     
@@ -1553,10 +1683,12 @@ def game_loop():
                             if room.boss is not None:
                                 wprint(f"You see... The {room.boss.name}...", 2)
                                 cls()
-                            if battle(room.boss) != False:
-                                room = room.nextRoom
+                                if battle(room.boss) != False:
+                                    room = room.nextRoom
+                                else:
+                                    game_loop()
                             else:
-                                game_loop()
+                                room = room.nextRoom
                         else:
                             print("Wrong answer! The door remains locked.")
                     except ValueError:
@@ -1564,7 +1696,7 @@ def game_loop():
                 else:
                     wprint(f"You go to {room.nextRoom.name}...", 3)
                     if room.boss == None:
-                        pass
+                        room = room.nextRoom
                     else:
                         wprint(f"You see... The {room.boss.name}...", 2)
                         cls()
@@ -1807,6 +1939,10 @@ Unknown Error""")
             hp = maxHP
             mp = maxMP
             dirtyHacker = True
+        
+        elif act.startswith("debug "):
+            handle_debug_command(act)
+            continue
             
 
 
