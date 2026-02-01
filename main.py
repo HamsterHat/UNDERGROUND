@@ -115,6 +115,62 @@ class Puzzle:
 
     def check(self, user_input):
         return str(user_input).strip().lower() == str(self.answer).strip().lower()
+        
+
+art_okak = r"""...................##(                                 ,(##................                                     
+..................##/                                    /#(..............                                      
+.................*#*                                      (#..............                                      
+.................#/                                        #(..............                                     
+.................(      *,./#(                 . %%(./      %.............                                      
+................,/     ,/ */##. #             # /#%,. ##.   ,*...........                                       
+...............(      ,#. ..,..@.           *&..,,...&*.    #............                                      
+................*      .*#& ..&@ .          . .&&   %(,.     *.........   .                                     
+...............*       ........,,            .,, .... .      ...........                                        
+...............(         .,,,,,,,             ..,...          ,........ .                                       
+.............../          ....,....  ....      ..             *...........                                      
+................             ...... ,(/((,  .                ./.... ... ..                                      
+. .............             .....,.*  ... ....               .*........  ..                                     
+. ..........,            ........,..   .........        ,. ,/.........                                        
+...............          .,  .......  ...     .  .,          ** .......                                         
+................           ..      .     ..  ...       *.    ** ..  ....                                        
+.............*       .. ..          .       .     ,       .../,...  .                                         
+....  .......,.                                           / .  ..,#                                           
+......,///(/*.                                       . ,    .....*/%,                                       
+////*((,,/,                                 .     ,     ........./%.                                    
+((*////(*..*#(                                     .           .....,*,%                                  
+##,*((///,..,##/.                                                      .,                                  
+/#/,*/////,.../#(/ .                                                                                        
+##/,/((*//,.  *##(.*/,//                    .                                                               
+.(%(,/#/,/,*.  ,(#(.//,. .                /.                                                                 
+(/#(///,*//*.  .*(/(//*,  ,                                                                                  
+#/(#**..*(//.. .*//. /(*.  ,*          .                                                                     
+#((#*.  ./#**,. ,*,  ///,%&.( *#  ((.,*&%   (.  #/                                                           
+.(((#/.   ,#(**..,*   //@@, .@.(@ @**   .,@  @,@@                                                             
+//*#///    (#/,,.,*   */&@*.@@.(@ %@  @, .@  @,.@&                .                                           
+(*,(*..,   /#/,,,,,   *///*.  .  *      ,     .                   .                                           
+                                                                                            
+                                                                                            
+     OOOOOOOOO     KKKKKKKKK    KKKKKKK               AAA               KKKKKKKKK    KKKKKKK
+   OO:::::::::OO   K:::::::K    K:::::K              A:::A              K:::::::K    K:::::K
+ OO:::::::::::::OO K:::::::K    K:::::K             A:::::A             K:::::::K    K:::::K
+O:::::::OOO:::::::OK:::::::K   K::::::K            A:::::::A            K:::::::K   K::::::K
+O::::::O   O::::::OKK::::::K  K:::::KKK           A:::::::::A           KK::::::K  K:::::KKK
+O:::::O     O:::::O  K:::::K K:::::K             A:::::A:::::A            K:::::K K:::::K   
+O:::::O     O:::::O  K::::::K:::::K             A:::::A A:::::A           K::::::K:::::K    
+O:::::O     O:::::O  K:::::::::::K             A:::::A   A:::::A          K:::::::::::K     
+O:::::O     O:::::O  K:::::::::::K            A:::::A     A:::::A         K:::::::::::K     
+O:::::O     O:::::O  K::::::K:::::K          A:::::AAAAAAAAA:::::A        K::::::K:::::K    
+O:::::O     O:::::O  K:::::K K:::::K        A:::::::::::::::::::::A       K:::::K K:::::K   
+O::::::O   O::::::OKK::::::K  K:::::KKK    A:::::AAAAAAAAAAAAA:::::A    KK::::::K  K:::::KKK
+O:::::::OOO:::::::OK:::::::K   K::::::K   A:::::A             A:::::A   K:::::::K   K::::::K
+ OO:::::::::::::OO K:::::::K    K:::::K  A:::::A               A:::::A  K:::::::K    K:::::K
+   OO:::::::::OO   K:::::::K    K:::::K A:::::A                 A:::::A K:::::::K    K:::::K
+     OOOOOOOOO     KKKKKKKKK    KKKKKKKAAAAAAA                   AAAAAAAKKKKKKKKK    KKKKKKK                                                                                  
+"""
+
+
+
+
 
 switches = Puzzle(
     question="Press switches(F, Y, B) in correct sequence.",
@@ -144,6 +200,8 @@ electricRod = Weapon(name = "Electric Rod", atk = 16, type = "weapon", descripti
 oldStaff = Weapon(name = "Old Staff", atk = 26, type = "weapon", description = "An old, wooden staff. There is a cat drawn on it. +26 ATK")
 
 debugWP = Weapon(name = "Debug Stick", atk = 10**40-1, type = "weapon", description = "just smal stick. +NaN ATK")
+okakWP = Weapon(name = "окак", atk = 56, type = "weapon", description = "The legendary weapon of power okak. +??? ATK")
+
 
 
 bandage = Armor(name = "Bandage", dfn = 2, type = "armor", description = "Made of premium materials. +2 DEF")
@@ -157,6 +215,7 @@ labCoat = Armor(name = "Lab Coat", dfn = 8, type = "armor", description = "An wh
 forceField = Armor(name = "Force Field", dfn = 14, type = "armor", description = "An smal electrical device. +14 DEF")
 
 locket = Armor(name = "The Locket", dfn = 18, type = "armor", description = "An locket in shape of heart. Its made from gold.\nThere are photo with three cats and text: 'Don't forget.' inside it... +18 DEF")
+okakAR = Armor(name = "броня окак", dfn = 999999, type = "armor", description = "An armor made from... окак?")
 
 
 dumplings = Food(name = "Dumplings", heal = 40, text = "Not very tasty.", type = "food", description = "Just dumplings with meat. Heals 40 HP.")
@@ -171,6 +230,7 @@ spooderBread = Food(name = "Spooder Bread", heal = 20, text = "Normal bread are 
 energyDrink = Food(name = "Energy Drink", heal = 55, text = "Very bitter.", type = "food", description = "A metal bottle with energy drink. Heals 55 HP.")
 
 mintTea = Food(name = "Mint Tea", heal = 999999999, text = "This is the best tea ever.", type = "food", description = "A cup of mint tea. Heals ??? HP.")
+okakFD = Food(name = "окак!", heal = 999999999, description = "A food made from... окак?", type = "food_okak", text = "IS IT LEGAL????????")
 
 
 
@@ -307,7 +367,7 @@ kills = 0
 spared = 0
 pacifist_eligible = True
 dirtyHacker = False
-
+OKAK = False
 
 bolt = Magic(name = "Lighting Bolt", cost = 70, atk = 10**40-1, heal = 0)
 healer = Magic(name = "Heal", cost = 60, atk = 0, heal = 60)
@@ -332,9 +392,12 @@ neutral_battle_messages = [
 
 
 
+
+
+
 CRIT_CHANCE = 0.3
 CRIT_MULTIPLIER = 5.0
-VERSION = "1.0"
+VERSION = "1.2"
 DEBUG_MODE = False
 
 
@@ -357,6 +420,8 @@ def updateATK():
     global atkFin
     
     atk = weapon.atk + atk_bonus
+    if atk <= 0:
+        atk = 1
     atkFin = atk + lv - 1
 
 def updateDFN():
@@ -506,16 +571,16 @@ def final_consequence():
 
 
 def get_weapon_by_name(name):
-    weapons = {w.name: w for w in [stick, noteknife, scienceStaff, scrap, rustDagger, electricRod, oldStaff, debugWP]}
+    weapons = {w.name: w for w in [stick, noteknife, scienceStaff, scrap, rustDagger, electricRod, oldStaff, debugWP, okakWP]}
     return weapons.get(name, stick)
 
 
 def get_armor_by_name(name):
-    armors = {a.name: a for a in [bandage, boneArmor, catCloak, labCoat, forceField, locket]}
+    armors = {a.name: a for a in [bandage, boneArmor, catCloak, labCoat, forceField, locket, okakFD]}
     return armors.get(name, bandage)
 
 def get_item_by_name(name):
-    items = {i.name: i for i in [dumplings, cheesecake, susdog, bread, flakes, susbottle, spooderBread, spooderSoup, energyDrink, mintTea, nukeButton, stick, noteknife, scienceStaff, scrap, rustDagger, electricRod, oldStaff, debugWP, bandage, boneArmor, catCloak, labCoat, forceField, locket]}
+    items = {i.name: i for i in [dumplings, cheesecake, susdog, bread, flakes, susbottle, spooderBread, spooderSoup, energyDrink, mintTea, nukeButton, stick, noteknife, scienceStaff, scrap, rustDagger, electricRod, oldStaff, debugWP, bandage, boneArmor, catCloak, labCoat, forceField, locket, okakWP, okakAR, okakFD]}
     return items.get(name, nothing)
     
 def get_room_by_name(name):
@@ -545,6 +610,7 @@ def save_game(filename="save.json"):
         "monsters": monsters,
         "bosses": bosses,
         "pacifist_eligible": pacifist_eligible,
+        "okak": OKAK,
     }
     
     with open(filename, "w", encoding="utf-8") as f:
@@ -559,9 +625,17 @@ def load_game(filename="save.json"):
 
     
     if not os.path.exists(filename):
-        print("There are no save files!")
-        sleep(0.5)
-        return False
+        if os.path.exists("okak.json"):
+                showerror(title="Critical Error", message="""Traceback (most recent call last)
+File "underground.py", line 944, in main_menu()
+    load_game()
+
+Unknown Okak Exception""")
+                os._exit(1)
+        else:
+            print("There are no save files!")
+            sleep(0.5)
+            return False
     
     with open(filename, "r", encoding="utf-8") as f:
         data = json.load(f)
@@ -589,6 +663,7 @@ def load_game(filename="save.json"):
     pacifist_eligible = data["pacifist_eligible"]
     monsters = data["monsters"]
     bosses = data["bosses"]
+    OKAK = data["okak"]
     
     
     print("\nFile loaded!")
@@ -613,7 +688,24 @@ def gameover():
         exit()
 
 def show_ending():
-    global kills, spared, pacifist_eligible, lv
+    global kills, spared, pacifist_eligible, lv, OKAK
+    
+    if OKAK:
+        printa("ОКАК ОКАК ОКАК ОКАК ОКАК", 0.1)
+        print("\n[ОКАК ENDING]")
+        print("You have activated the secret power of OKAK!")
+        print("All the enemies fled in terror, and Lord Cat just said, 'окак...'")
+        print("Now you are the master of the OKAK force!")
+        sleep(3)
+        cls()
+        printa(art_okak, delay = 0.001)
+        sleep(5)
+        show_credits()
+        with open("save.json", "w", encoding="utf-8") as f:
+            f.write(art_okak)
+        os.system("ren save.json okak.json")
+        return
+    
     
     if dirtyHacker == True:
         if pacifist_eligible and kills == 0:
@@ -685,9 +777,15 @@ def create_character():
     sleep(1.5)
     
     name = input("Enter your character's name: ").strip()
+    if name == "окак":
+        name = ""
+        print("...")
     while not name:
         print("Name cannot be empty!")
         name = input("Enter your character's name: ").strip()
+        if name == "окак":
+            name = ""
+            print("...")
 
     gender = input("Gender (M/F): ").strip().lower()
     while gender not in ['m', 'f']:
@@ -996,7 +1094,7 @@ def battle(enemy):
     global gold
     global CRIT_CHANCE
     global CRIT_MULTIPLIER
-    
+    global OKAK
     
 
     canSpared = False
@@ -1021,6 +1119,13 @@ def battle(enemy):
         updateATK()
         updateDFN()
         updateMP()
+        
+        if OKAK:
+            weapon = okakWP
+            armor = okakAR
+            for i in range(len(inventory)):
+                inventory[i] = okakFD
+            
         
         if enemy.name == "Lord Cat":
             neutral_msg = rnd.choice(neutral_battle_messages)
@@ -1063,11 +1168,14 @@ def battle(enemy):
             else:
                 apw = rnd.randint(50, 200)/100
                 atck = int(atkFin * apw * hpMP)
-                enemy.hp -= atck
-                if atck > 10**40-1:
-                    print(f"Damage: {10**40-1}")
+                if rnd.random() < 0.15 and enemy.name in ["Lord Cat", "TERMINATOR"]:
+                    blink("BLOCKED!", 5)
                 else:
-                    print(f"Damage: {atck}")
+                    enemy.hp -= atck
+                    if atck > 10**40-1:
+                        print(f"Damage: {10**40-1}")
+                    else:
+                        print(f"Damage: {atck}")
             if enemy.hp <= 0:
                 if enemy.name == "Lord Cat":
                     print("Enemy HP: 0.001/800")
@@ -1108,7 +1216,7 @@ def battle(enemy):
                 print(f"Enemy HP: {enemy.hp}/{enemy.maxHP}")
         elif bAct == "defend":
             defend = True
-            mp = min(mp + 10 + lv * 5, maxMP)
+            mp = min(mp + 10 + mp_bonus + lv * 5, maxMP)
             print(f"You defenced. Your MP increased({mp}/{maxMP}).")
         elif bAct == "magic":
             mgT = input("Select magic(bolt - 70MP, heal - 60MP, fireball - 40MP, shield - 30MP, meteor - 100MP): ")
@@ -1254,6 +1362,8 @@ def battle(enemy):
                         oldArmor = armor
                         armor = inventory[itemUse]
                         inventory[itemUse] = oldArmor
+                    elif inventory[itemUse] == "food_okak":
+                        heal(inventory[itemUse].heal, inventory[itemUse].text, inventory[itemUse].name, inventory[itemUse].type)
                     else:
                         heal(inventory[itemUse].heal, inventory[itemUse].text, inventory[itemUse].name, inventory[itemUse].type)
                         inventory[itemUse] = nothing
@@ -1543,6 +1653,7 @@ def game_loop():
     
     global CRIT_CHANCE
     global CRIT_MULTIPLIER
+    global OKAK
 
 
     while True:
@@ -1551,6 +1662,12 @@ def game_loop():
         updateATK()
         updateDFN()
         updateMP()
+        
+        if OKAK:
+            weapon = okakWP
+            armor = okakAR
+            for i in range(len(inventory)):
+                inventory[i] = okakFD
         
         if room == pianoRoom:
             act = input("Action(info, seek, clear, item, nextroom, open, shop, drop, talk, iteminfo, save, load, play): ")
@@ -1662,6 +1779,8 @@ def game_loop():
                         oldArmor = armor
                         armor = inventory[itemUse]
                         inventory[itemUse] = oldArmor
+                    elif inventory[itemUse] == "food_okak":
+                        heal(inventory[itemUse].heal, inventory[itemUse].text, inventory[itemUse].name, inventory[itemUse].type)
                     else:
                         heal(inventory[itemUse].heal, inventory[itemUse].text, inventory[itemUse].name, inventory[itemUse].type)
                         inventory[itemUse] = nothing
@@ -1721,6 +1840,17 @@ def game_loop():
                     sleep(2)
                     printa("Lord Cat: S H O U L D    B E    B U R N    I N    T H E    H E L L!", effect = "whisper")
                     sleep(0.8)
+                elif name == "окак":
+                    printa("Lord Cat: окак...")
+                    sleep(2)
+                    cls()
+                    wprint("UNDERGROUND", 2)
+                    wprint("by Alex", 2)
+                    print()
+                    show_ending()
+                    cls()
+                    input("Press Enter to exit...")
+                    exit()
                 else:
                     printa("Lord Cat: Oh... hello?!")
                     sleep(0.7)
@@ -1816,7 +1946,10 @@ def game_loop():
                                             print(f"You received {item.name}!")
                                             break
                                     else:
-                                        print("Inventory is full!")
+                                        if okakFD in inventory:
+                                            print("There are too much 'окак' in inventory!")
+                                        else:
+                                            print("Inventory is full!")
                                 elif trade_choice != -1:
                                     print("Invalid choice!")
                             except ValueError:
@@ -1851,7 +1984,10 @@ def game_loop():
                                         print(f"Gold left: {gold}")
                                         break
                                 else:
-                                    print("Inventory is full!")
+                                    if okakFD in inventory:
+                                        print("There are too much 'окак' in inventory!")
+                                    else:
+                                        print("Inventory is full!")
                             else:
                                 print("Not enough gold!")
                         else:
@@ -1943,6 +2079,22 @@ Unknown Error""")
         elif act.startswith("debug "):
             handle_debug_command(act)
             continue
+        
+        elif act == "окак":
+            printa(art_okak, delay = 0.001)
+            hp = maxHP
+            mp = maxMP
+            weapon = okakWP
+            armor = okakAR
+            for i in range(len(inventory)):
+                inventory[i] = okakFD
+            printa("Your HP and MP are restored!")
+            printa("You have got the legendary 'окак' power!")
+            dirtyHacker = True
+            OKAK = True
+            name = "окак"
+            save_game()
+
             
 
 
