@@ -115,7 +115,40 @@ class Puzzle:
 
     def check(self, user_input):
         return str(user_input).strip().lower() == str(self.answer).strip().lower()
+
+
+class Artifact:
+    def __init__(self, name, type, effect, atk, heal, description = ""):
+        self.name = name
+        self.type = type
+        self.description = description
+        self.effect = effect
+        self.atk = atk
+        self.heal = heal
         
+    def use(self):
+        self.effect()
+
+class Scroll:
+    def __init__(self, name, type, effect, atk, heal, description = ""):
+        self.name = name
+        self.type = type
+        self.description = description
+        self.effect = effect
+        self.atk = atk
+        self.heal = heal
+        
+    def use(self):
+        self.effect()
+
+
+def animate(frames = [], delay = 0.2):
+    cls()
+    for frame in frames:
+        print(frame)
+        sleep(delay)
+        cls()
+    sleep(0.4)
 
 art_okak = r"""...................##(                                 ,(##................                                     
 ..................##/                                    /#(..............                                      
@@ -266,7 +299,7 @@ cheesecake = Food(name = "Cheesecake", heal = 100, text = "Very sweet.", type = 
 susdog = Food(name = "Suspicous Dog", heal = 999999, text = "Is it legal?", type = "food", description = "A dog? Heals ??? HP.")
 bread = Food(name = "Bread", heal = 25, text = "Bread. Just bread.", type = "food", description = "Just bread. Heals 25 HP.")
 flakes = Food(name = "Flakes", heal = 10, text = "Very bitter.", type = "food", description = "A flakes made by cats. Heals 10 HP.")
-susbottle = Food(name = "Suspicous Flask", heal = -999999999999, text = "...", type = "kill", description = "An glass flask. There are written: 'Hydrochloric Acid'")
+susbottle = Food(name = "Suspicous Flask", heal = 0, text = "...", type = "kill", description = "An glass flask. There are written: 'Hydrochloric Acid'")
 spooderSoup = Food(name = "Spooder Soup", heal = 65, text = "Disgusting.", type = "food", description = "An very suspicous soup. Heals 65 HP.")
 spooderBread = Food(name = "Spooder Bread", heal = 20, text = "Normal bread are better.", type = "food", description = "A purple bread. Heals 20 HP.")
 
@@ -278,6 +311,66 @@ okakFD = Food(name = "окак!", heal = 999999999, description = "A food made f
 
 
 nukeButton = Item("Red Button", type = "nukeTrigger", description = "A red button with nuke sticker on it. I wouldn't recommend pressing it...")
+
+def meteor_strike():
+    print("METEOR STRIKE!")
+    for _ in range(5):
+        print("*BOOM*")
+        sleep(0.5)
+        
+
+def fireSpell():
+    frames = [
+    "",
+    "    !",
+    "",
+    "    !",
+    "",
+    "    !"
+    "    *",
+    "   |x|",
+    "  | X |",
+    "|   O   |",
+    "    o   ",
+    "        "
+    ]
+    animate(frames, 0.2)
+
+def healSpell():
+    frames = [
+    "   .   ",
+    " . * . ",
+    " * + * ",
+    " + + + ",
+    " * * * ",
+    " . . . ",
+    "       "
+    ]
+    animate(frames, 0.3)
+
+def boltSpell():
+    frames = [
+    "  |  ",
+    "  ║  ",
+    " ║║║ ",
+    "║ ║ ║",
+    "*ZAP!*"
+    ]
+    animate(frames, 0.1)
+
+meteor_artifact = Artifact(
+    name="The Meteor Frag",
+    type = "attack_artifact",
+    effect=meteor_strike,
+    description="An artifact that cause meteor strike.",
+    atk=200,
+    heal=0
+)
+
+fireScroll = Scroll(name = "Scroll Of Fire", type = "scroll_attack", effect = fireSpell, description = "A single use fire spell.", atk = 40, heal = 0)
+healScroll = Scroll(name = "Scroll Of Heal", type = "scroll_heal", effect = healSpell, description = "A single use heal spell.", atk = 0, heal = 50)
+boltScroll = Scroll(name = "Scroll Of Bolt", type = "scroll_attack", effect = boltSpell, description = "A single use bolt spell.", atk = 80, heal = 0)
+
 
 oldPiano = Piano(name = "Old Piano")
 
@@ -305,6 +398,7 @@ hugeSpooder = Enemy(name = "   H U G E    S P O O D E R", hp = 230, maxHP = 230,
 
 smolRobot = Enemy(name = "Smol Robot", hp = 30, maxHP = 30, atk = 7, exp = 15, text = "is sweeping floor and encountered you.")
 terminator = Enemy(name = "TERMINATOR", hp = 670, maxHP = 670, atk = 17, exp = 560, text = "IS WANTS TO TERMINATE YOU!", boss = True)
+terminatorNEO = Enemy(name = "TERMINATOR NEO", hp = 7460, maxHP = 7460, atk = 26, exp = 780, text = "IS WANTS TO TERMINATE YOU!", boss = True)
 
 lordcat = Enemy(name = "Lord Cat", hp = 800, maxHP = 800, atk = 23, exp = 720, text = "is want to defeat you.", boss = True)
 
@@ -320,9 +414,11 @@ annoyDog = NPC(
 basik = NPC(
     name = "Basik",
     dialogue=[
-        "meow",
-        "lord cat is strong",
-        "be careful..."
+        "Meow...",
+        "I remember the days when Lord Thomas was just a curious kitten...",
+        "His brother Marj was always tinkering with strange devices in the lab...",
+        "And Muysa... she was the bravest of us all...",
+        "Be careful in the lab..."
     ]
 )
 
@@ -336,6 +432,7 @@ cactus = NPC(
         "Sometimes music opens doors that are better left unopened..."
     ]
 )
+
 
 spiid = NPC(
     name = "Spiid",
@@ -371,12 +468,20 @@ spooderSale = Shop("Spooder Sale", [
     (spooderSoup, 15)
 ])
 
+libraryShop = Shop("Library Shop", [
+    (fireScroll, 160),
+    (healScroll, 155),
+    (boltScroll, 580),
+    (meteor_artifact, 6700)
+])
+
 finalRoom = Room(name = "The Lord's House", boss = lordcat, nextRoom = "", final = True, enemies = [smolSpooder], loot = [bread], chest = finalChest)
 chargeRoom = Room(name = "The Charging Room", boss = terminator, nextRoom = finalRoom, final = False, enemies = [smolRobot], loot = [scrap], chest = chargeChest)
 warehouse = Room(name = "The Warehouse", boss = None, nextRoom = chargeRoom, final = False, chest = warehouseChest, enemies = [smolRobot], puzzle = code, npc = [oldRobot], loot = [scrap, nukeButton])
 spiderRoom = Room(name = "The Spooders Lair", boss = hugeSpooder, nextRoom = warehouse, final = False, enemies = [smolSpooder, spooder, fastSpooder], npc = [spiid], shop = spooderSale, loot = [spooderBread, spooderSoup])
 lab = Room(name = "The Secret Lab", boss = None, nextRoom = spiderRoom, final = False, chest = labChest, enemies = [smolSpooder], puzzle = switches, loot = [susbottle])
-catRoom = Room(name = "The Cat Room", boss = None, nextRoom = lab, final = False, chest = catChest, enemies = [bob, leo], npc = [basik, cactus], shop = catShop, loot = [flakes, dumplings, bread])
+ancientLib = Room(name = "The Ancient Library", boss = None, nextRoom = lab, final = False, enemies = [smolSpooder], loot = None, shop = libraryShop)
+catRoom = Room(name = "The Cat Room", boss = None, nextRoom = ancientLib, final = False, chest = catChest, enemies = [bob, leo], npc = [basik, cactus], shop = catShop, loot = [flakes, dumplings, bread])
 pianoRoom = Room(name = "The Piano Room", boss = None, nextRoom = catRoom, final = False, chest = pianoChest, enemies = [smolSpooder], loot = [flakes], piano = oldPiano)
 dogRoom = Room(name = "The Dog Room", boss = doge, nextRoom = pianoRoom, final = False, chest = dogChest, enemies = [smolDoge, dog], npc = [annoyDog], loot = [dumplings, susdog])
 
@@ -396,7 +501,17 @@ atkFin = 0
 dfn = 0
 dfnFin = 0
 room = dogRoom
-monsters = 70
+monsters = {
+    "The Dog Room": 8,
+    "The Piano Room": 2,
+    "The Cat Room": 6,
+    "The Ancient Library": 1,
+    "The Secret Lab": 3,
+    "The Spooders Lair": 9,
+    "The Warehouse": 4,
+    "The Charging Room": 5,
+    "The Lord's House": 1
+}
 bosses = 4
 gold = 0
 name = ""
@@ -443,6 +558,44 @@ CRIT_MULTIPLIER = 5.0
 VERSION = "1.2"
 DEBUG_MODE = False
 
+
+def check_genocide():
+    return (monsters["The Dog Room"] == 0 and
+            monsters["The Piano Room"] == 0 and
+            monsters["The Cat Room"] == 0 and
+            monsters["The Ancient Library"] == 0 and
+            monsters["The Secret Lab"] == 0 and
+            monsters["The Spooders Lair"] == 0 and
+            monsters["The Warehouse"] == 0 and
+            monsters["The Charging Room"] == 0 and
+            bosses == 2)
+
+def check_genocide_final():
+    return (monsters["The Dog Room"] == 0 and
+            monsters["The Piano Room"] == 0 and
+            monsters["The Cat Room"] == 0 and
+            monsters["The Ancient Library"] == 0 and
+            monsters["The Secret Lab"] == 0 and
+            monsters["The Spooders Lair"] == 0 and
+            monsters["The Warehouse"] == 0 and
+            monsters["The Charging Room"] == 0 and
+            monsters["The Lord's House"] == 0 and
+            bosses == 1)
+
+def check_genocide_ending():
+    return (monsters["The Dog Room"] == 0 and
+            monsters["The Piano Room"] == 0 and
+            monsters["The Cat Room"] == 0 and
+            monsters["The Ancient Library"] == 0 and
+            monsters["The Secret Lab"] == 0 and
+            monsters["The Spooders Lair"] == 0 and
+            monsters["The Warehouse"] == 0 and
+            monsters["The Charging Room"] == 0 and
+            monsters["The Lord's House"] == 0 and
+            bosses == 0)
+
+def add_kill(name):
+    monsters[name] -= 1
 
 def updateHP():
     global hp
@@ -504,15 +657,16 @@ def heal(hpHeal, text, name, type):
         sleep(2.3)
         hp = 0
         gameover()
-
-    print(f"You ate {name}. {text}")
-    sleep(1.2)
-    if hp + hpHeal < maxHP:
-        print(f"Recovered {hpHeal} HP({hp+hpHeal}/{maxHP}).")
+    
     else:
-        print(f"HP maxed out.")
+        print(f"You ate {name}. {text}")
+        sleep(1.2)
+        if hp + hpHeal < maxHP:
+            print(f"Recovered {hpHeal} HP({hp+hpHeal}/{maxHP}).")
+        else:
+            print(f"HP maxed out.")
 
-    hp = min(hp + hpHeal, maxHP)
+        hp = min(hp + hpHeal, maxHP)
 
 
 def printa(text, delay=0.05, effect=None, newline=True):
@@ -623,11 +777,11 @@ def get_armor_by_name(name):
     return armors.get(name, bandage)
 
 def get_item_by_name(name):
-    items = {i.name: i for i in [dumplings, cheesecake, susdog, bread, flakes, susbottle, spooderBread, spooderSoup, energyDrink, mintTea, nukeButton, stick, noteknife, scienceStaff, scrap, rustDagger, electricRod, oldStaff, debugWP, bandage, boneArmor, catCloak, labCoat, forceField, locket, okakWP, okakAR, okakFD]}
+    items = {i.name: i for i in [dumplings, cheesecake, susdog, bread, flakes, susbottle, spooderBread, spooderSoup, energyDrink, mintTea, nukeButton, stick, noteknife, scienceStaff, scrap, rustDagger, electricRod, oldStaff, debugWP, bandage, boneArmor, catCloak, labCoat, forceField, locket, okakWP, okakAR, okakFD, meteor_artifact, fireScroll, healScroll, boltScroll]}
     return items.get(name, nothing)
     
 def get_room_by_name(name):
-    rooms = {i.name: i for i in [dogRoom, pianoRoom, catRoom, lab, spiderRoom, warehouse, chargeRoom, finalRoom]}
+    rooms = {i.name: i for i in [dogRoom, pianoRoom, catRoom, ancientLib, lab, spiderRoom, warehouse, chargeRoom, finalRoom]}
     return rooms.get(name, roomOfDog)
  
 
@@ -669,6 +823,7 @@ def load_game(filename="save.json"):
     
     if not os.path.exists(filename):
         if os.path.exists("okak.json"):
+                print(art_okak)
                 showerror(title="Critical Error", message="""Traceback (most recent call last)
 File "underground.py", line 944, in main_menu()
     load_game()
@@ -725,6 +880,8 @@ Error: There are too much dogs in save file""")
 
 
 def gameover():
+    global maxHP
+
     cls()
     print("GAME OVER!")
     printa(f"{name}, don't give up!")
@@ -736,7 +893,7 @@ def gameover():
     sleep(1.5)
     
     if load_game():
-        pass
+        hp = maxHP
     else:
         exit()
 
@@ -768,7 +925,7 @@ def show_ending():
             sleep(5)
             show_credits()
 
-        elif monsters == 0 and bosses == 0:
+        elif check_genocide_ending():
             printa("Silence. Only the echo of your steps remains.", 0.3)
             printa("Dirty hacker... stop it please...", 0.3)
             print("\n[HACKED GENOCIDE ENDING]")
@@ -794,7 +951,7 @@ def show_ending():
         
 
 
-    elif monsters == 0 and bosses == 0:
+    elif check_genocide_ending():
         printa("Silence. Only the echo of your steps remains.", 0.3)
         printa("Every creature lies still. You are alone.", 0.3)
         print("\n[GENOCIDE ENDING]")
@@ -1163,6 +1320,9 @@ def battle(enemy):
         
     if atkFin > enemy.hp:
         canSpared = True
+    
+    if enemy.name == "TERMINATOR" and check_genocide:
+        enemy = terminatorNEO
 
     
     while True:
@@ -1186,7 +1346,7 @@ def battle(enemy):
 
 
         if enemy.name == "Lord Cat":
-            if monsters == 0 and bosses == 1:
+            if check_genocide_final():
                 input("Action(attack, defend, magic, flee, info, item, spare): ")
                 cls()
                 print("Action(attack, defend, magic, flee, info, item, spare): attack")
@@ -1221,7 +1381,7 @@ def battle(enemy):
             else:
                 apw = rnd.randint(50, 200)/100
                 atck = int(atkFin * apw * hpMP)
-                if rnd.random() < 0.15 and enemy.name in ["Lord Cat", "TERMINATOR"]:
+                if rnd.random() < 0.15 and enemy.name in ["Lord Cat", "TERMINATOR", "TERMINATOR NEO"]:
                     blink("BLOCKED!", 5)
                 else:
                     enemy.hp -= atck
@@ -1259,7 +1419,7 @@ def battle(enemy):
                 kills += 1
                 gold += rnd.randint(25, 70)
                 if enemy.boss == False:
-                    monsters -= 1
+                    add_kill(room.name)
                 else:
                     bosses -= 1
                 pacifist_eligible = False
@@ -1286,7 +1446,7 @@ def battle(enemy):
                           print("YOU WON!")
                           print(f"You got {enemy.exp} EXP.")
                           kills += 1
-                          monsters -= 1
+                          add_kill(room.name)
                           pacifist_eligible = False 
                           exp += enemy.exp
                           sleep(1)
@@ -1310,19 +1470,21 @@ def battle(enemy):
                     if enemy.hp <= 0:
                         if enemy.name == "Lord Cat":
                             enemy.hp = 0.001
-                        wprint("Enemy turned to dust...", 2)
-                        print("YOU WON!")
-                        print(f"You got {enemy.exp} EXP.")
-                        kills += 1
-                        if enemy.boss == False:
-                            monsters -= 1
                         else:
-                            bosses -= 1
-                        pacifist_eligible = False 
-                        exp += enemy.exp
-                        sleep(1)
-                        break
-                    print(f"Enemy HP: {enemy.hp}/{enemy.maxHP}")
+                            wprint("Enemy turned to dust...", 2)
+                            print("YOU WON!")
+                            print(f"You got {enemy.exp} EXP.")
+                            kills += 1
+                            if enemy.boss == False:
+                                add_kill(room.name)
+                            else:
+                                bosses -= 1
+                            pacifist_eligible = False 
+                            exp += enemy.exp
+                            sleep(1)
+                            break
+                    else:
+                        print(f"Enemy HP: {enemy.hp}/{enemy.maxHP}")
             elif mgT == "shield":
                 if mp < shield.cost:
                     print("You don't have enough MP")
@@ -1345,19 +1507,21 @@ def battle(enemy):
                     if enemy.hp <= 0:
                         if enemy.name == "Lord Cat":
                             enemy.hp = 0.001
-                        wprint("Enemy turned to dust...", 2)
-                        print("YOU WON!")
-                        print(f"You got {enemy.exp} EXP.")
-                        kills += 1
-                        if enemy.boss == False:
-                            monsters -= 1
                         else:
-                            bosses -= 1
-                        pacifist_eligible = False 
-                        exp += enemy.exp
-                        sleep(1)
-                        break
-                print(f"Enemy HP: {enemy.hp}/{enemy.maxHP}")
+                            wprint("Enemy turned to dust...", 2)
+                            print("YOU WON!")
+                            print(f"You got {enemy.exp} EXP.")
+                            kills += 1
+                            if enemy.boss == False:
+                                add_kill(room.name)
+                            else:
+                                bosses -= 1
+                            pacifist_eligible = False 
+                            exp += enemy.exp
+                            sleep(1)
+                            break
+                    else:
+                            print(f"Enemy HP: {enemy.hp}/{enemy.maxHP}")
         elif bAct == "flee":
             if enemy.boss == False:
                 print("Escaped...")
@@ -1415,8 +1579,44 @@ def battle(enemy):
                         oldArmor = armor
                         armor = inventory[itemUse]
                         inventory[itemUse] = oldArmor
-                    elif inventory[itemUse] == "food_okak":
+                    elif inventory[itemUse].type == "food_okak":
                         heal(inventory[itemUse].heal, inventory[itemUse].text, inventory[itemUse].name, inventory[itemUse].type)
+                    elif inventory[itemUse].type == "kill":
+                        heal(inventory[itemUse].heal, inventory[itemUse].text, inventory[itemUse].name, inventory[itemUse].type)
+                        inventory[itemUse] = nothing
+                        return False
+                        break
+                    elif inventory[itemUse].type == "attack_artifact" or inventory[itemUse].type == "scroll_attack":
+                        inventory[itemUse].use()
+                        enemy.hp -= inventory[itemUse].atk * lv
+                        inventory[itemUse] = nothing
+                        if enemy.hp <= 0:
+                            if enemy.name == "Lord Cat":
+                                enemy.hp = 0.001
+                            else:
+                                wprint("Enemy turned to dust...", 2)
+                                print("YOU WON!")
+                                print(f"You got {enemy.exp} EXP.")
+                                kills += 1
+                                if enemy.boss == False:
+                                    add_kill(room.name)
+                                else:
+                                    bosses -= 1
+                                pacifist_eligible = False 
+                                exp += enemy.exp
+                                sleep(1)
+                                break
+                        else:        
+                            print(f"Enemy HP: {enemy.hp}/{enemy.maxHP}")
+                    elif inventory[itemUse].type == "scroll_heal":
+                        inventory[itemUse].use()
+                        if hp + inventory[itemUse].heal < maxHP:
+                            print(f"Recovered {hpHeal} HP({inventory[itemUse].heal}/{maxHP}).")
+                        else:
+                            print(f"HP maxed out.")
+
+                        hp = min(hp + inventory[itemUse].heal, maxHP)
+                        inventory[itemUse] = nothing
                     else:
                         heal(inventory[itemUse].heal, inventory[itemUse].text, inventory[itemUse].name, inventory[itemUse].type)
                         inventory[itemUse] = nothing
@@ -1755,32 +1955,35 @@ def game_loop():
             if chance >= 0 and chance <= 20:
                 monster = rnd.choice(room.enemies)
                 wprint("...", 1)
-                if monsters > 0:
+                if monsters[room.name] > 0:
                     wprint(f"{monster.name} {monster.text}", 1)
                     battle(monster)
                 else:
                     print("But nobody came...")
             elif chance >= 21 and chance <= 41:
                 wprint("...", 1)
-                drop = rnd.choice(room.loot)
-                print(f"You got {drop.name}!")
-                print("INVENTORY:")
-                print(f"[0] : [{inventory[0].name}]")
-                print(f"[1] : [{inventory[1].name}]")
-                print(f"[2] : [{inventory[2].name}]")
-                print(f"[3] : [{inventory[3].name}]")
-                print(f"[4] : [{inventory[4].name}]")
-                print(f"[5] : [{inventory[5].name}]")
-                print(f"[6] : [{inventory[6].name}]")
-                print(f"[7] : [{inventory[7].name}]")
-                try:
-                    place = int(input("Where to put it(8 - trash)?"))
-                    if place == 8:
-                        pass
-                    else:
-                        inventory[place] = drop
-                except:
-                    print("Incorrect input!")
+                if room.loot == None:
+                    print("...but you don't find anything.")
+                else:
+                    drop = rnd.choice(room.loot)
+                    print(f"You got {drop.name}!")
+                    print("INVENTORY:")
+                    print(f"[0] : [{inventory[0].name}]")
+                    print(f"[1] : [{inventory[1].name}]")
+                    print(f"[2] : [{inventory[2].name}]")
+                    print(f"[3] : [{inventory[3].name}]")
+                    print(f"[4] : [{inventory[4].name}]")
+                    print(f"[5] : [{inventory[5].name}]")
+                    print(f"[6] : [{inventory[6].name}]")
+                    print(f"[7] : [{inventory[7].name}]")
+                    try:
+                        place = int(input("Where to put it(8 - trash)?"))
+                        if place == 8:
+                            pass
+                        else:
+                            inventory[place] = drop
+                    except:
+                        print("Incorrect input!")
             elif chance >= 42 and chance <= 52:
                 wprint("...", 1)
                 print("You fall into trap...")
@@ -1832,8 +2035,21 @@ def game_loop():
                         oldArmor = armor
                         armor = inventory[itemUse]
                         inventory[itemUse] = oldArmor
-                    elif inventory[itemUse] == "food_okak":
+                    elif inventory[itemUse].type == "food_okak":
                         heal(inventory[itemUse].heal, inventory[itemUse].text, inventory[itemUse].name, inventory[itemUse].type)
+                    elif inventory[itemUse].type == "attack_artifact":
+                        print("You can use attack artifacts only in battle!")
+                    elif inventory[itemUse].type == "scroll_attack":
+                        print("You can use attack scrolls only in battle!")
+                    elif inventory[itemUse].type == "scroll_heal":
+                        inventory[itemUse].use()
+                        if hp + inventory[itemUse].heal < maxHP:
+                            print(f"Recovered {hpHeal} HP({inventory[itemUse].heal}/{maxHP}).")
+                        else:
+                            print(f"HP maxed out.")
+
+                        hp = min(hp + inventory[itemUse].heal, maxHP)
+                        inventory[itemUse] = nothing
                     else:
                         heal(inventory[itemUse].heal, inventory[itemUse].text, inventory[itemUse].name, inventory[itemUse].type)
                         inventory[itemUse] = nothing
@@ -1882,7 +2098,7 @@ def game_loop():
                 wprint(f"You see The Exit from The Underground...", 3)
                 wprint("This fills you with DETERMINATION...", 2)
                 wprint(f"You see... The {room.boss.name}...", 2)
-                if monsters == 0 and bosses == 1:
+                if check_genocide_final():
                     printa("Lord Cat: There is a beautiful day outside...")
                     sleep(0.7)
                     printa("Lord Cat: Birds are singing...")
@@ -1966,9 +2182,6 @@ def game_loop():
             weapon = debugWP
             inventory[0] = nukeButton
             dirtyHacker = True
-        elif act == "g":
-            monsters = 0
-            pacifist_eligible = False
         elif act == "talk":
             if room.npc is None or len(room.npc) == 0:
                 print("There is no one to talk to here.")
@@ -1988,7 +2201,7 @@ def game_loop():
                         if npc.trade:
                             print(f"\n{npc.name} offers to trade:")
                             for i, item in enumerate(npc.items):
-                                print(f"[{i}] {item.name} (Heal: {item.heal})")
+                                print(f"[{i}] [{item.name}]")
                             try:
                                 trade_choice = int(input("Choose an item to receive (or -1 to cancel): "))
                                 if 0 <= trade_choice < len(npc.items):
