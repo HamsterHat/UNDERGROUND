@@ -1959,6 +1959,7 @@ def battle(enemy):
             print()
             print("ENEMY")
             print(f"Name: {enemy.name}")
+            print(f"Description: {enemy.description}")
             print(f"HP: {enemy.hp}/{enemy.maxHP}")
             print(f"ATK: {enemy.atk}")
         elif bAct == "item":
