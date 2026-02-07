@@ -9,7 +9,7 @@ import json
 
 cls()
 
-
+INFINITY = 10**40-1
 
 class Item:
     def __init__(self, name, type, description = ""):
@@ -35,12 +35,17 @@ class Room:
 
 
 class Weapon:
-    def __init__(self, name, atk, type, description = ""):
+    def __init__(self, name, atk, type, FX, description = ""):
         self.name = name
         self.atk = atk
         self.type = type
+        self.FX = FX
         self.description = description
-
+        
+    def VFX(self):
+        self.FX()
+        
+        
 class Armor:
     def __init__(self, name, dfn, type, description = ""):
         self.name = name
@@ -58,22 +63,43 @@ class Food:
 
 
 class Enemy:
-    def __init__(self, name, hp, maxHP, atk, exp, text, boss = False, instSpare = False):
+    def __init__(self, name, hp, maxHP, atk, exp, text, description = "", boss = False, instSpare = False):
         self.name = name
         self.hp = hp
         self.maxHP = maxHP
         self.atk = atk
         self.exp = exp
         self.text = text
+        self.description = description
         self.boss = boss
         self.instSpare = instSpare
+        
+
+# class Ally(NPC):
+    # def __init__(self, name, dialogue, stats, abilities):
+        # super().__init__(name, dialogue)
+        # self.stats = stats
+        # self.is_joined = False
+
+    # def join_party(self):
+        # self.is_joined = True
+        # print(f"{self.name} join the team!")
+
+    # def leave_party(self):
+        # self.is_joined = False
+        # print(f"{self.name} leave the team.")
+
 
 class Magic:
-    def __init__(self, name, cost, atk, heal):
+    def __init__(self, name, cost, atk, heal, effect):
         self.name = name
         self.cost = cost
         self.atk = atk
         self.heal = heal
+        self.effect = effect
+        
+    def use(self):
+        self.effect()
 
 class Chest:
     def __init__(self, items):
@@ -142,13 +168,28 @@ class Scroll:
         self.effect()
 
 
-def animate(frames = [], delay = 0.2):
-    cls()
+# class Skill:
+    # def __init__(self, name, description, cost, effect):
+        # self.name = name
+        # self.description = description
+        # self.cost = cost
+        # self.effect = effect
+        # self.unlocked = False
+
+    # def apply(self):
+        # self.effect()
+        # self.unlocked = True
+
+
+def animate(frames=[], delay=0.2):
+    
     for frame in frames:
-        print(frame)
+        print("\r" + " " * 120, end="")
+        print("\r" + frame, end="")
         sleep(delay)
-        cls()
+
     sleep(0.4)
+    print()
 
 art_okak = r"""...................##(                                 ,(##................                                     
 ..................##/                                    /#(..............                                      
@@ -245,7 +286,246 @@ DOG
                   .#&&@@@@@@*                                     .#&@@@@@@@@@/
 """
 
+def stickFX():
+    frames = [
+    r"          ",
+    r"|         ",
+    r" /        ",
+    r"  -       ",
+    r"  \       ",
+    r"   |      ",
+    r"    /     ",
+    r"     -    ",
+    r"      \   ",
+    r"   *WHACK*"
+    ]
+    animate(frames, 0.1)
 
+def bladeFX():
+    frames = [
+    "          ",
+    "♫         ",
+    "|♫        ",
+    "♫|♫       ",
+    " ♫|♫      ",
+    "  ♫|♫     ",
+    "   ♫|♫    ",
+    "    ♫|♫   ",
+    "     ♫|♫  ",
+    "    *DING*"
+    ]
+    animate(frames, 0.1)
+    
+    
+def scienceStaffFX():
+    frames = [
+    "       ",
+    "   O   ",
+    "   o   ",
+    "   .   ",
+    "   *   ",
+    "   O   ",
+    "  |x|  ",
+    " | X | ",
+    "|  O  |",
+    "   o   ",
+    "   *   ",
+    "  ***  ",
+    " ***** ",
+    "*******",
+    ".*****.",
+    " .***. ",
+    "  .*.  ",
+    "   .   ",
+    "*BOOM* "
+    ]
+    animate(frames, 0.1)
+    
+def scrapFX():
+    frames = [
+    "       ",
+    ">      ",
+    "=>     ",
+    "==>    ",
+    "===>   ",
+    "====>  ",
+    "======>",
+    "*WHACK*"
+    ]
+    animate(frames, 0.1)
+
+def daggerFX():
+    frames = [
+    "       ",
+    ">      ",
+    "=>     ",
+    "|=>    ",
+    "-|=>   ",
+    " -|=>  ",
+    "  -|=> ",
+    "*SLICE*"
+    ]
+    animate(frames, 0.1)
+    
+def rodFX():
+    frames = [
+    "           ",
+    "]          ",
+    "=]         ",
+    "==]        ",
+    "[==]       ",
+    " [==]      ",
+    "  [==]     ",
+    "   [=*=]   ",
+    "   [-x-]   ",
+    "  [  X  ]  ",
+    " [   x   ] ",
+    "[    *    ]",
+    "   *ZAP*   "
+    ]
+    animate(frames, 0.1)
+
+def staffFX():
+    frames = [
+    "       ",
+    "   .   ",
+    ">  .  <",
+    " > . < ",
+    "  >.<  ",
+    ">  o  <",
+    " > o < ",
+    "  >o<  ",
+    ">  O  <",
+    " > O < ",
+    "  >O<  ",
+    "  (O)  ",
+    "  (x)  ",
+    "  (X)  ",
+    " ( O ) ",
+    "(  o  )",
+    "   *   ",
+    "  *.*  ",
+    " *. .* ",
+    "*. . .*",
+    ".  *  .",
+    "   o   ",
+    "   O   ",
+    "#######",
+    "OOOOOOO",
+    "ooooooo",
+    "*******",
+    ".......",
+    " *BOOM*"
+    ]
+    animate(frames, 0.1)
+    
+def debugFX():
+    frames = [
+    "              ",
+    "   .          ",
+    "   *          ",
+    "   .          ",
+    "              ",
+    "              ",
+    "              ",
+    "              ",
+    "              ",
+    "              ",
+    "              ",
+    "              ",
+    "              ",
+    "              ",
+    "              ",
+    " [9999999999] ",
+    "[999999999]   ",
+    " [9999999999] ",
+    "  [9999999999]",
+    " [9999999999] ",
+    " [9999999999] ",
+    "[999999999]   ",
+    " [9999999999] ",
+    "  [9999999999]",
+    " [9999999999] ",
+    "[999999999]   ",
+    " [9999999999] ",
+    "  [9999999999]",
+    " [9999999999] ",
+    " [9999999999] ",
+    "[999999999]   ",
+    " [9999999999] ",
+    "  [9999999999]",
+    " [9999999999] ",
+    "  [9999999999]",
+    " [9999999999] ",
+    " [9999999999] ",
+    "[999999999]   ",
+    " [9999999999] ",
+    "  [9999999999]",
+    " [9999999999] ",
+    "  [9999999999]",
+    " [9999999999] ",
+    " [9999999999] ",
+    "[999999999]   ",
+    " [9999999999] ",
+    "  [9999999999]",
+    " [9999999999] ",
+    " [9999999999] ",
+    " [9999999999] ",
+    " [9999999999] ",
+    " [9999999999] ",
+    " [9999999999] ",
+    " [9999999999] ",
+    " [9999999999] ",
+    " [9999999999] ",
+    " [9999999999] ",
+    " [9999999999] ",
+    " [9999999999] ",
+    " [9999999999] ",
+    "  [99999999]  ",
+    "   [999999]   ",
+    "    [9999]    ",
+    "     [99]     ",
+    "      []      ",
+    "      O       ",
+    "      o       ",
+    "      *       ",
+    "      .       ",
+    "              ",
+    "              ",
+    "              ",
+    "              ",
+    "   *BONK*     ",
+    ]
+    animate(frames, 0.1)
+
+def okakFX():
+    frames = [
+    "*ОКАК*",
+    "*окак*",
+    "*ОКАК*",
+    "*окак*",
+    "*ОКАК*",
+    "*окак*",
+    "*ОКАК*",
+    "*окак*",
+    "*ОКАК*",
+    "*окак*",
+    "*ОКАК*",
+    "*окак*",
+    "*ОКАК*",
+    "*окак*",
+    "*ОКАК*",
+    "*окак*",
+    "*ОКАК*",
+    "*окак*",
+    "*ОКАК*",
+    "*окак*",
+    "*ОКАК*",
+    "*окак*",
+    "*ОКАК*",
+    "*окак*"
+    ]
+    animate(frames, 0.1)
 
 
 switches = Puzzle(
@@ -262,21 +542,21 @@ code = Puzzle(
 
 nothing = Item(name = "", type = "internal")
 
-stick = Weapon(name = "Stick", atk = 2, type = "weapon", description = "Just wooden stick. +2 ATK")
+stick = Weapon(name = "Stick", atk = 2, type = "weapon", description = "Just wooden stick. +2 ATK", FX = stickFX)
 
-noteknife = Weapon(name = "Note Blade", atk = 5, type = "weapon", description = "A blade made from musical notes. +5 ATK.")
+noteknife = Weapon(name = "Note Blade", atk = 5, type = "weapon", description = "A blade made from musical notes. +5 ATK.", FX = bladeFX)
 
-scienceStaff = Weapon(name = "Science Staff", atk = 7, type = "weapon", description = "An old staff... +7 ATK")
+scienceStaff = Weapon(name = "Science Staff", atk = 7, type = "weapon", description = "An old staff... +7 ATK", FX = scienceStaffFX)
 
-scrap = Weapon(name = "Scrap", atk = 12, type = "weapon", description = "A long, sharp metal pipe. +12 ATK")
-rustDagger = Weapon(name = "Rusted Dagger", atk = 14, type = "weapon", description = "A rusted steel dagger. There is cat drawn on its blade. +14 ATK")
+scrap = Weapon(name = "Scrap", atk = 12, type = "weapon", description = "A long, sharp metal pipe. +12 ATK", FX = scrapFX)
+rustDagger = Weapon(name = "Rusted Dagger", atk = 14, type = "weapon", description = "A rusted steel dagger. There is cat drawn on its blade. +14 ATK", FX = daggerFX)
 
-electricRod = Weapon(name = "Electric Rod", atk = 16, type = "weapon", description = "A long, blue glass pipe with energy inside it. +16 ATK")
+electricRod = Weapon(name = "Electric Rod", atk = 16, type = "weapon", description = "A long, blue glass pipe with energy inside it. +16 ATK", FX = rodFX)
 
-oldStaff = Weapon(name = "Old Staff", atk = 26, type = "weapon", description = "An old, wooden staff. There is a cat drawn on it. +26 ATK")
+oldStaff = Weapon(name = "Old Staff", atk = 26, type = "weapon", description = "An old, wooden staff. There is a cat drawn on it. +26 ATK", FX = staffFX)
 
-debugWP = Weapon(name = "Debug Stick", atk = 10**40-1, type = "weapon", description = "just smal stick. +NaN ATK")
-okakWP = Weapon(name = "окак", atk = 56, type = "weapon", description = "The legendary weapon of power okak. +??? ATK")
+debugWP = Weapon(name = "Debug Stick", atk = INFINITY, type = "weapon", description = "just smal stick. +NaN ATK", FX = debugFX)
+okakWP = Weapon(name = "окак", atk = 56, type = "weapon", description = "The legendary weapon of power okak. +??? ATK", FX = okakFX)
 
 
 
@@ -291,12 +571,12 @@ labCoat = Armor(name = "Lab Coat", dfn = 8, type = "armor", description = "An wh
 forceField = Armor(name = "Force Field", dfn = 14, type = "armor", description = "An smal electrical device. +14 DEF")
 
 locket = Armor(name = "The Locket", dfn = 18, type = "armor", description = "An locket in shape of heart. Its made from gold.\nThere are photo with three cats and text: 'Don't forget.' inside it... +18 DEF")
-okakAR = Armor(name = "броня окак", dfn = 999999, type = "armor", description = "An armor made from... окак?")
+okakAR = Armor(name = "броня окак", dfn = INFINITY, type = "armor", description = "An armor made from... окак?")
 
 
 dumplings = Food(name = "Dumplings", heal = 40, text = "Not very tasty.", type = "food", description = "Just dumplings with meat. Heals 40 HP.")
 cheesecake = Food(name = "Cheesecake", heal = 100, text = "Very sweet.", type = "food", description = "An extremely big cheesecake. Heals 100 HP.")
-susdog = Food(name = "Suspicous Dog", heal = 999999, text = "Is it legal?", type = "food", description = "A dog? Heals ??? HP.")
+susdog = Food(name = "Suspicous Dog", heal = INFINITY, text = "Is it legal?", type = "food", description = "A dog? Heals ??? HP.")
 bread = Food(name = "Bread", heal = 25, text = "Bread. Just bread.", type = "food", description = "Just bread. Heals 25 HP.")
 flakes = Food(name = "Flakes", heal = 10, text = "Very bitter.", type = "food", description = "A flakes made by cats. Heals 10 HP.")
 susbottle = Food(name = "Suspicous Flask", heal = 0, text = "...", type = "kill", description = "An glass flask. There are written: 'Hydrochloric Acid'")
@@ -305,8 +585,8 @@ spooderBread = Food(name = "Spooder Bread", heal = 20, text = "Normal bread are 
 
 energyDrink = Food(name = "Energy Drink", heal = 55, text = "Very bitter.", type = "food", description = "A metal bottle with energy drink. Heals 55 HP.")
 
-mintTea = Food(name = "Mint Tea", heal = 999999999, text = "This is the best tea ever.", type = "food", description = "A cup of mint tea. Heals ??? HP.")
-okakFD = Food(name = "окак!", heal = 999999999, description = "A food made from... окак?", type = "food_okak", text = "IS IT LEGAL????????")
+mintTea = Food(name = "Mint Tea", heal = INFINITY, text = "This is the best tea ever.", type = "food", description = "A cup of mint tea. Heals ??? HP.")
+okakFD = Food(name = "окак!", heal = INFINITY, description = "A food made from... окак?", type = "food_okak", text = "IS IT LEGAL????????")
 
 
 
@@ -315,41 +595,75 @@ nukeButton = Item("Red Button", type = "nukeTrigger", description = "A red butto
 def meteor_strike():
     print("METEOR STRIKE!")
     for _ in range(5):
-        print("*BOOM*")
+        frames = [
+            "         ",
+            "    !    ",
+            "         ",
+            "    !    ",
+            "         ",
+            "    !    "
+            "    *    ",
+            "   |x|   ",
+            "  | X |  ",
+            "|   O   |",
+            "    o    ",
+            " *BOOM*  "
+        ]
+        animate(frames, 0.1)
         sleep(0.5)
+        
+
+def lightHeal():
+    frames = [
+    "         ",
+    "    .    ",
+    "    -    ",
+    "    *    ",
+    "    +    ",
+    "   -+-   ",
+    "---+.+---",
+    "--+. .+--",
+    "-+.   .+-",
+    "+.     .+",
+    ".       .",
+    "  *HEAL* "
+    ]
+    animate(frames, 0.1)
         
 
 def fireSpell():
     frames = [
-    "",
-    "    !",
-    "",
-    "    !",
-    "",
-    "    !"
-    "    *",
-    "   |x|",
-    "  | X |",
+    "         ",
+    "    !    ",
+    "         ",
+    "    !    ",
+    "         ",
+    "    !    "
+    "    *    ",
+    "   |x|   ",
+    "  | X |  ",
     "|   O   |",
-    "    o   ",
-    "        "
+    "    o    ",
+    " *BOOM*  "
     ]
-    animate(frames, 0.2)
+    animate(frames, 0.1)
 
 def healSpell():
     frames = [
+    "       ",
     "   .   ",
     " . * . ",
     " * + * ",
     " + + + ",
     " * * * ",
     " . . . ",
-    "       "
+    " *HEAL*"
     ]
-    animate(frames, 0.3)
+    animate(frames, 0.1)
 
 def boltSpell():
     frames = [
+    "     ",
     "  |  ",
     "  ║  ",
     " ║║║ ",
@@ -358,6 +672,46 @@ def boltSpell():
     ]
     animate(frames, 0.1)
 
+def meteorSpell():
+    frames = [
+    "       ",
+    "   !   ",
+    "       ",
+    "   !   ",
+    "       ",
+    "   !   ",
+    "   !   ",
+    "   *   ",
+    "   x   ",
+    "   X   ",
+    "  |O|  ",
+    " | o | ",
+    "|  .  |",
+    "*KABOOM*"
+    ]
+    animate(frames, 0.1)
+
+def shieldSpell():
+    frames = [
+        "         ",
+        "    .    ",
+        "   .*.   ",
+        "   ***   ",
+        "  *.*.*  ",
+        " *.*.*.* ",
+        "*.*.*.*.*",
+        "*.*.*.*.*",
+        " *.*.*.* ",
+        "  *.*.*  ",
+        "   ***   ",
+        "  *GLOW* ",
+    ]
+    animate(frames, 0.1)
+
+
+    
+    
+    
 meteor_artifact = Artifact(
     name="The Meteor Frag",
     type = "attack_artifact",
@@ -365,6 +719,15 @@ meteor_artifact = Artifact(
     description="An artifact that cause meteor strike.",
     atk=200,
     heal=0
+)
+
+light_artifact = Artifact(
+    name = "The Crystal Of Life",
+    type = "heal_artifact",
+    effect = lightHeal,
+    description = "An glowing light blue crystal.",
+    atk = 0,
+    heal = INFINITY
 )
 
 fireScroll = Scroll(name = "Scroll Of Fire", type = "scroll_attack", effect = fireSpell, description = "A single use fire spell.", atk = 40, heal = 0)
@@ -383,24 +746,24 @@ chargeChest = Chest(items=[electricRod, forceField])
 finalChest = Chest(items=[mintTea, locket, oldStaff])
 
 
-smolDoge = Enemy(name = "Smol Doge", hp = 15, maxHP = 15, atk = 1, exp = 6, text = "is barking and jumping around you!", instSpare = True)
-dog = Enemy(name = "Just Dog", hp = 20, maxHP = 20, atk = 3, exp = 12, text = "is.... BARK! BARK! BARK!")
-doge = Enemy(name = "Doge", hp = 160, maxHP = 160, atk = 8, exp = 120, text = "is barking and trying defeat you.", boss = True)
+smolDoge = Enemy(name = "Smol Doge", hp = 15, maxHP = 15, atk = 1, exp = 6, text = "is barking and jumping around you!", description = "Thinks fighting is a game of tag. Jumps around, wags its tail, and tries to lick your face even while attacking.", instSpare = True)
+dog = Enemy(name = "Just Dog", hp = 20, maxHP = 20, atk = 3, exp = 12, text = "is.... BARK! BARK! BARK!", description = "A serious dog who takes combat as a duty. Barks sharply and attacks methodically, without unnecessary movements.")
+doge = Enemy(name = "Doge", hp = 160, maxHP = 160, atk = 8, exp = 120, text = "is barking and trying defeat you.", description = "A philosophical dog. Contemplates the meaning of life and justice before attacking, quotes memes, and often confuses reality with memes.", boss = True)
 
-bob = Enemy(name = "bob", hp = 120, maxHP = 120, atk = 5, exp = 45, text = "is here to defeat you!")
-leo = Enemy(name = "Leopold", hp = 75, maxHP = 75, atk = 2, exp = 25, text = "is failing on your head!")
+bob = Enemy(name = "bob", hp = 120, maxHP = 120, atk = 5, exp = 45, text = "is here to defeat you!", description = "A little fat cat. He loves bad puns and jokes.")
+leo = Enemy(name = "Leopold", hp = 75, maxHP = 75, atk = 2, exp = 25, text = "is failing on your head!", description = "Clumsy and awkward enemy. Often misses, apologizes for hits, and seems sorry for having to fight.")
 
-smolSpooder = Enemy(name = "Smol Spooder", hp = 5, maxHP = 5, atk = 1, exp = 3, text = "is running across the room.", instSpare = True)
+smolSpooder = Enemy(name = "Smol Spooder", hp = 5, maxHP = 5, atk = 1, exp = 3, text = "is running across the room.", description = "Curious little spider. Attacks randomly, more interested in the player’s pockets.", instSpare = True)
 
-spooder = Enemy(name = "Big Spooder", hp = 50, maxHP = 50, atk = 8, exp = 40, text = "crawled from the hole.")
-fastSpooder = Enemy(name = "Spooder, but faster", hp = 45, maxHP = 45, atk = 6, exp = 60, text = "is running around you.")
-hugeSpooder = Enemy(name = "   H U G E    S P O O D E R", hp = 230, maxHP = 230, atk = 11, exp = 175, text = "   A T T A C K S.", boss = True)
+spooder = Enemy(name = "Big Spooder", hp = 50, maxHP = 50, atk = 8, exp = 40, text = "crawled from the hole.", description = "Classic spider strategist. Envelops in webs and waits for the prey to get tangled.")
+fastSpooder = Enemy(name = "Spooder, but faster", hp = 45, maxHP = 45, atk = 6, exp = 60, text = "is running around you.", description = "Spider athlete. Compensates for lack of strength with speed and agility.")
+hugeSpooder = Enemy(name = "   H U G E    S P O O D E R", hp = 230, maxHP = 230, atk = 11, exp = 175, text = "   A T T A C K S.", description = "Giant spider with a Napoleon complex. Complains that everyone is afraid of him.", boss = True)
 
-smolRobot = Enemy(name = "Smol Robot", hp = 30, maxHP = 30, atk = 7, exp = 15, text = "is sweeping floor and encountered you.")
-terminator = Enemy(name = "TERMINATOR", hp = 670, maxHP = 670, atk = 17, exp = 560, text = "IS WANTS TO TERMINATE YOU!", boss = True)
-terminatorNEO = Enemy(name = "TERMINATOR NEO", hp = 7460, maxHP = 7460, atk = 26, exp = 780, text = "IS WANTS TO TERMINATE YOU!", boss = True)
+smolRobot = Enemy(name = "Smol Robot", hp = 30, maxHP = 30, atk = 7, exp = 15, text = "is sweeping floor and encountered you.", description = "Cleaning robot that accidentally activated combat mode. Tries to attack and vacuum simultaneously.")
+terminator = Enemy(name = "TERMINATOR", hp = 670, maxHP = 670, atk = 17, exp = 560, text = "IS WANTS TO TERMINATE YOU!", description = "Terminator with system errors. Periodically freezes and displays errors.", boss = True)
+terminatorNEO = Enemy(name = "TERMINATOR NEO", hp = 7460, maxHP = 7460, atk = 26, exp = 780, text = "IS WANTS TO TERMINATE YOU!", description = "Upgraded version with additional bugs. Glitches twice as often.", boss = True)
 
-lordcat = Enemy(name = "Lord Cat", hp = 800, maxHP = 800, atk = 23, exp = 720, text = "is want to defeat you.", boss = True)
+lordcat = Enemy(name = "Lord Cat", hp = 800, maxHP = 800, atk = 23, exp = 720, text = "is want to defeat you.", description = "Fights to keep his family’s memory alive. Attacks with purpose, each move telling a story of loss and hope.", boss = True)
 
 annoyDog = NPC(
     name="Annoying Dog",
@@ -433,6 +796,20 @@ cactus = NPC(
     ]
 )
 
+marjik = NPC(
+    name="Marjik",
+    dialogue=[
+        "I see you've come for answers...",
+        "My family has always kept ancient knowledge...",
+        "Thomas inherited my willpower...",
+        "Marge got my mind...",
+        "Murysya is my heart...",
+        "Not everything can be told to a stranger...",
+        "But I see in you have the potential...",
+        "You can buy some magical things in my shop..."
+    ]  
+)
+
 
 spiid = NPC(
     name = "Spiid",
@@ -442,6 +819,7 @@ spiid = NPC(
         "....orr hugii spiiidiiirrrr wiillll eattt youuuuuu........."
     ]
 )
+
 
 oldRobot = NPC(
     name = "Old Robot",
@@ -472,7 +850,8 @@ libraryShop = Shop("Library Shop", [
     (fireScroll, 160),
     (healScroll, 155),
     (boltScroll, 580),
-    (meteor_artifact, 6700)
+    (meteor_artifact, 2350),
+    (light_artifact, 1340)
 ])
 
 finalRoom = Room(name = "The Lord's House", boss = lordcat, nextRoom = "", final = True, enemies = [smolSpooder], loot = [bread], chest = finalChest)
@@ -480,12 +859,18 @@ chargeRoom = Room(name = "The Charging Room", boss = terminator, nextRoom = fina
 warehouse = Room(name = "The Warehouse", boss = None, nextRoom = chargeRoom, final = False, chest = warehouseChest, enemies = [smolRobot], puzzle = code, npc = [oldRobot], loot = [scrap, nukeButton])
 spiderRoom = Room(name = "The Spooders Lair", boss = hugeSpooder, nextRoom = warehouse, final = False, enemies = [smolSpooder, spooder, fastSpooder], npc = [spiid], shop = spooderSale, loot = [spooderBread, spooderSoup])
 lab = Room(name = "The Secret Lab", boss = None, nextRoom = spiderRoom, final = False, chest = labChest, enemies = [smolSpooder], puzzle = switches, loot = [susbottle])
-ancientLib = Room(name = "The Ancient Library", boss = None, nextRoom = lab, final = False, enemies = [smolSpooder], loot = None, shop = libraryShop)
+ancientLib = Room(name = "The Ancient Library", boss = None, nextRoom = lab, final = False, enemies = [smolSpooder], loot = None, shop = libraryShop, npc = [marjik])
 catRoom = Room(name = "The Cat Room", boss = None, nextRoom = ancientLib, final = False, chest = catChest, enemies = [bob, leo], npc = [basik, cactus], shop = catShop, loot = [flakes, dumplings, bread])
 pianoRoom = Room(name = "The Piano Room", boss = None, nextRoom = catRoom, final = False, chest = pianoChest, enemies = [smolSpooder], loot = [flakes], piano = oldPiano)
 dogRoom = Room(name = "The Dog Room", boss = doge, nextRoom = pianoRoom, final = False, chest = dogChest, enemies = [smolDoge, dog], npc = [annoyDog], loot = [dumplings, susdog])
 
 roomOfDog = Room(name = "Room of Dog", boss = None, nextRoom = "", final = False, chest = None, enemies = [], npc = [], loot = [])
+
+
+
+
+
+
 
 lv = 1
 exp = 0
@@ -527,11 +912,11 @@ pacifist_eligible = True
 dirtyHacker = False
 OKAK = False
 
-bolt = Magic(name = "Lighting Bolt", cost = 70, atk = 10**40-1, heal = 0)
-healer = Magic(name = "Heal", cost = 60, atk = 0, heal = 60)
-fireball = Magic(name = "Fireball", cost = 40, atk = 25, heal = 0)
-shield = Magic(name = "Shield", cost = 30, atk = 0, heal = 0)
-meteor = Magic(name = "Meteor", cost = 100, atk = 50, heal = 0)
+bolt = Magic(name = "Lighting Bolt", cost = 70, atk = INFINITY, heal = 0, effect = boltSpell)
+healer = Magic(name = "Heal", cost = 60, atk = 0, heal = 60, effect = healSpell)
+fireball = Magic(name = "Fireball", cost = 40, atk = 25, heal = 0, effect = fireSpell)
+shield = Magic(name = "Shield", cost = 30, atk = 0, heal = 0, effect = shieldSpell)
+meteor = Magic(name = "Meteor", cost = 100, atk = 50, heal = 0, effect = meteorSpell)
 
 
 
@@ -548,6 +933,23 @@ neutral_battle_messages = [
     "Sometimes, violence isn't the answer. But you already know that, right?"
 ]
 
+
+
+
+BANNED_NAMES = [
+    "lord cat",
+    "lord kotik",
+    "lord kotnk",
+    "terminator NEO",
+    "doge",
+    "terminator",
+    "sus",
+    "amogus",
+    "bonk",
+    "what",
+    "vine boom",
+    "punch"
+]
 
 
 
@@ -777,7 +1179,7 @@ def get_armor_by_name(name):
     return armors.get(name, bandage)
 
 def get_item_by_name(name):
-    items = {i.name: i for i in [dumplings, cheesecake, susdog, bread, flakes, susbottle, spooderBread, spooderSoup, energyDrink, mintTea, nukeButton, stick, noteknife, scienceStaff, scrap, rustDagger, electricRod, oldStaff, debugWP, bandage, boneArmor, catCloak, labCoat, forceField, locket, okakWP, okakAR, okakFD, meteor_artifact, fireScroll, healScroll, boltScroll]}
+    items = {i.name: i for i in [dumplings, cheesecake, susdog, bread, flakes, susbottle, spooderBread, spooderSoup, energyDrink, mintTea, nukeButton, stick, noteknife, scienceStaff, scrap, rustDagger, electricRod, oldStaff, debugWP, bandage, boneArmor, catCloak, labCoat, forceField, locket, okakWP, okakAR, okakFD, meteor_artifact, light_artifact, fireScroll, healScroll, boltScroll]}
     return items.get(name, nothing)
     
 def get_room_by_name(name):
@@ -852,7 +1254,7 @@ Error: There are too much dogs in save file""")
     gender = data["gender"]
     atk_bonus = data["atk_bonus"]
     mp_bonus = data["mp_bonus"]
-    appearance = data["appearance"]
+    ppearance = data["appearance"]
     room = get_room_by_name(data["room"])
     hp = data["hp"]
     mp = data["mp"]
@@ -986,16 +1388,23 @@ def create_character():
 
     sleep(1.5)
     
-    name = input("Enter your character's name: ").strip()
-    if name == "окак":
-        name = ""
-        print("...")
-    while not name:
-        print("Name cannot be empty!")
-        name = input("Enter your character's name: ").strip()
+    while True:
+        name = input("Enter your character's name: ").strip().lower()
+        
+        if name.lower() in BANNED_NAMES:
+            print("You can't!")
+            continue
+            
         if name == "окак":
             name = ""
             print("...")
+            continue
+            
+        if not name:
+            print("Name cannot be empty!")
+            continue
+            
+        break
 
     gender = input("Gender (M/F): ").strip().lower()
     while gender not in ['m', 'f']:
@@ -1373,6 +1782,7 @@ def battle(enemy):
                 atck = atkFin * hpMP
                 crit_damage = int(atck * CRIT_MULTIPLIER)
                 blink("CRITICAL HIT!", 8)
+                weapon.VFX()
                 if crit_damage > 10**40-1:
                    print(f"Damage: {10**40-1} (x{CRIT_MULTIPLIER})") 
                 else:
@@ -1381,6 +1791,7 @@ def battle(enemy):
             else:
                 apw = rnd.randint(50, 200)/100
                 atck = int(atkFin * apw * hpMP)
+                weapon.VFX()
                 if rnd.random() < 0.15 and enemy.name in ["Lord Cat", "TERMINATOR", "TERMINATOR NEO"]:
                     blink("BLOCKED!", 5)
                 else:
@@ -1438,6 +1849,7 @@ def battle(enemy):
                         print("You don't have enough MP")
                   elif mp >= bolt.cost:
                       mp -= bolt.cost
+                      bolt.effect()
                       if enemy.boss == True:
                           print("MISS")
                       else:
@@ -1455,6 +1867,7 @@ def battle(enemy):
                 if mp < healer.cost:
                     print("You don't have enough MP")
                 elif mp >= healer.cost:
+                   heal.effect()
                    mp -= healer.cost
                    hp = maxHP
                    print("Healed all HP")
@@ -1464,7 +1877,7 @@ def battle(enemy):
                 elif mp >= fireball.cost:
                     mp -= fireball.cost
                     enemy.hp -= fireball.atk * lv * hpMP
-                    sleep(1.9)
+                    fireball.effect()
                     print(f"Damage: {fireball.atk * lv * hpMP}")
                     print("BOOOOM!")
                     if enemy.hp <= 0:
@@ -1492,6 +1905,7 @@ def battle(enemy):
                     if shieldApplied == True:
                         print("You already have shield.")
                     else:
+                        shield.effect()
                         shieldApplied = True
                         effectDuration = 5
                         mp -= shield.cost
@@ -1501,7 +1915,7 @@ def battle(enemy):
                 elif mp >= meteor.cost:
                     mp -= meteor.cost
                     enemy.hp -= meteor.atk * lv * hpMP
-                    sleep(4.7)
+                    meteor.effect()
                     print(f"Damage: {meteor.atk * lv * hpMP}")
                     print("BOOOOOOOOOOM!")
                     if enemy.hp <= 0:
@@ -1608,7 +2022,7 @@ def battle(enemy):
                                 break
                         else:        
                             print(f"Enemy HP: {enemy.hp}/{enemy.maxHP}")
-                    elif inventory[itemUse].type == "scroll_heal":
+                    elif inventory[itemUse].type == "scroll_heal" or inventory[itemUse].type == "heal_artifact":
                         inventory[itemUse].use()
                         if hp + inventory[itemUse].heal < maxHP:
                             print(f"Recovered {hpHeal} HP({inventory[itemUse].heal}/{maxHP}).")
