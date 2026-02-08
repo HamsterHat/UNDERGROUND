@@ -998,7 +998,7 @@ BANNED_NAMES = [
 
 CRIT_CHANCE = 0.3
 CRIT_MULTIPLIER = 5.0
-VERSION = "1.4"
+VERSION = "1.5"
 DEBUG_MODE = False
 
 
@@ -2882,3 +2882,4 @@ Unknown Error""")
 
 
 game_loop()
+
