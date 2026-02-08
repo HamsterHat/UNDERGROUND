@@ -998,7 +998,7 @@ BANNED_NAMES = [
 
 CRIT_CHANCE = 0.3
 CRIT_MULTIPLIER = 5.0
-VERSION = "1.5"
+VERSION = "1.5.1"
 DEBUG_MODE = False
 
 
@@ -1533,8 +1533,6 @@ def nuclear_explosion():
     print("NUCLEAR EXPLOSION!!!")
     sleep(0.6)
 
-    for i in range(0,120):
-        print("█" * 122 * 29)
 
         
     sleep(2)
@@ -2548,6 +2546,8 @@ def game_loop():
                 else:
                     print("Invalid input!")
         elif act == "nextroom":
+            if room == chargeRoom and check_genocide():
+                room.boss = terminatorNEO
             if room.final == False:
                 if room.puzzle is not None:
                     print("To proceed, you must solve a puzzle!")
@@ -2581,10 +2581,6 @@ def game_loop():
                         wprint(f"You see... The {room.boss.name}...", 2)
                         cls()
                         currentBoss = room.boss
-                        if boss.name == "TERMINATOR" and check_genocide == True:
-                            currentBoss = terminatorNEO
-                            continue
-
                         if battle(currentBoss) != False:
                             room = room.nextRoom
                         else:
@@ -2882,4 +2878,3 @@ Unknown Error""")
 
 
 game_loop()
-
