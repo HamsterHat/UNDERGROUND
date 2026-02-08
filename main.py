@@ -286,6 +286,33 @@ DOG
                   .#&&@@@@@@*                                     .#&@@@@@@@@@/
 """
 
+nuke_art = r"""
+                       ________________
+                  ____/ (  (    )   )  \___
+                 /( (  (  )   _    ))  )   )\
+               ((     (   )(    )  )   (   )  )
+             ((/  ( _(   )   (   _) ) (  () )  )
+            ( (  ( (_)   ((    (   )  .((_ ) .  )_
+           ( (  )    (      (  )    )   ) . ) (   )
+          (  (   (  (   ) (  _  ( _) ).  ) . ) ) ( )
+          ( (  (   ) (  )   (  ))     ) _)(   )  )  )
+         ( (  ( \ ) (    (_  ( ) ( )  )   ) )  )) ( )
+          (  (   (  (   (_ ( ) ( _    )  ) (  )  )   )
+         ( (  ( (  (  )     (_  )  ) )  _)   ) _( ( )
+          ((  (   )(    (     _    )   _) _(_ (  (_ )
+           (_((__(_(__(( ( ( |  ) ) ) )_))__))_)___)
+           ((__)        \\||lll|l||///          \_))
+                    (   /(/ (  )  ) )\   )
+                  (    ( ( ( | | ) ) )\   )
+                   (   /(| / ( )) ) ) )) )
+                 (     ( ((((_(|)_)))))     )
+                  (      ||\(|(|)|/||     )
+                (        |(||(||)||||        )
+                  (     //|/l|||)|\\ \     )
+                (/ / //  /|//||||\\  \ \  \ _)
+-----------------------------------------------------------------------
+"""
+
 def stickFX():
     frames = [
     r"          ",
@@ -297,7 +324,7 @@ def stickFX():
     r"    /     ",
     r"     -    ",
     r"      \   ",
-    r"   *WHACK*"
+    r"*WHACK*   "
     ]
     animate(frames, 0.1)
 
@@ -312,7 +339,7 @@ def bladeFX():
     "   ♫|♫    ",
     "    ♫|♫   ",
     "     ♫|♫  ",
-    "    *DING*"
+    "*DING*    "
     ]
     animate(frames, 0.1)
     
@@ -381,7 +408,7 @@ def rodFX():
     "  [  X  ]  ",
     " [   x   ] ",
     "[    *    ]",
-    "   *ZAP*   "
+    "*ZAP*      "
     ]
     animate(frames, 0.1)
 
@@ -415,7 +442,7 @@ def staffFX():
     "ooooooo",
     "*******",
     ".......",
-    " *BOOM*"
+    "*BOOM* "
     ]
     animate(frames, 0.1)
     
@@ -494,7 +521,7 @@ def debugFX():
     "              ",
     "              ",
     "              ",
-    "   *BONK*     ",
+    "*BONK*        ",
     ]
     animate(frames, 0.1)
 
@@ -607,7 +634,7 @@ def meteor_strike():
             "  | X |  ",
             "|   O   |",
             "    o    ",
-            " *BOOM*  "
+            "*BOOM*  "
         ]
         animate(frames, 0.1)
         sleep(0.5)
@@ -626,7 +653,7 @@ def lightHeal():
     "-+.   .+-",
     "+.     .+",
     ".       .",
-    "  *HEAL* "
+    "*HEAL* "
     ]
     animate(frames, 0.1)
         
@@ -644,7 +671,7 @@ def fireSpell():
     "  | X |  ",
     "|   O   |",
     "    o    ",
-    " *BOOM*  "
+    "*BOOM*  "
     ]
     animate(frames, 0.1)
 
@@ -657,7 +684,7 @@ def healSpell():
     " + + + ",
     " * * * ",
     " . . . ",
-    " *HEAL*"
+    "*HEAL*"
     ]
     animate(frames, 0.1)
 
@@ -704,7 +731,7 @@ def shieldSpell():
         " *.*.*.* ",
         "  *.*.*  ",
         "   ***   ",
-        "  *GLOW* ",
+        "*GLOW* ",
     ]
     animate(frames, 0.1)
 
@@ -761,9 +788,10 @@ hugeSpooder = Enemy(name = "   H U G E    S P O O D E R", hp = 230, maxHP = 230,
 
 smolRobot = Enemy(name = "Smol Robot", hp = 30, maxHP = 30, atk = 7, exp = 15, text = "is sweeping floor and encountered you.", description = "Cleaning robot that accidentally activated combat mode. Tries to attack and vacuum simultaneously.")
 terminator = Enemy(name = "TERMINATOR", hp = 670, maxHP = 670, atk = 17, exp = 560, text = "IS WANTS TO TERMINATE YOU!", description = "Terminator with system errors. Periodically freezes and displays errors.", boss = True)
-terminatorNEO = Enemy(name = "TERMINATOR NEO", hp = 7460, maxHP = 7460, atk = 26, exp = 780, text = "IS WANTS TO TERMINATE YOU!", description = "Upgraded version with additional bugs. Glitches twice as often.", boss = True)
+terminatorNEO = Enemy(name = "TERMINATOR NEO", hp = 1670, maxHP = 1670, atk = 26, exp = 780, text = "IS WANTS TO TERMINATE YOU!", description = "Upgraded version with additional bugs. Glitches twice as often.", boss = True)
 
 lordcat = Enemy(name = "Lord Cat", hp = 800, maxHP = 800, atk = 23, exp = 720, text = "is want to defeat you.", description = "Fights to keep his family’s memory alive. Attacks with purpose, each move telling a story of loss and hope.", boss = True)
+lordkotik = Enemy(name = "Lord Kotik", hp = 6573, maxHP = 6573, atk = 1, exp = 1280, text = "is want to defeat you.", description = "This is end.", boss = True)
 
 annoyDog = NPC(
     name="Annoying Dog",
@@ -933,6 +961,19 @@ neutral_battle_messages = [
     "Sometimes, violence isn't the answer. But you already know that, right?"
 ]
 
+neutral_battle_messages_genocide = [
+"You feel your sins creeping up your back.",
+"You feel like your sins are hanging around your neck.",
+"It looks like a turning point.",
+"It seems that reading this is not the best way to spend time.",
+"Wind howls through the chamber.",
+"The walls tremble slightly.",
+"A distant echo answers the clash.",
+"Your heartbeat echoes in your ears.",
+"Dust rises from the ancient floor.",
+"The air grows colder."
+]
+
 
 
 
@@ -957,7 +998,7 @@ BANNED_NAMES = [
 
 CRIT_CHANCE = 0.3
 CRIT_MULTIPLIER = 5.0
-VERSION = "1.2"
+VERSION = "1.4"
 DEBUG_MODE = False
 
 
@@ -1141,7 +1182,7 @@ def show_about():
     cls()
     print("\n=== ABOUT ===")
     print("Game: THE UNDERGROUND")
-    print("Version: 1.0")
+    print(f"Version: {VERSION}")
     print("Developer: Alex")
     print("Genre: Text-based RPG")
     print("\nDescription:")
@@ -1246,6 +1287,17 @@ File "underground.py", line 944, in main_menu()
 
 Error: There are too much dogs in save file""")
             os._exit(1)
+            
+            
+    with open(filename, "r", encoding="utf-8") as file:
+        if nuke_art in file.read():
+            print(nuke_art)
+            showerror(title="Critical Error", message="""Traceback (most recent call last)
+File "underground.py", line 944, in main_menu()
+    load_game()
+
+Error: There are only nuclear dust in save file""")
+            os._exit(1)
     
     with open(filename, "r", encoding="utf-8") as f:
         data = json.load(f)
@@ -1254,7 +1306,7 @@ Error: There are too much dogs in save file""")
     gender = data["gender"]
     atk_bonus = data["atk_bonus"]
     mp_bonus = data["mp_bonus"]
-    ppearance = data["appearance"]
+    appearance = data["appearance"]
     room = get_room_by_name(data["room"])
     hp = data["hp"]
     mp = data["mp"]
@@ -1391,7 +1443,7 @@ def create_character():
     while True:
         name = input("Enter your character's name: ").strip().lower()
         
-        if name.lower() in BANNED_NAMES:
+        if name in BANNED_NAMES:
             print("You can't!")
             continue
             
@@ -1479,68 +1531,20 @@ def nuclear_explosion():
 
     cls()
     print("NUCLEAR EXPLOSION!!!")
-    sleep(1.2)
+    sleep(0.6)
 
-    print(shake_text(". . . .", 1))
-    sleep(0.4)
+    for i in range(0,120):
+        print("█" * 122 * 29)
+
+        
+    sleep(2)
     cls()
-
-    print(shake_text("* * *", 1))
-    sleep(0.3)
+    
+    print(nuke_art)
+    with open("save.json", "w", encoding="utf-8") as f:
+                        f.write(nuke_art)
+    sleep(4)
     cls()
-
-
-    for r in range(1, 10):
-        if r < 4:
-            chars = "*@#"
-        elif r < 7:
-            chars = "%%%"
-        else:
-            chars = ".~"
-
-        frame = generate_frame(r, chars)
-        print(f"{frame}")
-
-
-        delay = 0.15 + (r * 0.03)
-        sleep(delay)
-        cls()
-
-
-    for _ in range(4):
-        wave = ".".join(["#" * (10 + _*5)])
-        print(f"{wave:^50}")
-        sleep(0.25)
-        cls()
-        print(f"{wave:^50}")
-        sleep(0.2)
-        cls()
-
-
-    for _ in range(6):
-        print(f"{'!' * 60}")
-        sleep(0.12)
-        cls()
-        if _ % 2 == 0:
-            print(f"{'!' * 60}")
-            sleep(0.1)
-            cls()
-
-    print(f"The ground is burning...")
-    sleep(1.0)
-
-    for step in range(12):
-        line = ""
-        for col in range(50):
-            if random.random() < (0.4 - step * 0.03):
-                line += random.choice(".*~-")
-            else:
-                line += " "
-        print(f"{line}")
-        fade_delay = 0.2 + step * 0.05
-        sleep(fade_delay)
-        cls()
-
 
     print("The Underground is now just a crater.")
     sleep(2.5)
@@ -1723,6 +1727,8 @@ def battle(enemy):
     defend = False
     shieldApplied = False
     enemy.hp = enemy.maxHP
+    KR = 0
+    turn = 1
 
     if enemy.instSpare == True:
         canSpared = True
@@ -1730,8 +1736,9 @@ def battle(enemy):
     if atkFin > enemy.hp:
         canSpared = True
     
-    if enemy.name == "TERMINATOR" and check_genocide:
-        enemy = terminatorNEO
+    if name == "окак":
+        printa(f"{enemy.name}: окак...")
+        canSpared = True
 
     
     while True:
@@ -1747,30 +1754,21 @@ def battle(enemy):
             armor = okakAR
             for i in range(len(inventory)):
                 inventory[i] = okakFD
-            
+
         
         if enemy.name == "Lord Cat":
             neutral_msg = rnd.choice(neutral_battle_messages)
             printa(neutral_msg)
+            
+         
+        if enemy.name == "Lord Kotik":
+            if turn == 1:
+                printa("You feel like you're having a bad time.")
+            else:
+                neutral_msg = rnd.choice(neutral_battle_messages_genocide)
+                printa(neutral_msg)
 
 
-        if enemy.name == "Lord Cat":
-            if check_genocide_final():
-                input("Action(attack, defend, magic, flee, info, item, spare): ")
-                cls()
-                print("Action(attack, defend, magic, flee, info, item, spare): attack")
-                print(f"Damage: {10**40-1}")
-                print("Enemy HP: 0/800")
-                sleep(0.2)
-                printa("Lord Cat: B-b-burn-n in-n t-the-e h-hel-l-l...", 0.15, effect = "whisper")
-                print("YOU WON!")
-                print(f"You got {enemy.exp} EXP")
-                exp += enemy.exp
-                kills += 1
-                bosses -= 1
-                pacifist_eligible = False
-                sleep(1)
-                break
         bAct = input("Action(attack, defend, magic, flee, info, item, spare, act): ")
         defend = False
 
@@ -1781,21 +1779,23 @@ def battle(enemy):
             if rnd.random() < CRIT_CHANCE:
                 atck = atkFin * hpMP
                 crit_damage = int(atck * CRIT_MULTIPLIER)
-                blink("CRITICAL HIT!", 8)
                 weapon.VFX()
-                if crit_damage > 10**40-1:
+                blink("CRITICAL HIT!", 6)
+                if crit_damage > 10**20-1:
                    print(f"Damage: {10**40-1} (x{CRIT_MULTIPLIER})") 
                 else:
                     print(f"Damage: {crit_damage} (x{CRIT_MULTIPLIER})")
                 enemy.hp -= crit_damage
+                KR = crit_damage // 2
             else:
                 apw = rnd.randint(50, 200)/100
                 atck = int(atkFin * apw * hpMP)
                 weapon.VFX()
-                if rnd.random() < 0.15 and enemy.name in ["Lord Cat", "TERMINATOR", "TERMINATOR NEO"]:
+                if rnd.random() < 0.15 and enemy.name in ["Lord Cat", "Lord Kotik", "TERMINATOR", "TERMINATOR NEO"]:
                     blink("BLOCKED!", 5)
                 else:
                     enemy.hp -= atck
+                    KR = atck // 2
                     if atck > 10**40-1:
                         print(f"Damage: {10**40-1}")
                     else:
@@ -1824,6 +1824,26 @@ def battle(enemy):
                         break
                     else:
                         print("yet another error message")
+                if enemy.name == "Lord Kotik":
+                    blink("MISS", 4)
+                    printa("Lord Cat: Do you really think to you can defeat m...")
+                    print(f"Damage: {INFINITY}")
+                    sleep(0.3)
+                    printa("Lord Cat: ...")
+                    sleep(0.4)
+                    hp -= KR
+                    print(f"Damage: {int(KR)}")
+                    if hp <= 0:
+                        gameover()
+                        break
+                    print("YOU WON!")
+                    print(f"You got {enemy.exp} EXP")
+                    exp += enemy.exp
+                    kills += 1
+                    bosses -= 1
+                    pacifist_eligible = False
+                    sleep(1)
+                    break
                 print("YOU WON!")
                 print(f"You got {enemy.exp} EXP")
                 exp += enemy.exp
@@ -1842,6 +1862,7 @@ def battle(enemy):
             defend = True
             mp = min(mp + 10 + mp_bonus + lv * 5, maxMP)
             print(f"You defenced. Your MP increased({mp}/{maxMP}).")
+            KR -= KR // 4
         elif bAct == "magic":
             mgT = input("Select magic(bolt - 70MP, heal - 60MP, fireball - 40MP, shield - 30MP, meteor - 100MP): ")
             if mgT == "bolt":
@@ -1867,10 +1888,11 @@ def battle(enemy):
                 if mp < healer.cost:
                     print("You don't have enough MP")
                 elif mp >= healer.cost:
-                   heal.effect()
+                   healer.effect()
                    mp -= healer.cost
                    hp = maxHP
                    print("Healed all HP")
+                   KR -= KR // 4
             elif mgT == "fireball":
                 if mp < fireball.cost:
                     print("You don't have enough MP")
@@ -1881,7 +1903,7 @@ def battle(enemy):
                     print(f"Damage: {fireball.atk * lv * hpMP}")
                     print("BOOOOM!")
                     if enemy.hp <= 0:
-                        if enemy.name == "Lord Cat":
+                        if enemy.name == "Lord Cat" or enemy.name == "Lord Kotik":
                             enemy.hp = 0.001
                         else:
                             wprint("Enemy turned to dust...", 2)
@@ -1909,6 +1931,7 @@ def battle(enemy):
                         shieldApplied = True
                         effectDuration = 5
                         mp -= shield.cost
+                        KR -= KR // 4
             elif mgT == "meteor":
                 if mp < meteor.cost:
                     print("You don't have enough MP")
@@ -1919,7 +1942,7 @@ def battle(enemy):
                     print(f"Damage: {meteor.atk * lv * hpMP}")
                     print("BOOOOOOOOOOM!")
                     if enemy.hp <= 0:
-                        if enemy.name == "Lord Cat":
+                        if enemy.name == "Lord Cat" or enemy.name == "Lord Kotik":
                             enemy.hp = 0.001
                         else:
                             wprint("Enemy turned to dust...", 2)
@@ -1962,6 +1985,7 @@ def battle(enemy):
             print(f"Description: {enemy.description}")
             print(f"HP: {enemy.hp}/{enemy.maxHP}")
             print(f"ATK: {enemy.atk}")
+            KR -= KR // 4
         elif bAct == "item":
             print("INVENTORY:")
             print(f"[0] : [{inventory[0].name}]")
@@ -1996,6 +2020,7 @@ def battle(enemy):
                         inventory[itemUse] = oldArmor
                     elif inventory[itemUse].type == "food_okak":
                         heal(inventory[itemUse].heal, inventory[itemUse].text, inventory[itemUse].name, inventory[itemUse].type)
+                        KR -= KR // 4
                     elif inventory[itemUse].type == "kill":
                         heal(inventory[itemUse].heal, inventory[itemUse].text, inventory[itemUse].name, inventory[itemUse].type)
                         inventory[itemUse] = nothing
@@ -2024,6 +2049,7 @@ def battle(enemy):
                         else:        
                             print(f"Enemy HP: {enemy.hp}/{enemy.maxHP}")
                     elif inventory[itemUse].type == "scroll_heal" or inventory[itemUse].type == "heal_artifact":
+                        KR -= KR // 4
                         inventory[itemUse].use()
                         if hp + inventory[itemUse].heal < maxHP:
                             print(f"Recovered {hpHeal} HP({inventory[itemUse].heal}/{maxHP}).")
@@ -2033,14 +2059,27 @@ def battle(enemy):
                         hp = min(hp + inventory[itemUse].heal, maxHP)
                         inventory[itemUse] = nothing
                     else:
+                        KR -= KR // 4
                         heal(inventory[itemUse].heal, inventory[itemUse].text, inventory[itemUse].name, inventory[itemUse].type)
                         inventory[itemUse] = nothing
-            except:
-                print("Invalid input!")
+            except Exception as e:
+                if DEBUG_MODE:
+                    print(f"Error: {e}")
+                else:
+                    print("Invalid input!")
         elif bAct == "spare":
             if enemy.name == "Lord Cat":
                 wprint("You try to spare...", 1)
                 wprint("...but Lord Cat is ignoring you...", 1)
+            elif enemy.name == "Lord Kotik":
+                printa("Lord Cat: What?")
+                printa("Lord Cat: You killed them all...")
+                sleep(1)
+                print(f"Damage: {INFINITY}")
+                sleep(0.3)
+                gameover()
+                return False
+                break
             elif canSpared == True:
                 print(f"You decided to spare {enemy.name}.")
                 print("The enemy leaves.")
@@ -2054,6 +2093,7 @@ def battle(enemy):
                 gold += rnd.randint(25, 70)
                 break
         elif bAct == "act":
+            KR -= KR // 4
             if enemy.name == "Smol Doge":
                 talk = input("What do(pet, play, turnaway):")
                 if talk == "pet":
@@ -2186,90 +2226,121 @@ def battle(enemy):
                         canSpared = True
                     else:
                         print("...but no anything happened...")
-
+            elif enemy.name == "TERMINATOR NEO" or enemy.name == "Lord Kotik":
+                print("But you can't do anything")
             
                 
-
-        if defend == True:
-            if shieldApplied == True and effectDuration > 0:
-                print("Magical shield is absorbing half of enemy hit!")
-                if enemy.atk * dmgMP / 4 > dfnFin:
-                    hp -= (enemy.atk - dfnFin) * dmgMP / 4
+        if enemy.name == "Lord Kotik":
+            if defend == True:
+                if shieldApplied == True and effectDuration > 0:
+                    print("Magical shield is absorbing half of enemy hit!")
+                    hp -= int(enemy.atk + KR + lv / 4)
                     if hp <= 0:
                         gameover()
                         return False
                         break
-                    print(f"You got {int((enemy.atk - dfnFin) * dmgMP / 4)} damage. HP: {hp}/{maxHP}")
+                    print(f"You got {int(enemy.atk + KR + lv / 4)} damage. HP: {hp}/{maxHP}")
+                    effectDuration -= 1
+                    if effectDuration == 0:
+                        shieldApplied = False
                 else:
-                    hp -= 1
-                    print(f"You got 1 damage. HP: {hp}/{maxHP}")
+                    print("You blocked half of enemy hit!")
+                    hp -= int(enemy.atk + KR + lv / 2)
                     if hp <= 0:
                         gameover()
                         return False
                         break
-                effectDuration -= 1
-                if effectDuration == 0:
-                    shieldApplied = False
+                    print(f"You got {int(enemy.atk + KR + lv / 2)} damage. HP: {hp}/{maxHP}")
             else:
-                print("You blocked half of enemy hit!")
-                if enemy.atk * dmgMP / 2 > dfnFin:
-                    hp -= (enemy.atk - dfnFin) * dmgMP / 2
-                    if hp <= 0:
-                        gameover()
-                        return False
-                        break
-                    print(f"You got {int((enemy.atk - dfnFin) * dmgMP / 2)} damage. HP: {hp}/{maxHP}")
-                else:
-                    hp -= 1
-                    print(f"You got 1 damage. HP: {hp}/{maxHP}")
-                    if hp <= 0:
-                        gameover()
-                        return False
-                        break
+                hp -= int(enemy.atk + KR + lv)
+                if hp <= 0:
+                    gameover()
+                    return False
+                    break
+                print(f"You got {int(enemy.atk + KR + lv)} damage. HP: {hp}/{maxHP}")
 
 
-            dmgMP = 1
-            
-            
+
+
         else:
-            if shieldApplied == True and effectDuration > 0:
-                print("Magical shield is absorbing half of enemy hit!")
-                if enemy.atk * dmgMP / 2 > dfnFin:
-                    hp -= (enemy.atk - dfnFin) * dmgMP / 2
-                    if hp <= 0:
-                        gameover()
-                        return False
-                        break
-                    print(f"You got {int((enemy.atk - dfnFin) * dmgMP / 2)} damage. HP: {hp}/{maxHP}")
+            if defend == True:
+                if shieldApplied == True and effectDuration > 0:
+                    print("Magical shield is absorbing half of enemy hit!")
+                    if enemy.atk * dmgMP / 4 > dfnFin:
+                        hp -= (enemy.atk - dfnFin) * dmgMP / 4
+                        if hp <= 0:
+                            gameover()
+                            return False
+                            break
+                        print(f"You got {int((enemy.atk - dfnFin) * dmgMP / 4)} damage. HP: {hp}/{maxHP}")
+                    else:
+                        hp -= 1
+                        print(f"You got 1 damage. HP: {hp}/{maxHP}")
+                        if hp <= 0:
+                            gameover()
+                            return False
+                            break
+                    effectDuration -= 1
+                    if effectDuration == 0:
+                        shieldApplied = False
                 else:
-                    hp -= 1
-                    print(f"You got 1 damage. HP: {hp}/{maxHP}")
-                    if hp <= 0:
-                        gameover()
-                        return False
-                        break
-                effectDuration -= 1
-                if effectDuration == 0:
-                    shieldApplied = False
-            else:
-                if enemy.atk * dmgMP > dfnFin:
-                    hp -= int((enemy.atk - dfnFin) * dmgMP)
-                    if hp <= 0:
-                        gameover()
-                        return False
-                        break
-                    print(f"You got {int(enemy.atk - dfnFin * dmgMP)} damage. HP: {hp}/{maxHP}")
-                else:
-                    hp -= 1
-                    if hp <= 0:
-                        gameover()
-                        return False
-                        break
-                    print(f"You got 1 damage. HP: {hp}/{maxHP}")
-
+                    print("You blocked half of enemy hit!")
+                    if enemy.atk * dmgMP / 2 > dfnFin:
+                        hp -= (enemy.atk - dfnFin) * dmgMP / 2
+                        if hp <= 0:
+                            gameover()
+                            return False
+                            break
+                        print(f"You got {int((enemy.atk - dfnFin) * dmgMP / 2)} damage. HP: {hp}/{maxHP}")
+                    else:
+                        hp -= 1
+                        print(f"You got 1 damage. HP: {hp}/{maxHP}")
+                        if hp <= 0:
+                            gameover()
+                            return False
+                            break
             
-           
+            else:
+                if shieldApplied == True and effectDuration > 0:
+                    print("Magical shield is absorbing half of enemy hit!")
+                    if enemy.atk * dmgMP / 2 > dfnFin:
+                        hp -= (enemy.atk - dfnFin) * dmgMP / 2
+                        if hp <= 0:
+                            gameover()
+                            return False
+                            break
+                        print(f"You got {int((enemy.atk - dfnFin) * dmgMP / 2)} damage. HP: {hp}/{maxHP}")
+                    else:
+                        hp -= 1
+                        print(f"You got 1 damage. HP: {hp}/{maxHP}")
+                        if hp <= 0:
+                            gameover()
+                            return False
+                            break
+                    effectDuration -= 1
+                    if effectDuration == 0:
+                        shieldApplied = False
+                else:
+                    if enemy.atk * dmgMP > dfnFin:
+                        hp -= int((enemy.atk - dfnFin) * dmgMP)
+                        if hp <= 0:
+                            gameover()
+                            return False
+                            break
+                        print(f"You got {int(enemy.atk - dfnFin * dmgMP)} damage. HP: {hp}/{maxHP}")
+                    else:
+                        hp -= 1
+                        if hp <= 0:
+                            gameover()
+                            return False
+                            break
+                        print(f"You got 1 damage. HP: {hp}/{maxHP}")
+
+                
+               
             dmgMP = 1
+        
+        turn += 1
         
             
             
@@ -2397,8 +2468,11 @@ def game_loop():
                             pass
                         else:
                             inventory[place] = drop
-                    except:
-                        print("Incorrect input!")
+                    except Exception as e:
+                        if DEBUG_MODE:
+                            print(f"Error: {e}")
+                        else:
+                            print("Invalid input!")
             elif chance >= 42 and chance <= 52:
                 wprint("...", 1)
                 print("You fall into trap...")
@@ -2456,7 +2530,7 @@ def game_loop():
                         print("You can use attack artifacts only in battle!")
                     elif inventory[itemUse].type == "scroll_attack":
                         print("You can use attack scrolls only in battle!")
-                    elif inventory[itemUse].type == "scroll_heal":
+                    elif inventory[itemUse].type == "scroll_heal" or inventory[itemUse].type == "heal_artifact":
                         inventory[itemUse].use()
                         if hp + inventory[itemUse].heal < maxHP:
                             print(f"Recovered {hpHeal} HP({inventory[itemUse].heal}/{maxHP}).")
@@ -2468,8 +2542,11 @@ def game_loop():
                     else:
                         heal(inventory[itemUse].heal, inventory[itemUse].text, inventory[itemUse].name, inventory[itemUse].type)
                         inventory[itemUse] = nothing
-            except:
-                print("Invalid input!")
+            except Exception as e:
+                if DEBUG_MODE:
+                    print(f"Error: {e}")
+                else:
+                    print("Invalid input!")
         elif act == "nextroom":
             if room.final == False:
                 if room.puzzle is not None:
@@ -2503,7 +2580,12 @@ def game_loop():
                     else:
                         wprint(f"You see... The {room.boss.name}...", 2)
                         cls()
-                        if battle(room.boss) != False:
+                        currentBoss = room.boss
+                        if boss.name == "TERMINATOR" and check_genocide == True:
+                            currentBoss = terminatorNEO
+                            continue
+
+                        if battle(currentBoss) != False:
                             room = room.nextRoom
                         else:
                             game_loop()
@@ -2513,18 +2595,34 @@ def game_loop():
                 wprint(f"You see The Exit from The Underground...", 3)
                 wprint("This fills you with DETERMINATION...", 2)
                 wprint(f"You see... The {room.boss.name}...", 2)
+                finalBoss = lordcat
                 if check_genocide_final():
-                    printa("Lord Cat: There is a beautiful day outside...")
-                    sleep(0.7)
-                    printa("Lord Cat: Birds are singing...")
-                    sleep(0.7)
-                    printa("Lord Cat: ...sun is shining.")
-                    sleep(0.7)
-                    printa("Lord Cat: In that days, kids like you...")
-                    sleep(2)
-                    printa("Lord Cat: S H O U L D    B E    B U R N    I N    T H E    H E L L!", effect = "whisper")
-                    sleep(0.8)
+                    if name == "окак":
+                        finalBoss = lordcat
+                        printa("Lord Cat: окак...")
+                        sleep(2)
+                        cls()
+                        wprint("UNDERGROUND", 2)
+                        wprint("by Alex", 2)
+                        print()
+                        show_ending()
+                        cls()
+                        input("Press Enter to exit...")
+                        exit()
+                    else:
+                        finalBoss = lordkotik
+                        printa("Lord Cat: There is a beautiful day outside...")
+                        sleep(0.7)
+                        printa("Lord Cat: Birds are singing...")
+                        sleep(0.7)
+                        printa("Lord Cat: ...flowers are blooming.")
+                        sleep(0.7)
+                        printa("Lord Cat: In that days, kids like you...")
+                        sleep(2)
+                        printa("Lord Cat: S H O U L D    B E    B U R N    I N    T H E    H E L L!", effect = "whisper")
+                        sleep(0.8)
                 elif name == "окак":
+                    finalBoss = lordcat
                     printa("Lord Cat: окак...")
                     sleep(2)
                     cls()
@@ -2536,6 +2634,7 @@ def game_loop():
                     input("Press Enter to exit...")
                     exit()
                 else:
+                    finalBoss = lordcat
                     printa("Lord Cat: Oh... hello?!")
                     sleep(0.7)
                     printa("Lord Cat: What's your name?")
@@ -2547,7 +2646,7 @@ def game_loop():
                     printa("Lord Cat: Goodbye.")
                     sleep(2)
                 cls()
-                if battle(room.boss) != False:
+                if battle(finalBoss) != False:
                     pass
                 else:
                     game_loop()
