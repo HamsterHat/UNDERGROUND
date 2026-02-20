@@ -7,6 +7,7 @@ import os
 import sys
 import json
 
+
 cls()
 
 INFINITY = 10**40-1
@@ -131,6 +132,8 @@ class Shop:
         for idx, (item, price) in enumerate(self.items):
             print(f"[{idx}] {item.name} — {price} gold")
         print("[b] Back")
+        
+
 
 
 class Puzzle:
@@ -558,7 +561,7 @@ def okakFX():
 switches = Puzzle(
     question="Press switches(F, Y, B) in correct sequence.",
     answer="B F Y",
-    hint="Think about sequence"
+    hint=f"Think about sequence"
 )
 
 code = Puzzle(
@@ -585,6 +588,9 @@ oldStaff = Weapon(name = "Old Staff", atk = 26, type = "weapon", description = "
 debugWP = Weapon(name = "Debug Stick", atk = INFINITY, type = "weapon", description = "just smal stick. +NaN ATK", FX = debugFX)
 okakWP = Weapon(name = "окак", atk = 56, type = "weapon", description = "The legendary weapon of power okak. +??? ATK", FX = okakFX)
 
+trueKnife = Weapon(name = "Real Knife", atk = INFINITY, type = "weapon", description = "Here you are!", FX = daggerFX)
+
+
 
 
 bandage = Armor(name = "Bandage", dfn = 2, type = "armor", description = "Made of premium materials. +2 DEF")
@@ -599,6 +605,8 @@ forceField = Armor(name = "Force Field", dfn = 14, type = "armor", description =
 
 locket = Armor(name = "The Locket", dfn = 18, type = "armor", description = "An locket in shape of heart. Its made from gold.\nThere are photo with three cats and text: 'Don't forget.' inside it... +18 DEF")
 okakAR = Armor(name = "броня окак", dfn = INFINITY, type = "armor", description = "An armor made from... окак?")
+
+heartLocket = Armor(name = "The Heart Locket", dfn = INFINITY, type = "armor", description = "Here you are!")
 
 
 dumplings = Food(name = "Dumplings", heal = 40, text = "Not very tasty.", type = "food", description = "Just dumplings with meat. Heals 40 HP.")
@@ -617,7 +625,7 @@ okakFD = Food(name = "окак!", heal = INFINITY, description = "A food made fr
 
 
 
-nukeButton = Item("Red Button", type = "nukeTrigger", description = "A red button with nuke sticker on it. I wouldn't recommend pressing it...")
+nukeButton = Item(f"Red Button", type = "nukeTrigger", description = f"A red button with nuke sticker on it. I wouldn't recommend pressing it...")
 
 def meteor_strike():
     print("METEOR STRIKE!")
@@ -740,26 +748,26 @@ def shieldSpell():
     
     
 meteor_artifact = Artifact(
-    name="The Meteor Frag",
+    name=f"The Meteor Frag",
     type = "attack_artifact",
     effect=meteor_strike,
-    description="An artifact that cause meteor strike.",
+    description=f"An artifact that cause meteor strike.",
     atk=200,
     heal=0
 )
 
 light_artifact = Artifact(
-    name = "The Crystal Of Life",
+    name = f"The Crystal Of Life",
     type = "heal_artifact",
     effect = lightHeal,
-    description = "An glowing light blue crystal.",
+    description = f"An glowing light blue crystal.",
     atk = 0,
     heal = INFINITY
 )
 
-fireScroll = Scroll(name = "Scroll Of Fire", type = "scroll_attack", effect = fireSpell, description = "A single use fire spell.", atk = 40, heal = 0)
-healScroll = Scroll(name = "Scroll Of Heal", type = "scroll_heal", effect = healSpell, description = "A single use heal spell.", atk = 0, heal = 50)
-boltScroll = Scroll(name = "Scroll Of Bolt", type = "scroll_attack", effect = boltSpell, description = "A single use bolt spell.", atk = 80, heal = 0)
+fireScroll = Scroll(name = f"Scroll Of Fire", type = "scroll_attack", effect = fireSpell, description = f"A single use fire spell.", atk = 40, heal = 0)
+healScroll = Scroll(name = f"Scroll Of Heal", type = "scroll_heal", effect = healSpell, description = f"A single use heal spell.", atk = 0, heal = 50)
+boltScroll = Scroll(name = f"Scroll Of Bolt", type = "scroll_attack", effect = boltSpell, description = f"A single use bolt spell.", atk = 80, heal = 0)
 
 
 oldPiano = Piano(name = "Old Piano")
@@ -773,25 +781,25 @@ chargeChest = Chest(items=[electricRod, forceField])
 finalChest = Chest(items=[mintTea, locket, oldStaff])
 
 
-smolDoge = Enemy(name = "Smol Doge", hp = 15, maxHP = 15, atk = 1, exp = 6, text = "is barking and jumping around you!", description = "Thinks fighting is a game of tag. Jumps around, wags its tail, and tries to lick your face even while attacking.", instSpare = True)
-dog = Enemy(name = "Just Dog", hp = 20, maxHP = 20, atk = 3, exp = 12, text = "is.... BARK! BARK! BARK!", description = "A serious dog who takes combat as a duty. Barks sharply and attacks methodically, without unnecessary movements.")
-doge = Enemy(name = "Doge", hp = 160, maxHP = 160, atk = 8, exp = 120, text = "is barking and trying defeat you.", description = "A philosophical dog. Contemplates the meaning of life and justice before attacking, quotes memes, and often confuses reality with memes.", boss = True)
+smolDoge = Enemy(name = "Smol Doge", hp = 15, maxHP = 15, atk = 2, exp = 6, text = "is barking and jumping around you!", description = "Thinks fighting is a game of tag. Jumps around, wags its tail, and tries to lick your face even while attacking.", instSpare = True)
+dog = Enemy(name = "Just Dog", hp = 20, maxHP = 20, atk = 6, exp = 12, text = "is.... BARK! BARK! BARK!", description = "A serious dog who takes combat as a duty. Barks sharply and attacks methodically, without unnecessary movements.")
+doge = Enemy(name = f"Doge", hp = 160, maxHP = 160, atk = 9, exp = 120, text = "is barking and trying defeat you.", description = "A philosophical dog. Contemplates the meaning of life and justice before attacking, quotes memes, and often confuses reality with memes.", boss = True)
 
-bob = Enemy(name = "bob", hp = 120, maxHP = 120, atk = 5, exp = 45, text = "is here to defeat you!", description = "A little fat cat. He loves bad puns and jokes.")
-leo = Enemy(name = "Leopold", hp = 75, maxHP = 75, atk = 2, exp = 25, text = "is failing on your head!", description = "Clumsy and awkward enemy. Often misses, apologizes for hits, and seems sorry for having to fight.")
+bob = Enemy(name = "bob", hp = 120, maxHP = 120, atk = 7, exp = 45, text = "is here to defeat you!", description = "A little fat cat. He loves bad puns and jokes.")
+leo = Enemy(name = "Leopold", hp = 75, maxHP = 75, atk = 6, exp = 25, text = "is failing on your head!", description = "Clumsy and awkward enemy. Often misses, apologizes for hits, and seems sorry for having to fight.")
 
-smolSpooder = Enemy(name = "Smol Spooder", hp = 5, maxHP = 5, atk = 1, exp = 3, text = "is running across the room.", description = "Curious little spider. Attacks randomly, more interested in the player’s pockets.", instSpare = True)
+smolSpooder = Enemy(name = "Smol Spooder", hp = 5, maxHP = 5, atk = 4, exp = 3, text = "is running across the room.", description = "Curious little spider. Attacks randomly, more interested in the player’s pockets.", instSpare = True)
 
-spooder = Enemy(name = "Big Spooder", hp = 50, maxHP = 50, atk = 8, exp = 40, text = "crawled from the hole.", description = "Classic spider strategist. Envelops in webs and waits for the prey to get tangled.")
-fastSpooder = Enemy(name = "Spooder, but faster", hp = 45, maxHP = 45, atk = 6, exp = 60, text = "is running around you.", description = "Spider athlete. Compensates for lack of strength with speed and agility.")
-hugeSpooder = Enemy(name = "   H U G E    S P O O D E R", hp = 230, maxHP = 230, atk = 11, exp = 175, text = "   A T T A C K S.", description = "Giant spider with a Napoleon complex. Complains that everyone is afraid of him.", boss = True)
+spooder = Enemy(name = "Big Spooder", hp = 50, maxHP = 50, atk = 12, exp = 40, text = "crawled from the hole.", description = "Classic spider strategist. Envelops in webs and waits for the prey to get tangled.")
+fastSpooder = Enemy(name = "Spooder, but faster", hp = 45, maxHP = 45, atk = 11, exp = 60, text = "is running around you.", description = "Spider athlete. Compensates for lack of strength with speed and agility.")
+hugeSpooder = Enemy(name = f"H U G E    S P O O D E R", hp = 230, maxHP = 230, atk = 16, exp = 175, text = "   A T T A C K S.", description = "Giant spider with a Napoleon complex. Complains that everyone is afraid of him.", boss = True)
 
-smolRobot = Enemy(name = "Smol Robot", hp = 30, maxHP = 30, atk = 7, exp = 15, text = "is sweeping floor and encountered you.", description = "Cleaning robot that accidentally activated combat mode. Tries to attack and vacuum simultaneously.")
-terminator = Enemy(name = "TERMINATOR", hp = 670, maxHP = 670, atk = 17, exp = 560, text = "IS WANTS TO TERMINATE YOU!", description = "Terminator with system errors. Periodically freezes and displays errors.", boss = True)
-terminatorNEO = Enemy(name = "TERMINATOR NEO", hp = 1670, maxHP = 1670, atk = 26, exp = 780, text = "IS WANTS TO TERMINATE YOU!", description = "Upgraded version with additional bugs. Glitches twice as often.", boss = True)
+smolRobot = Enemy(name = "Smol Robot", hp = 30, maxHP = 30, atk = 14, exp = 15, text = "is sweeping floor and encountered you.", description = "Cleaning robot that accidentally activated combat mode. Tries to attack and vacuum simultaneously.")
+terminator = Enemy(name = f"TERMINATOR", hp = 670, maxHP = 670, atk = 19, exp = 560, text = "IS WANTS TO TERMINATE YOU!", description = "Terminator with system errors. Periodically freezes and displays errors.", boss = True)
+terminatorNEO = Enemy(name = f"TERMINATOR NEO", hp = 1670, maxHP = 1670, atk = 28, exp = 780, text = "IS WANTS TO TERMINATE YOU!", description = "Upgraded version with additional bugs. Glitches twice as often.", boss = True)
 
-lordcat = Enemy(name = "Lord Cat", hp = 800, maxHP = 800, atk = 23, exp = 720, text = "is want to defeat you.", description = "Fights to keep his family’s memory alive. Attacks with purpose, each move telling a story of loss and hope.", boss = True)
-lordkotik = Enemy(name = "Lord Kotik", hp = 6573, maxHP = 6573, atk = 1, exp = 1280, text = "is want to defeat you.", description = "This is end.", boss = True)
+lordcat = Enemy(name = f"Lord Cat", hp = 800, maxHP = 800, atk = 30, exp = 720, text = "is want to defeat you.", description = "Fights to keep his family’s memory alive.\nAttacks with purpose, each move telling a story of loss and hope.", boss = True)
+lordkotik = Enemy(name = f"Lord Kotik", hp = 6573, maxHP = 6573, atk = 1, exp = 1280, text = "is want to defeat you.", description = "This is end.", boss = True)
 
 annoyDog = NPC(
     name="Annoying Dog",
@@ -819,8 +827,8 @@ cactus = NPC(
     dialogue=[
         "Meow. I am a Cactus.",
         "Don't be surprised, I really am a cat named Cactus..",
-        "I'm here to give you some advice: be careful with the piano.",
-        "Sometimes music opens doors that are better left unopened..."
+        f"I'm here to give you some advice: be careful with the piano.",
+        f"Sometimes music opens doors that are better left unopened..."
     ]
 )
 
@@ -829,12 +837,12 @@ marjik = NPC(
     dialogue=[
         "I see you've come for answers...",
         "My family has always kept ancient knowledge...",
-        "Thomas inherited my willpower...",
-        "Marge got my mind...",
-        "Murysya is my heart...",
+        f"Thomas inherited my willpower...",
+        f"Marge got my mind...",
+        f"Murysya is my heart...",
         "Not everything can be told to a stranger...",
         "But I see in you have the potential...",
-        "You can buy some magical things in my shop..."
+        f"You can buy some magical things in my shop..."
     ]  
 )
 
@@ -844,7 +852,7 @@ spiid = NPC(
     dialogue=[
         "abebebebebe....................",
         "biiiii cariifullll.........",
-        "....orr hugii spiiidiiirrrr wiillll eattt youuuuuu........."
+        f"....orr hugii spiiidiiirrrr wiillll eattt youuuuuu........."
     ]
 )
 
@@ -854,7 +862,8 @@ oldRobot = NPC(
     dialogue=[
         r"GU/-\RD|\|3R 1.24 IS R<EAD@ TO @6TAC|<...    AND D3FE|\|D...",
         r"ST/T*$: D7MAG/D...",
-        r"COD\de: 34.. ,hb 57... f8798)(*67^#)#.....",
+        r"COD\de: 34..57...",
+        r"f8798)(*67^#)#.....",
         r"ERR@R;*$^&jjjb  ;F><?dk.............",
         "...",
         "..."
@@ -925,7 +934,14 @@ monsters = {
     "The Charging Room": 5,
     "The Lord's House": 1
 }
-bosses = 4
+bosses = {
+    "Doge": True,
+    "H U G E    S P O O D E R": True,
+    "TERMINATOR": True,
+    "TERMINATOR NEO": True,
+    "Lord Cat": True,
+    "Lord Kotik": True,
+}
 gold = 0
 name = ""
 gender = ""
@@ -998,7 +1014,7 @@ BANNED_NAMES = [
 
 CRIT_CHANCE = 0.3
 CRIT_MULTIPLIER = 5.0
-VERSION = "1.5.1"
+VERSION = "1.6"
 DEBUG_MODE = False
 
 
@@ -1011,7 +1027,8 @@ def check_genocide():
             monsters["The Spooders Lair"] == 0 and
             monsters["The Warehouse"] == 0 and
             monsters["The Charging Room"] == 0 and
-            bosses == 2)
+            bosses["Doge"] == False and
+            bosses["H U G E    S P O O D E R"] == False)
 
 def check_genocide_final():
     return (monsters["The Dog Room"] == 0 and
@@ -1023,7 +1040,9 @@ def check_genocide_final():
             monsters["The Warehouse"] == 0 and
             monsters["The Charging Room"] == 0 and
             monsters["The Lord's House"] == 0 and
-            bosses == 1)
+            bosses["Doge"] == False and
+            bosses["H U G E    S P O O D E R"] == False and
+            bosses["TERMINATOR NEO"] == False)
 
 def check_genocide_ending():
     return (monsters["The Dog Room"] == 0 and
@@ -1035,10 +1054,50 @@ def check_genocide_ending():
             monsters["The Warehouse"] == 0 and
             monsters["The Charging Room"] == 0 and
             monsters["The Lord's House"] == 0 and
-            bosses == 0)
+            bosses["Doge"] == False and
+            bosses["H U G E    S P O O D E R"] == False and
+            bosses["TERMINATOR NEO"] == False and
+            bosses["Lord Kotik"] == False)
+            
+            
+def check_genocide_interrupt():
+    return (monsters["The Dog Room"] == 0 and
+            monsters["The Piano Room"] == 0 and
+            monsters["The Cat Room"] == 0 and
+            monsters["The Ancient Library"] == 0 and
+            monsters["The Secret Lab"] == 0 and
+            monsters["The Spooders Lair"] == 0 and
+            monsters["The Warehouse"] == 0 and
+            monsters["The Charging Room"] > 0 and
+            bosses["Doge"] == False and
+            bosses["H U G E    S P O O D E R"] == False)
+
+def check_no_kills():
+    return (kills == 0 and
+            bosses["Doge"] == False and
+            bosses["H U G E    S P O O D E R"] == False and
+            bosses["TERMINATOR"] == False and
+            bosses["Lord Cat"] == False)
+
+def check_no_ruler():
+    return (kills < 0 and
+            bosses["Doge"] == False and
+            bosses["H U G E    S P O O D E R"] == False and
+            bosses["TERMINATOR"] == False and
+            bosses["Lord Cat"] == False)
 
 def add_kill(name):
     monsters[name] -= 1
+
+def add_kill_boss(name):
+    if name == "Lord Cat" or name == "Lord Kotik":
+        bosses["Lord Cat"] = False
+        bosses["Lord Kotik"] = False
+    elif name == "TERMINATOR" or name == "TERMINATOR NEO":
+        bosses["TERMINATOR"] = False
+        bosses["TERMINATOR NEO"] = False
+    else:
+        bosses[name] = False
 
 def updateHP():
     global hp
@@ -1166,7 +1225,7 @@ def printsta(lines, delay_between=2.0, text_delay=0.05, effect=None):
 def show_credits():
     credits_text = [
         "",
-        "Credits:",
+        f"Credits:",
         "Game Design: Alex",
         "Programming: Alex",
         "Special Thanks:",
@@ -1180,7 +1239,7 @@ def show_credits():
 
 def show_about():
     cls()
-    print("\n=== ABOUT ===")
+    print(f"\n=== ABOUT ===")
     print("Game: THE UNDERGROUND")
     print(f"Version: {VERSION}")
     print("Developer: Alex")
@@ -1195,8 +1254,42 @@ def show_about():
     print("\n© 2026 Alex. All rights reserved.")
     input("\nPress Enter to return...")
 
+def show_resurrection_ending():
+    printa("The power of the locket activates...", effect="glitch")
+    printa("The ancient magic of the lab awakens...", effect="fade")
+    
+    printsta([
+        "The locket begins to glow brighter",
+        "A portal of light opens",
+        "Marj appears, restored to life",
+        "Muysa steps through the light",
+        "The family is reunited"
+    ], delay_between=2.0, text_delay=0.07, effect="fade")
+    
+    printa("Marj: The power of science and magic combined...", effect="whisper")
+    printa("Muysa: We owe our lives to your compassion...", effect="whisper")
+    printa("Lord Thomas: Together, we will protect this knowledge...", effect="whisper")
+
+def show_explanation():
+    printsta([
+        "The locket contains ancient magic",
+        "Combined with Marj's scientific knowledge",
+        "And the power of compassion",
+        "It created a portal between life and death"
+    ], delay_between=1.5, text_delay=0.07)
+    
+    printa("Lord Thomas: This power should never be abused...", effect="whisper")
+    printa("Marj: We will safeguard the knowledge...", effect="whisper")
+    printa("Muysa: And protect those who cannot protect themselves...", effect="whisper")
 
 
+def check_conditions_for_resurrection():
+    if (pacifist_eligible and 
+        kills == 0 and
+        spared >= 15 and
+        armor == locket):
+        return True
+    return False
 
 def final_consequence():
     global pacifist_eligible, kills, spared
@@ -1211,16 +1304,16 @@ def final_consequence():
 
 
 def get_weapon_by_name(name):
-    weapons = {w.name: w for w in [stick, noteknife, scienceStaff, scrap, rustDagger, electricRod, oldStaff, debugWP, okakWP]}
+    weapons = {w.name: w for w in [stick, noteknife, scienceStaff, scrap, rustDagger, electricRod, oldStaff, debugWP, okakWP, trueKnife]}
     return weapons.get(name, stick)
 
 
 def get_armor_by_name(name):
-    armors = {a.name: a for a in [bandage, boneArmor, catCloak, labCoat, forceField, locket, okakFD]}
+    armors = {a.name: a for a in [bandage, boneArmor, catCloak, labCoat, forceField, locket, okakFD, heartLocket]}
     return armors.get(name, bandage)
 
 def get_item_by_name(name):
-    items = {i.name: i for i in [dumplings, cheesecake, susdog, bread, flakes, susbottle, spooderBread, spooderSoup, energyDrink, mintTea, nukeButton, stick, noteknife, scienceStaff, scrap, rustDagger, electricRod, oldStaff, debugWP, bandage, boneArmor, catCloak, labCoat, forceField, locket, okakWP, okakAR, okakFD, meteor_artifact, light_artifact, fireScroll, healScroll, boltScroll]}
+    items = {i.name: i for i in [dumplings, cheesecake, susdog, bread, flakes, susbottle, spooderBread, spooderSoup, energyDrink, mintTea, nukeButton, stick, noteknife, scienceStaff, scrap, rustDagger, electricRod, oldStaff, debugWP, bandage, boneArmor, catCloak, labCoat, forceField, locket, okakWP, okakAR, okakFD, meteor_artifact, light_artifact, fireScroll, healScroll, boltScroll, heartLocket, trueKnife]}
     return items.get(name, nothing)
     
 def get_room_by_name(name):
@@ -1256,7 +1349,7 @@ def save_game(filename="save.json"):
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(current_save, f, indent=2)
     
-    print("\nFile saved!")
+    print(f"\nFile saved!")
     
 
 
@@ -1328,7 +1421,7 @@ Error: There are only nuclear dust in save file""")
     OKAK = data["okak"]
     
     
-    print("\nFile loaded!")
+    print(f"\nFile loaded!")
     sleep(0.5)
     return True
 
@@ -1337,10 +1430,10 @@ def gameover():
     global maxHP
 
     cls()
-    print("GAME OVER!")
+    print(f"GAME OVER!")
     printa(f"{name}, don't give up!")
     sleep(0.3)
-    printa("Save the DETERMINATION!")
+    printa(f"Save the DETERMINATION!")
     sleep(0.6)
     print()
     input("Press Enter to continue...")
@@ -1356,7 +1449,7 @@ def show_ending():
     
     if OKAK:
         printa("ОКАК ОКАК ОКАК ОКАК ОКАК", 0.1)
-        print("\n[ОКАК ENDING]")
+        print(f"\n[ОКАК ENDING]")
         print("You have activated the secret power of OKAK!")
         print("All the enemies fled in terror, and Lord Cat just said, 'окак...'")
         print("Now you are the master of the OKAK force!")
@@ -1371,44 +1464,115 @@ def show_ending():
         return
     
     
-    if dirtyHacker == True:
+    if dirtyHacker:
         if pacifist_eligible and kills == 0:
-            printa("How you do this?")
-            print("\n[HACKED PACIFIST ENDING]")
-            print("Peace settles over The Underground.")
-            sleep(5)
-            show_credits()
+            if check_conditions_for_resurrection():
+                printa("How you do this?")
+                print(f"\n[HACKED TRUE PACIFIST ENDING]")
+                print("Peace settles over The Underground.")
+                sleep(5)
+                show_credits()
+            else:
+                printa("How you do this?")
+                print(f"\n[HACKED PACIFIST ENDING]")
+                print("Peace settles over The Underground.")
+                sleep(5)
+                show_credits()
 
         elif check_genocide_ending():
             printa("Silence. Only the echo of your steps remains.", 0.3)
             printa("Dirty hacker... stop it please...", 0.3)
-            print("\n[HACKED GENOCIDE ENDING]")
+            print(f"\n[HACKED GENOCIDE ENDING]")
             print("The Underground is empty. Was it worth it?")
             sleep(5)
             show_credits()
         else:
-            printa("bruh... it's worst ending ever...", 0.3)
-            print("\n[HACKED NEUTRAL ENDING]")
-            print("The story ends... or not? (UNDERGROUND 2: JUSTICE will be released soon)")
+            if bosses["Lord Cat"]:
+                if check_genocide_interrupt():
+                    if bosses["TERMINATOR"]:
+                        printa("Now Lord Cat is even more angry.")
+                        printa("The TERMINATOR rules the Underground, and Lord Cat has gone to the old laboratory.")
+                        print("\n[HACKED NEUTRAL ENDING: INTERRUPTED GENOCIDE ENDING]")
+                        print("Lord Cat is develops new superweapon aganist humans. What have you done?!")
+                        sleep(5)
+                        show_credits()
+                    else:
+                        printa("Lord Cat realized that it would be pointless to fight humans.")
+                        printa("He went to join Marge in the Ancient Library.")
+                        print("\n[HACKED NEUTRAL ENDING: INTERRUPTED GENOCIDE ENDING]")
+                        print("Now there is anarchy in the Underground.")
+                else:
+                    printa("Lord Cat rules the Underground as before.")
+                    print(f"\n[HACKED NEUTRAL ENDING: LORD CAT ENDING]")
+                    print("The story ends... or not?")
+                    sleep(5)
+                    show_credits()
+            elif bosses["Lord Cat"] == False and bosses["TERMINATOR"]:
+                printa("The Underground has been transformed into a digital matrix.")
+                printa("Ancient tunnels have turned into neural networks, and the walls glow from the data stream.")
+                printa("The Terminator has become the central processor of the system,\nhere every corner of the Underground is now part of a single supercomputer.")
+                print("\n[HACKED NEUTRAL ENDING: TERMINATOR ENDING")
+                print("Even spooders now surfing the World Wide Web *badam-tss*")
+            elif bosses["Lord Cat"] == False and bosses["TERMINATOR"] == False and bosses["H U G E    S P O O D E R"]:
+                printa("Doge became the head of the spider Guard.")
+                printa("And the Huge Spooder, having become the ruler, complains that everyone is afraid of him.")
+                print("\n[HACKED NEUTRAL ENDING: SPOODER ENDING")
+                print("Now everything in the Underground is made up of cobwebs.")
+            elif bosses["Lord Cat"] == False and bosses["TERMINATOR"] == False and bosses["H U G E    S P O O D E R"] == False and bosses["Doge"]:
+                printa("Doge rules the kingdom wisely.")
+                printa("Dog philosophers teach residents to comprehend the essence of existence.")
+                printa("The smile economy is thriving in a world of kindness.")
+                print("[HACKED NEUTRAL ENDING: DOGE ENDING")
+                print("The Underground is filled with wisdom and laughter under the gentle rule of the great Doge.")
+            elif check_no_kills():
+                printa("Marjik grieves over the loss of Thomas, realizing that the past cannot be brought back.")
+                printa("The ancient library now preserves the memory of the fallen.")
+                printa("A wise merchant becomes a ruler, but his heart is full of sadness.")
+                printa("The kingdom lives by the laws of reason and memory.")
+                print("\n[HACKED NEUTRAL ENDING: MARJIK ENDING]")
+                print("Time heals wounds, but the scars of loss remain forever.")
+            elif check_no_ruler():
+                printa("The Underground is plunged into darkness.")
+                printa("Without a ruler, the corridors are filled with chaos.")
+                printa("The mechanisms work uncontrollably.")
+                printa("Ancient knowledge is dying in ruin.")
+                printa("Everyone survives as best they can.")
+                print("\n[HACKED NEUTRAL ENDING: NO RULER ENDING]")
+                print("The Underground future is shrouded in darkness.")
+            
+                
+    elif pacifist_eligible and kills == 0:
+        if check_conditions_for_resurrection():
+            show_resurrection_ending()
+            show_explanation()
+            printa("Marjik watches with awe the miracle of Thomas' family resurrection.")
+            printa("Marjik: Ancient forces are entwined together...", effect = "whisper")
+            printa("Marjik: Magic and science, compassion and will—it all brought them back to life.", effect = "whisper")
+            printa("Thomas, Marge, and Murysya stand together again, and their presence fills the library with new meaning.")
+            printa("Marjik: I've seen a lot, but this... this surpasses all my knowledge.")
+            printa("Ancient mechanisms come to life in harmony with magic, and lost knowledge finds new life.")
+            printa("Marjik: Now we will keep this gift. Every being in the kingdom should know that love can overcome even death.")
+            printa("The underground kingdom is entering an era where the memory of the past is not a pain, but a source of strength.")
+            print("\n[TRUE PACIFIST ENDING]")
+            print("The cycle of violence is broken.")
+            print("The clan of scholar cats is reborn.")
+            print("Peace returns to The Underground.")
+        else:
+            printa("The world breathes easier.", 0.3)
+            printa("You chose compassion. Even Lord Cat lowered his claws.", 0.3)
+            printa("'Maybe... we can coexist'", 0.3)
+            print(f"\n[PACIFIST ENDING]")
+            print("Peace settles over The Underground.")
+            print("The locket glows softly, as if remembering its lost family...")
             sleep(5)
             show_credits()
-        
-
-    elif pacifist_eligible and kills == 0:
-        printa("The world breathes easier.", 0.3)
-        printa("You chose compassion. Even Lord Cat lowered his claws.", 0.3)
-        printa("'Maybe... we can coexist'", 0.3)
-        print("\n[PACIFIST ENDING]")
-        print("Peace settles over The Underground.")
-        sleep(5)
-        show_credits()
         
 
 
     elif check_genocide_ending():
         printa("Silence. Only the echo of your steps remains.", 0.3)
         printa("Every creature lies still. You are alone.", 0.3)
-        print("\n[GENOCIDE ENDING]")
+        print(f"\n[GENOCIDE ENDING]")
         print("The Underground is empty. Was it worth it?")
         sleep(5)
         show_credits()
@@ -1416,17 +1580,58 @@ def show_ending():
         
     else:
         printa("You survived. But at what cost?", 0.3)
-        if kills > 5:
-            printa("The walls are stained. You try not to look.", 0.3)
-        elif spared > 5:
-            printa("Some faces flash in your memory. You hope they're safe.", 0.3)
-        else:
-            printa("You walk away, unsure if you made the right choices.", 0.3)
-        print("\n[NEUTRAL ENDING]")
-        print("The story ends... or not?")
+        if bosses["Lord Cat"]:
+            if check_genocide_interrupt():
+                if bosses["TERMINATOR"]:
+                    printa("Now Lord Cat is even more angry.")
+                    printa("The TERMINATOR rules the Underground, and Lord Cat has gone to the old laboratory.")
+                    print("\n[NEUTRAL ENDING: INTERRUPTED GENOCIDE ENDING]")
+                    print("Lord Cat is develops new superweapon aganist humans. What have you done?!")
+                else:
+                    printa("Lord Cat realized that it would be pointless to fight humans.")
+                    printa("He went to join Marge in the Ancient Library.")
+                    print("\n[NEUTRAL ENDING: INTERRUPTED GENOCIDE ENDING]")
+                    print("Now there is anarchy in the Underground.")
+            else:
+                printa("Lord Cat rules the Underground as before.")
+                print(f"\n[NEUTRAL ENDING: LORD CAT ENDING]")
+                print("The story ends... or not?")
+                
+        elif bosses["Lord Cat"] == False and bosses["TERMINATOR"]:
+            printa("The Underground has been transformed into a digital matrix.")
+            printa("Ancient tunnels have turned into neural networks, and the walls glow from the data stream.")
+            printa("The Terminator has become the central processor of the system,\nhere every corner of the Underground is now part of a single supercomputer.")
+            print("\n[NEUTRAL ENDING: TERMINATOR ENDING")
+            print("Even spooders now surfing the World Wide Web *badam-tss*")
+        elif bosses["Lord Cat"] == False and bosses["TERMINATOR"] == False and bosses["H U G E    S P O O D E R"]:
+            printa("Doge became the head of the spider Guard.")
+            printa("And the Huge Spooder, having become the ruler, complains that everyone is afraid of him.")
+            print("\n[NEUTRAL ENDING: SPOODER ENDING")
+            print("Now everything in the Underground is made up of cobwebs.")
+        elif bosses["Lord Cat"] == False and bosses["TERMINATOR"] == False and bosses["H U G E    S P O O D E R"] == False and bosses["Doge"]:
+            printa("Doge rules the kingdom wisely.")
+            printa("Dog philosophers teach residents to comprehend the essence of existence.")
+            printa("The smile economy is thriving in a world of kindness.")
+            print("[NEUTRAL ENDING: DOGE ENDING")
+            print("The Underground is filled with wisdom and laughter under the gentle rule of the great Doge.")
+        elif check_no_kills():
+            printa("Marjik grieves over the loss of Thomas, realizing that the past cannot be brought back.")
+            printa("The ancient library now preserves the memory of the fallen.")
+            printa("A wise merchant becomes a ruler, but his heart is full of sadness.")
+            printa("The kingdom lives by the laws of reason and memory.")
+            print("\n[NEUTRAL ENDING: MARJIK ENDING]")
+            print("Time heals wounds, but the scars of loss remain forever.")
+        elif check_no_ruler():
+            printa("The Underground is plunged into darkness.")
+            printa("Without a ruler, the corridors are filled with chaos.")
+            printa("The mechanisms work uncontrollably.")
+            printa("Ancient knowledge is dying in ruin.")
+            printa("Everyone survives as best they can.")
+            print("\n[NEUTRAL ENDING: NO RULER ENDING]")
+            print("The Underground future is shrouded in darkness.")
+        
         sleep(5)
         show_credits()
-
 
 
 def create_character():
@@ -1434,20 +1639,20 @@ def create_character():
     
     cls()
     
-    print("=============================================")
-    print("         CREATE YOUR CHARACTER")
-    print("=============================================")
+    print(f"=============================================")
+    print(f"         CREATE YOUR CHARACTER")
+    print(f"=============================================")
 
     sleep(1.5)
     
     while True:
-        name = input("Enter your character's name: ").strip().lower()
+        name = input("Enter your character's name: ")
         
-        if name in BANNED_NAMES:
-            print("You can't!")
+        if name.strip().lower() in BANNED_NAMES:
+            print(f"You can't!")
             continue
             
-        if name == "окак":
+        if name.strip().lower() == "окак":
             name = ""
             print("...")
             continue
@@ -1464,9 +1669,9 @@ def create_character():
     
     
     print("Choose class:")
-    print("1. Warrior (+ATK, -MP)")
-    print("2. Mage (+MP, -ATK)")
-    print("3. Default(No changes)")
+    print(f"1. Warrior (+ATK, -MP)")
+    print(f"2. Mage (+MP, -ATK)")
+    print(f"3. Default(No changes)")
     class_choice = input("> ")
     if class_choice == "1":
         atk_bonus = 5
@@ -1495,6 +1700,18 @@ File "underground.py", line 711, in <module>
 
 Unknown Error""")
         os._exit(1)
+        
+    if (name == "Chara" and
+        gender == "f" and
+        class_choice == "1" and
+        hair == "brown" and
+        eyes == "red" and
+        build == "murderer"):
+        armor = heartLocket
+        weapon = trueKnife
+        lv = 20
+        exp = exp_for_level(20)
+        
     print("The journey begins...")
     sleep(2)
 
@@ -1530,7 +1747,7 @@ def nuclear_explosion():
 
 
     cls()
-    print("NUCLEAR EXPLOSION!!!")
+    print(f"NUCLEAR EXPLOSION!!!")
     sleep(0.6)
 
 
@@ -1558,7 +1775,7 @@ def gain_exp(amount):
 def main_menu():
     while True:
         cls()
-        print("\n=== MENU ===")
+        print(f"\n=== MENU ===")
         print("1. New Game")
         print("2. Load Save")
         print("3. About")
@@ -1583,16 +1800,17 @@ def handle_debug_command(cmd):
     global hp, mp, lv, exp, gold, inventory, weapon, armor, kills, spared, pacifist_eligible, room, DEBUG_MODE, VERSION
 
     if not DEBUG_MODE and cmd != "debug on":
-        print("Debug mode is off. Use 'debug on' to enable.")
+        print(f"Debug mode is off. Use 'debug on' to enable.")
+        return
 
     try:
         if cmd == "debug on":
             DEBUG_MODE = True
-            print("[DEBUG] Enabled.")
+            print(f"[DEBUG] Enabled.")
 
         elif cmd == "debug off":
             DEBUG_MODE = False
-            print("[DEBUG] Disabled.")
+            print(f"[DEBUG] Disabled.")
 
         elif cmd.startswith("debug hp "):
             hp = int(cmd.split()[2])
@@ -1640,7 +1858,7 @@ def handle_debug_command(cmd):
                 print(f"[DEBUG] Item '{item_name}' not found.")
 
         elif cmd == "debug show state":
-            print("\n[DEBUG] CURRENT STATE:")
+            print(f"\n[DEBUG] CURRENT STATE:")
             print(f"  GAME VERSION: {VERSION}")
             print(f"  HP: {hp}/{maxHP}")
             print(f"  MP: {mp}/{maxMP}")
@@ -1660,7 +1878,7 @@ def handle_debug_command(cmd):
                 gain_exp(room.boss.exp)
                 room.boss = None
             else:
-                print("[DEBUG] No boss in this room.")
+                print(f"[DEBUG] No boss in this room.")
 
 
         elif cmd == "debug next room":
@@ -1668,11 +1886,11 @@ def handle_debug_command(cmd):
                 room = room.nextRoom
                 print(f"[DEBUG] Moved to: {room.name}")
             else:
-                print("[DEBUG] No next room.")
+                print(f"[DEBUG] No next room.")
 
 
         elif cmd == "debug teleport":
-            room_name = input("[DEBUG] Room name: ").strip()
+            room_name = input(f"[DEBUG] Room name: ").strip()
             target_room = get_room_by_name(room_name)
             if target_room:
                 room = target_room
@@ -1682,7 +1900,7 @@ def handle_debug_command(cmd):
 
 
         else:
-            print("[DEBUG] Unknown command. Try: hp X, lv X, exp X, gold X, give NAME, show state, win boss, next room, teleport")
+            print(f"[DEBUG] Unknown command. Try: hp X, lv X, exp X, gold X, give NAME, show state, win boss, next room, teleport")
     except Exception as e:
         print(f"[DEBUG] Error: {e}")
 
@@ -1778,8 +1996,8 @@ def battle(enemy):
                 atck = atkFin * hpMP
                 crit_damage = int(atck * CRIT_MULTIPLIER)
                 weapon.VFX()
-                blink("CRITICAL HIT!", 6)
-                if crit_damage > 10**20-1:
+                blink(f"CRITICAL HIT!", 6)
+                if crit_damage > 10**10-1:
                    print(f"Damage: {10**40-1} (x{CRIT_MULTIPLIER})") 
                 else:
                     print(f"Damage: {crit_damage} (x{CRIT_MULTIPLIER})")
@@ -1794,7 +2012,7 @@ def battle(enemy):
                 else:
                     enemy.hp -= atck
                     KR = atck // 2
-                    if atck > 10**40-1:
+                    if atck > 10**10-1:
                         print(f"Damage: {10**40-1}")
                     else:
                         print(f"Damage: {atck}")
@@ -1808,11 +2026,10 @@ def battle(enemy):
                         print("Enemy HP: 0/800")
                         sleep(0.2)
                         printa("Lord Cat: B-b-burn-n in-n t-the-e h-hel-l-l...", 0.15, effect = "whisper")
-                        print("YOU WON!")
+                        print(f"YOU WON!")
                         print(f"You got {enemy.exp} EXP")
                         exp += enemy.exp
-                        kills += 1
-                        bosses -= 1
+                        add_kill_boss(enemy.name)
                         pacifist_eligible = False
                         sleep(1)
                         break
@@ -1830,27 +2047,32 @@ def battle(enemy):
                     printa("Lord Cat: ...")
                     sleep(0.4)
                     hp -= KR
-                    print(f"Damage: {int(KR)}")
+                    print(f"You got {int(KR)} damage")
+                    sleep(0.3)
                     if hp <= 0:
                         gameover()
+                        return False
                         break
-                    print("YOU WON!")
+                    print(f"YOU WON!")
                     print(f"You got {enemy.exp} EXP")
                     exp += enemy.exp
-                    kills += 1
-                    bosses -= 1
+                    if not enemy.boss:
+                        kills += 1
+                    add_kill_boss(enemy.name)
                     pacifist_eligible = False
                     sleep(1)
                     break
-                print("YOU WON!")
+                print(f"YOU WON!")
                 print(f"You got {enemy.exp} EXP")
                 exp += enemy.exp
-                kills += 1
-                gold += rnd.randint(25, 70)
+                if not enemy.boss:
+                        kills += 1
                 if enemy.boss == False:
                     add_kill(room.name)
+                    gold += rnd.randint(25, 70)
                 else:
-                    bosses -= 1
+                    add_kill_boss(enemy.name)
+                    gold += rnd.randint(70, 260)
                 pacifist_eligible = False
                 sleep(1)
                 break
@@ -1874,9 +2096,10 @@ def battle(enemy):
                       else:
                           wprint("BOOOOOOOOOOM!", 1)
                           wprint("Enemy turned to dust...", 2)
-                          print("YOU WON!")
+                          print(f"YOU WON!")
                           print(f"You got {enemy.exp} EXP.")
-                          kills += 1
+                          if not enemy.boss:
+                            kills += 1
                           add_kill(room.name)
                           pacifist_eligible = False 
                           exp += enemy.exp
@@ -1905,13 +2128,14 @@ def battle(enemy):
                             enemy.hp = 0.001
                         else:
                             wprint("Enemy turned to dust...", 2)
-                            print("YOU WON!")
+                            print(f"YOU WON!")
                             print(f"You got {enemy.exp} EXP.")
-                            kills += 1
+                            if not enemy.boss:
+                                kills += 1
                             if enemy.boss == False:
                                 add_kill(room.name)
                             else:
-                                bosses -= 1
+                                add_kill_boss(enemy.name)
                             pacifist_eligible = False 
                             exp += enemy.exp
                             sleep(1)
@@ -1944,13 +2168,14 @@ def battle(enemy):
                             enemy.hp = 0.001
                         else:
                             wprint("Enemy turned to dust...", 2)
-                            print("YOU WON!")
+                            print(f"YOU WON!")
                             print(f"You got {enemy.exp} EXP.")
-                            kills += 1
+                            if not enemy.boss:
+                                kills += 1
                             if enemy.boss == False:
                                 add_kill(room.name)
                             else:
-                                bosses -= 1
+                                add_kill_boss(enemy.name)
                             pacifist_eligible = False 
                             exp += enemy.exp
                             sleep(1)
@@ -2003,7 +2228,7 @@ def battle(enemy):
                         print("You pressed The Red Button...")
                         sleep(1.5)
                         nuclear_explosion()
-                        print("\n[NUKE SECRET ENDING]")
+                        print(f"\n[NUKE SECRET ENDING]")
                         print("...")
                         sleep(3)
                         input("Press Enter to quit...")
@@ -2033,13 +2258,14 @@ def battle(enemy):
                                 enemy.hp = 0.001
                             else:
                                 wprint("Enemy turned to dust...", 2)
-                                print("YOU WON!")
+                                print(f"YOU WON!")
                                 print(f"You got {enemy.exp} EXP.")
-                                kills += 1
+                                if not enemy.boss:
+                                    kills += 1
                                 if enemy.boss == False:
                                     add_kill(room.name)
                                 else:
-                                    bosses -= 1
+                                    add_kill_boss(enemy.name)
                                 pacifist_eligible = False 
                                 exp += enemy.exp
                                 sleep(1)
@@ -2073,7 +2299,7 @@ def battle(enemy):
                 printa("Lord Cat: What?")
                 printa("Lord Cat: You killed them all...")
                 sleep(1)
-                print(f"Damage: {INFINITY}")
+                print(f"You got {INFINITY} damage!")
                 sleep(0.3)
                 gameover()
                 return False
@@ -2081,14 +2307,20 @@ def battle(enemy):
             elif canSpared == True:
                 print(f"You decided to spare {enemy.name}.")
                 print("The enemy leaves.")
-                gold += rnd.randint(25, 70)
+                if enemy.boss == False:
+                    gold += rnd.randint(25, 70)
+                else:
+                    gold += rnd.randint(70, 260)
                 break
             elif enemy.hp > enemy.maxHP * 0.3:
                 print(f"{enemy.name} is still too aggressive to be spared!")
             else:
                 print(f"You decided to spare {enemy.name}.")
                 print("The enemy leaves.")
-                gold += rnd.randint(25, 70)
+                if enemy.boss == False:
+                    gold += rnd.randint(25, 70)
+                else:
+                    gold += rnd.randint(70, 260)
                 break
         elif bAct == "act":
             KR -= KR // 4
@@ -2214,7 +2446,7 @@ def battle(enemy):
                         dmgMP = 0.5
                     else:
                         print("Lord Cat ignores you...")
-            elif enemy.name == "   H U G E    S P O O D E R":
+            elif enemy.name == "H U G E    S P O O D E R":
                 talk = input("What do(whisper): ")
                 if talk == "whisper":
                     chnce = rnd.randint(1, 100)
@@ -2231,8 +2463,9 @@ def battle(enemy):
         if enemy.name == "Lord Kotik":
             if defend == True:
                 if shieldApplied == True and effectDuration > 0:
-                    print("Magical shield is absorbing half of enemy hit!")
+                    print(f"Magical shield is absorbing half of enemy hit!")
                     hp -= int(enemy.atk + KR + lv / 4)
+                    sleep(0.4)
                     if hp <= 0:
                         gameover()
                         return False
@@ -2244,6 +2477,7 @@ def battle(enemy):
                 else:
                     print("You blocked half of enemy hit!")
                     hp -= int(enemy.atk + KR + lv / 2)
+                    sleep(0.4)
                     if hp <= 0:
                         gameover()
                         return False
@@ -2251,6 +2485,7 @@ def battle(enemy):
                     print(f"You got {int(enemy.atk + KR + lv / 2)} damage. HP: {hp}/{maxHP}")
             else:
                 hp -= int(enemy.atk + KR + lv)
+                sleep(0.4)
                 if hp <= 0:
                     gameover()
                     return False
@@ -2263,9 +2498,10 @@ def battle(enemy):
         else:
             if defend == True:
                 if shieldApplied == True and effectDuration > 0:
-                    print("Magical shield is absorbing half of enemy hit!")
+                    print(f"Magical shield is absorbing half of enemy hit!")
                     if enemy.atk * dmgMP / 4 > dfnFin:
                         hp -= (enemy.atk - dfnFin) * dmgMP / 4
+                        sleep(0.4)
                         if hp <= 0:
                             gameover()
                             return False
@@ -2274,6 +2510,7 @@ def battle(enemy):
                     else:
                         hp -= 1
                         print(f"You got 1 damage. HP: {hp}/{maxHP}")
+                        sleep(0.4)
                         if hp <= 0:
                             gameover()
                             return False
@@ -2285,6 +2522,7 @@ def battle(enemy):
                     print("You blocked half of enemy hit!")
                     if enemy.atk * dmgMP / 2 > dfnFin:
                         hp -= (enemy.atk - dfnFin) * dmgMP / 2
+                        sleep(0.4)
                         if hp <= 0:
                             gameover()
                             return False
@@ -2293,6 +2531,7 @@ def battle(enemy):
                     else:
                         hp -= 1
                         print(f"You got 1 damage. HP: {hp}/{maxHP}")
+                        sleep(0.4)
                         if hp <= 0:
                             gameover()
                             return False
@@ -2300,9 +2539,10 @@ def battle(enemy):
             
             else:
                 if shieldApplied == True and effectDuration > 0:
-                    print("Magical shield is absorbing half of enemy hit!")
+                    print(f"Magical shield is absorbing half of enemy hit!")
                     if enemy.atk * dmgMP / 2 > dfnFin:
                         hp -= (enemy.atk - dfnFin) * dmgMP / 2
+                        sleep(0.4)
                         if hp <= 0:
                             gameover()
                             return False
@@ -2311,6 +2551,7 @@ def battle(enemy):
                     else:
                         hp -= 1
                         print(f"You got 1 damage. HP: {hp}/{maxHP}")
+                        sleep(0.4)
                         if hp <= 0:
                             gameover()
                             return False
@@ -2321,6 +2562,7 @@ def battle(enemy):
                 else:
                     if enemy.atk * dmgMP > dfnFin:
                         hp -= int((enemy.atk - dfnFin) * dmgMP)
+                        sleep(0.4)
                         if hp <= 0:
                             gameover()
                             return False
@@ -2328,6 +2570,7 @@ def battle(enemy):
                         print(f"You got {int(enemy.atk - dfnFin * dmgMP)} damage. HP: {hp}/{maxHP}")
                     else:
                         hp -= 1
+                        sleep(0.4)
                         if hp <= 0:
                             gameover()
                             return False
@@ -2343,9 +2586,9 @@ def battle(enemy):
             
             
           
-print("===========================================")      
-print("               UNDERGROUND")
-print("===========================================")
+print(f"===========================================")      
+print(f"               UNDERGROUND")
+print(f"===========================================")
 
 sleep(3)
 
@@ -2473,9 +2716,10 @@ def game_loop():
                             print("Invalid input!")
             elif chance >= 42 and chance <= 52:
                 wprint("...", 1)
-                print("You fall into trap...")
+                print(f"You fall into trap...")
                 mp = 0
                 hp -= 20
+                sleep(0.4)
                 if hp <= 0:
                     gameover()
                 print(f"You got 20 damage. HP: {hp}/{maxHP}")
@@ -2509,7 +2753,7 @@ def game_loop():
                         print("You pressed The Red Button...")
                         sleep(1.5)
                         nuclear_explosion()
-                        print("\n[NUKE SECRET ENDING]")
+                        print(f"\n[NUKE SECRET ENDING]")
                         print("...")
                         sleep(3)
                         input("Press Enter to quit...")
@@ -2559,7 +2803,7 @@ def game_loop():
                     try:
                         user_answer = input("Your answer: ")
                         if room.puzzle.check(user_answer):
-                            print("Correct! The path opens.")
+                            print(f"Correct! The path opens.")
                             if room.boss is not None:
                                 wprint(f"You see... The {room.boss.name}...", 2)
                                 cls()
@@ -2570,7 +2814,7 @@ def game_loop():
                             else:
                                 room = room.nextRoom
                         else:
-                            print("Wrong answer! The door remains locked.")
+                            print(f"Wrong answer! The door remains locked.")
                     except ValueError:
                         print("Invalid input! Try again.")
                 else:
@@ -2589,7 +2833,7 @@ def game_loop():
                 final_consequence()
                 sleep(2)
                 wprint(f"You see The Exit from The Underground...", 3)
-                wprint("This fills you with DETERMINATION...", 2)
+                wprint(f"This fills you with DETERMINATION...", 2)
                 wprint(f"You see... The {room.boss.name}...", 2)
                 finalBoss = lordcat
                 if check_genocide_final():
@@ -2772,7 +3016,7 @@ def game_loop():
                         print("Enter a number or 'b'!")
         elif act == "anuke":
             printa("The walls briefly flash with blue light... Build. Defend. Survive.", 0.1)
-            print("(You feel a surge of DETERMINATION...)")
+            print(f"(You feel a surge of DETERMINATION...)")
             hp = min(hp + 50, maxHP)
             mp = min(mp + 30, maxMP)
         elif act == "play":
@@ -2782,12 +3026,12 @@ def game_loop():
                 sequence = input("Play notes: ").strip().upper()
                     
                 if sequence == "A G F E":
-                    printa("The piano emits a soft, melodic chime...", 0.35)
-                    printa("Suddenly, the floor shakes!", 0.3)
-                    printa("A tiny white dog in a toy race car comes speeding in!", 0.2)
+                    printa("The piano emits a soft, melodic chime...", 0.1)
+                    printa("Suddenly, the floor shakes!", 0.1)
+                    printa("A tiny white dog in a toy race car comes speeding in!", 0.1)
                     printa("BEEP! BEEP! VROOM!", 0.1)
                     sleep(1)
-                    printa("CRASH!!!", 1)
+                    printa("CRASH!!!", 0.3)
                     sleep(0.5)
                             
                     cls()
@@ -2867,8 +3111,8 @@ Unknown Error""")
             armor = okakAR
             for i in range(len(inventory)):
                 inventory[i] = okakFD
-            printa("Your HP and MP are restored!")
-            printa("You have got the legendary 'окак' power!")
+            print(f"Your HP and MP are restored!")
+            print(f"You have got the legendary 'окак' power!")
             dirtyHacker = True
             OKAK = True
             name = "окак"
